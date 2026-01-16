@@ -1,0 +1,146 @@
+---
+interface Props {
+  name: string;
+  tags?: string[];
+  className?: string; // Allow overriding height/width classes
+}
+
+const { name, tags = [], className } = Astro.props;
+
+// 定義露營風格的漸層配色盤與 SVG 圖形
+// 使用者指定色票 (User Hex Codes) + 漸層 100% -> 80% (解釋為不透明度或是同色系明度變化)
+const THEMES = [
+  // 1. 森林系 (Forest) - #75B06F
+  { 
+    gradient: 'bg-gradient-to-b from-[#75B06F] to-[#75B06F]/80', 
+    accent: 'bg-[#98D492]',
+    text: 'text-[#F1FAF0]',
+    // 簡化的幾何松樹
+    iconPathFull: `<path d="M12 2L3 18H21L12 2Z M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+    opacity: 0.15
+  },
+  // 2. 星空系 (Night) - #0F2854
+  { 
+    gradient: 'bg-gradient-to-b from-[#0F2854] to-[#0F2854]/80', 
+    accent: 'bg-[#2A4B85]', 
+    text: 'text-[#E6EEFF]',
+    // 四角星
+    iconPathFull: `<path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>`,
+    opacity: 0.12
+  },
+  // 3. 大地系 (Earth) - #C1856D
+  { 
+    gradient: 'bg-gradient-to-b from-[#C1856D] to-[#C1856D]/80', 
+    accent: 'bg-[#E3A993]', 
+    text: 'text-[#FFF5F0]',
+    // 帳篷
+    iconPathFull: `<path d="M3 21L12 4L21 21H3ZM12 8L16 18H8L12 8Z" fill="currentColor"/>`, 
+    opacity: 0.12
+  },
+  // 4. 溪流系 (Water) - #3F9AAE
+  { 
+    gradient: 'bg-gradient-to-b from-[#3F9AAE] to-[#3F9AAE]/80', 
+    accent: 'bg-[#6FC4D6]', 
+    text: 'text-[#F0FBFF]',
+    // 波浪
+    iconPathFull: `<path d="M2 12Q7 6 12 12T22 12" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round"/>`,
+    opacity: 0.15
+  },
+  // 5. 雲霧系 (Mist) - #91ADC8
+  { 
+    gradient: 'bg-gradient-to-b from-[#91ADC8] to-[#91ADC8]/80', 
+    accent: 'bg-[#B4D0EB]', 
+    text: 'text-white',
+    // 雲朵
+    iconPathFull: `<path d="M17 19C20.31 19 23 16.31 23 13C23 10.03 20.84 7.57 18 7.14C17.58 3.65 14.61 1 11 1C7.81 1 5.12 3.08 4.24 6.03C1.86 6.57 0 8.78 0 11.5C0 14.5 2.1 17 5 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(1, 2)"/>`,
+    opacity: 0.15
+  },
+];
+
+// 簡單的字串轉數字雜湊函數
+const getHashIndex = (str: string, max: number) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash % max);
+};
+
+// 1. 決定主題
+let themeIndex = getHashIndex(name, THEMES.length);
+
+if (tags.some(t => t.includes('豪華') || t.includes('免搭'))) themeIndex = 2; // Glamping -> 大地/帳篷
+else if (tags.some(t => t.includes('溪') || t.includes('水'))) themeIndex = 3; // 溪流
+else if (tags.some(t => t.includes('雲海') || t.includes('高海拔'))) themeIndex = 4; // 雲海
+else if (tags.some(t => t.includes('星'))) themeIndex = 1; // 星空
+else if (tags.some(t => t.includes('森林') || t.includes('樹'))) themeIndex = 0; // 森林
+
+const theme = THEMES[themeIndex];
+
+// 統一設定 Pattern 參數以保持風格一致
+const PATTERN_SIZE = 48; // 統一格子大小
+const ICON_SIZE = 24;    // 假設 Icon ViewBox
+const OFFSET = (PATTERN_SIZE - ICON_SIZE) / 2; // 置中偏移量
+
+// 生成重複圖案的 SVG Data URI
+const patternSvg = `
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="pattern-${themeIndex}" x="0" y="0" width="${PATTERN_SIZE}" height="${PATTERN_SIZE}" patternUnits="userSpaceOnUse">
+       <g transform="translate(${OFFSET}, ${OFFSET})" opacity="${theme.opacity}">
+         ${theme.iconPathFull}
+       </g>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-${themeIndex})" />
+</svg>
+`;
+
+// 2. 處理文字排版
+const isLongName = name.length > 8;
+const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
+
+// 3. 計算動態位置 (讓每張卡片的光暈位置稍微不同)
+const glowPos = getHashIndex(name, 4); // 0-3 (四個角落)
+const glowClasses = [
+    '-top-12 -left-12', 
+    '-top-12 -right-12', 
+    '-bottom-12 -left-12', 
+    '-bottom-12 -right-12'
+];
+
+// 4. [SEO] 產生描述性 Aria Label
+const themeNames = ['森林', '星空', '大地', '溪流', '雲霧'];
+const coverDescription = `${name} 露營區示意封面 - ${themeNames[themeIndex]}風格`;
+---
+
+<div role="img" aria-label={coverDescription} class:list={[`w-full relative overflow-hidden flex flex-col items-center justify-center p-6 text-center transition-all duration-500 group-hover:scale-105`, theme.gradient, className]}>
+  
+  {/* Layer 1: 動態光暈 (Spotlight) - 增加深度 */}
+  <div class:list={[`absolute w-64 h-64 rounded-full opacity-30 blur-3xl mix-blend-screen`, theme.accent, glowClasses[glowPos]]}></div>
+
+  {/* Layer 2: 四方連續圖案 (Tiled Pattern) */}
+  <div class="absolute inset-0 w-full h-full text-white pointer-events-none mix-blend-overlay" set:html={patternSvg} />
+  
+  {/* Layer 3: 微噪點紋理 (Noise Texture) */}
+  <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+
+
+
+  {/* Content Layer: 主視覺文字區 */}
+  <div class="relative z-10 flex flex-col items-center gap-2">
+    {/* 裝飾性上標 */}
+    <span class:list={[`text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/30 pb-1 mb-1 shadow-sm`, theme.text]}>
+      TW GLAMPING
+    </span>
+    
+    {/* 🟢 [FIX] SEO 優化: 將裝飾性的 h3 改為 div，避免標題層級混亂 (Heading Order) */}
+    {/* 實際的 h3 標題保留在 CampgroundCard 的文字區塊中 */}
+    <div class:list={[`font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans`, fontSize]}>
+      {name}
+    </div>
+
+    {/* 裝飾性下標 (所在縣市) */}
+    <div class="w-8 h-1 bg-white/50 rounded-full mt-2 backdrop-blur-sm shadow-sm"></div>
+  </div>
+</div>

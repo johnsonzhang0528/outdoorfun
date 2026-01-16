@@ -1,0 +1,165 @@
+---
+interface Props {
+  tags: string[];
+  elevation: number;
+}
+
+import productData from '../data/products.json';
+
+const { tags, elevation } = Astro.props;
+
+// Affiliate Config
+const ICHANNELS_PREFIX = "https://product.mchannles.com/redirect_wa.php?k=3F8Gh&tourl=";
+
+// 1. 定義情境策略 (Marketing Hooks)
+const scenarios = [
+  {
+    id: 'glamping',
+    check: () => tags.some(t => ['glamping', 'luxury', '豪華露營', '免搭帳', '露營車'].includes(t)),
+    icon: '🥂',
+    title: '豪華露營的儀式感升級術',
+    desc: '免搭帳已經很輕鬆，帶上這些「氣氛小物」讓照片質感瞬間拉滿！',
+    targetTags: ['glamping', 'vibe', 'cooking', 'play']
+  },
+  {
+    id: 'high_altitude_cold',
+    check: () => elevation > 1000,
+    icon: '🥶',
+    title: '高山露營：拒絕半夜冷醒！',
+    desc: '高海拔溫差極大，入夜體感恐低於10度。這些「保暖神器」資深露友都推薦。',
+    targetTags: ['high_altitude', 'sleep', 'heating', 'cooking']
+  },
+  {
+    id: 'pet_friendly',
+    check: () => tags.some(t => ['pet', 'pet_friendly', '寵物', '寵物友善', '可帶貓狗'].includes(t)),
+    icon: '🐾',
+    title: '帶著毛孩去露營',
+    desc: '寵物友善營區必備！讓毛小孩也能舒適享受戶外生活，不便溺不擾鄰。',
+    targetTags: ['pet_friendly', 'general', 'clean']
+  },
+  {
+    id: 'summer_forest',
+    check: () => tags.some(t => ['forest', 'stream', 'river', '森林', '溪流', '戲水'].includes(t)) || elevation < 800,
+    icon: '🦟',
+    title: '防蚊抗暑大作戰',
+    desc: '低海拔營區蚊蟲較多，且夏季悶熱。沒帶這幾樣，晚上真的很難睡！',
+    targetTags: ['summer', 'play', 'cooling', 'general']
+  },
+  {
+    id: 'general_beginner',
+    check: () => true, // Fallback
+    icon: '🎒',
+    title: '新手露營：裝備檢查表',
+    desc: '第一次露營怕手忙腳亂？工欲善其事，必先利其器，這些裝備帶齊了嗎？',
+    targetTags: ['general', 'sleep', 'furniture', 'cooking']
+  }
+];
+// 2. 選擇最佳情境
+const activeScenario = scenarios.find(s => s.check());
+
+// 3. 智慧選品演算法
+const recommendedCategories = productData
+  .filter(cat => cat.id !== 'booking-always' && cat.tags.some(t => activeScenario.targetTags.includes(t)))
+  .map(cat => {
+    // 計算關聯分數
+    const score = cat.tags.filter(t => activeScenario.targetTags.includes(t)).length;
+    
+    // Affiliate Link Wrapping
+    const wrappedItems = cat.items.map(item => ({
+        ...item,
+        link: ICHANNELS_PREFIX ? `${ICHANNELS_PREFIX}${encodeURIComponent(item.link)}` : item.link
+    }));
+
+    return { ...cat, items: wrappedItems, matchScore: score };
+  })
+  .sort((a, b) => b.matchScore - a.matchScore)
+  .slice(0, 3);
+
+// Fallback
+if (recommendedCategories.length === 0) {
+    const fallbacks = productData
+        .filter(cat => cat.tags.includes('general') || cat.tags.includes('sleep'))
+        .slice(0, 3)
+        .map(cat => ({
+            ...cat,
+            items: cat.items.map(item => ({
+                ...item,
+                link: ICHANNELS_PREFIX ? `${ICHANNELS_PREFIX}${encodeURIComponent(item.link)}` : item.link
+            }))
+        }));
+    recommendedCategories.push(...fallbacks);
+}
+---
+
+<aside class="bg-gradient-to-br from-stone-50 to-white border border-stone-200 rounded-xl p-6 my-8 shadow-sm relative overflow-hidden ring-1 ring-emerald-900/5">
+    <!-- Decorator -->
+    <div class="absolute -right-6 -top-6 text-9xl opacity-5 select-none pointer-events-none grayscale">
+        {activeScenario.icon}
+    </div>
+
+    <header class="mb-6 relative z-10">
+        <h3 class="text-xl md:text-2xl font-bold text-stone-800 flex items-center gap-3 mb-2">
+            <span class="text-3xl shadow-sm bg-white rounded-full w-12 h-12 flex items-center justify-center border border-stone-100">{activeScenario.icon}</span>
+            {activeScenario.title}
+        </h3>
+        <p class="text-stone-600 text-sm md:text-base pl-[60px] leading-relaxed">
+            {activeScenario.desc}
+        </p>
+    </header>
+
+    <div class="space-y-4 relative z-10">
+        <div class="flex items-center gap-2 mb-2 pb-2 border-b border-stone-100 mx-1">
+            <span class="text-xs font-bold bg-stone-800 text-amber-400 px-2 py-0.5 rounded uppercase tracking-wider">Editor's Gear Pick</span>
+            <span class="text-xs text-stone-500 font-medium">裝備評測推薦</span>
+        </div>
+        {recommendedCategories.map(cat => (
+            <div class="group bg-white rounded-lg border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                <div class="bg-stone-50/50 px-4 py-2 border-b border-stone-100 flex justify-between items-center">
+                    <h4 class="font-bold text-stone-700 text-sm flex items-center gap-2">
+                        {cat.title}
+                    </h4>
+                    {/* 🟢 [FIX] 對比度優化: text-stone-400 -> text-stone-500 */}
+                    <span class="text-[10px] text-stone-500 font-mono tracking-wider uppercase">Hot Picks</span>
+                </div>
+                
+                <div class="p-3 grid gap-2">
+                    {cat.items.slice(0, 3).map((item, idx) => (
+                        <a 
+                            href={item.link} 
+                            target="_blank" 
+                            rel="nofollow noopener noreferrer"
+                            class="flex items-center justify-between p-2 rounded-md hover:bg-emerald-50/50 transition-colors group/item"
+                        >
+                            <div class="flex-1 min-w-0 pr-3">
+                                <div class="flex items-start gap-2 mb-0.5">
+                                    {/* 🟢 [FIX] 最終對比度修正: bg-amber-600 -> bg-amber-700 */}
+                                    {/* 確保 No.1 徽章在白字下清晰可讀 */}
+                                    <span class={`text-xs font-bold px-1.5 py-0.5 rounded text-white shrink-0 mt-0.5 ${idx === 0 ? 'bg-amber-700' : 'bg-stone-600'}`}>
+                                        {idx === 0 ? 'No.1' : (idx + 1)}
+                                    </span>
+                                    <span class="text-stone-700 font-medium text-sm line-clamp-2 group-hover/item:text-emerald-700 transition-colors leading-snug">
+                                        {item.name}
+                                    </span>
+                                </div>
+                                <p class="text-xs text-stone-500 line-clamp-1 pl-8">{item.desc}</p>
+                            </div>
+                            
+                            <div class="flex flex-col items-end gap-1 min-w-[80px] shrink-0">
+                                <span class="text-sm font-bold text-rose-600 font-mono text-right whitespace-nowrap">{item.price}</span>
+                                {/* 🟢 [FIX] 對比度優化: text-emerald-600 -> text-emerald-700 */}
+                                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-all whitespace-nowrap">
+                                    {item.cta || '查看'} &rarr;
+                                </span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        ))}
+    </div>
+  
+    <div class="mt-5 text-center flex items-center justify-center gap-2 text-xs text-stone-400">
+         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+         <span>價格與庫存以 momo 購物網即時資訊為準 • 為您精選最優質的露營裝備</span>
+    </div>
+</aside>

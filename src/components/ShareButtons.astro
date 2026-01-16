@@ -1,0 +1,188 @@
+---
+interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title } = Astro.props;
+const url = Astro.props.url || Astro.url.href;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+
+// Social Media Links
+const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`;
+const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+const threadsShareUrl = `https://www.threads.net/intent/post?text=${encodedTitle}%20${encodedUrl}`;
+const messengerShareUrl = `fb-messenger://share/?link=${encodedUrl}`;
+---
+
+{/* Generic Share Button to specific implementation */}
+<div class="my-6">
+  <button 
+    id="share-trigger-btn"
+    class="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition active:scale-95 shadow-md"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"></circle>
+      <circle cx="6" cy="12" r="3"></circle>
+      <circle cx="18" cy="19" r="3"></circle>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </svg>
+    分享營區
+  </button>
+</div>
+
+{/* Modal Backdrop */}
+<div id="share-modal-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 hidden transition-opacity opacity-0" aria-hidden="true"></div>
+
+{/* Modal Content */}
+<div id="share-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden pointer-events-none">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm transform scale-95 opacity-0 transition-all duration-200 pointer-events-auto flex flex-col overflow-hidden">
+    
+    {/* Header */}
+    <div class="p-4 border-b border-stone-100 flex justify-between items-center bg-stone-50">
+      <h3 class="font-bold text-stone-800 text-lg">分享至...</h3>
+      <button id="share-modal-close" class="p-1 rounded-full hover:bg-stone-200 text-stone-500 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    {/* Grid of Options */}
+    <div class="p-6 grid grid-cols-3 gap-4">
+      
+      {/* Line */}
+      <a href={lineShareUrl} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+        <div class="w-12 h-12 rounded-full bg-[#06C755] text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.614.388.084.915.259 1.05.595.12.302.079.766-.038 1.407-.127.696-.605 3.313-.655 3.498-.052.193-.243 1.056.924.577 6.46-2.651 9.074-5.26 9.424-5.632 1.956-2.071 3.277-4.887 3.277-8.059zm-16.712 1.942c0 .412-.335.748-.748.748h-1.399v1.397c0 .413-.335.748-.748.748-.412 0-.748-.335-.748-.748v-3.79c0-.413.336-.748.748-.748h2.895c.413 0 .748.335.748.748 0 .413-.335.748-.748.748h-2.147v.897h2.147zm2.253.748c0 .413-.335.748-.748.748-.412 0-.748-.335-.748-.748v-3.79c0-.413.336-.748.748-.748.412 0 .748.335.748.748v3.79zm5.093-2.146h-2.148v2.146c0 .413-.335.748-.748.748-.412 0-.748-.335-.748-.748v-3.79c0-.413.335-.748.748-.748h2.896c.413 0 .748.335.748.748 0 .413-.335.748-.748.748zm2.457-1.644c0 .413-.335.748-.748.748h-1.399v.897h1.399c.413 0 .748.335.748.748 0 .413-.335.748-.748.748h-2.147c-.413 0-.748-.335-.748-.748v-3.79c0-.413.335-.748.748-.748h2.147c.413 0 .748.335.748.748 0 .413-.335.748-.748.748h-1.399v.649h1.399c.413 0 .748.335.748.748z"/>
+            </svg>
+        </div>
+        <span class="text-xs text-stone-600 font-medium">Line</span>
+      </a>
+
+      {/* Facebook */}
+      <a href={fbShareUrl} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+        <div class="w-12 h-12 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+        </div>
+        <span class="text-xs text-stone-600 font-medium">Facebook</span>
+      </a>
+
+      {/* Threads */}
+      <a href={threadsShareUrl} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+        <div class="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.87 3.42c7.65-.08 10.95 3.65 11.13 7.82.01.2.06 3.61-2.27 7.12l-1.15-1.07-.4.61c-.62 1.3-3.66 6.86-7.85 6.64-5.22-.27-7.29-4.83-7.53-5.38 0 0-1.02-2.18-.7-5.59.3-3.41 2.37-8.32 9.27-8.4 6.09-.07 8.35 2.14 9.17 4.82.02.05 1.57 5.09-1.29 9.38-1.55 2.32-3.88 2.3-5.06 2.05-2.22-.48-2.61-3.26-2.58-3.56.24-2.57 2.33-2.92 3.01-2.93.91-.01 2.37.3 2.92 1.76l1.24-.71c-.74-1.99-2.73-2.45-4.14-2.43-2.66.03-4.32 2-4.13 4.22-.03-.23-.07-.48-.09-.75-.43-5.3 4.48-5.74 5.37-5.73 2.37.03 4.09 1.25 4.54 2.65.65 2.02.2 4.95-1.55 7.6-.82 1.24-2.29 2.17-5.31 2.82l.4 1.34c3.48-.75 5.36-1.95 6.47-3.64 3.07-4.66 2.95-8.58 1.94-11.75-1.12-3.5-4.47-6.26-10.46-6.19-8.35.1-11 6.13-11.4 10.37-.41 4.39.87 7.43 1.05 7.92.36.93 2.84 6.78 9.5 7.15 5.56.31 8.73-3.05 9.77-5.3 0 0 1.25.36 1.13 1.29-.3 2.45-3.32 5.16-10.16 4.79-8.15-.44-11.41-6.85-11.83-8.89C2.7 10.74 5.61 3.5 12.87 3.42z" />
+            </svg>
+        </div>
+        <span class="text-xs text-stone-600 font-medium">Threads</span>
+      </a>
+
+      {/* Messenger - Facebook Messenger */}
+      <a href={messengerShareUrl} class="flex flex-col items-center gap-2 group">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-b from-[#00B2FF] to-[#006AFF] text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.03 2 11C2 13.66 3.39 16.03 5.6 17.58V22L9.17 19.96C10.08 20.21 11.02 20.34 12 20.34C17.52 20.34 22 16.31 22 11C22 5.69 17.52 2 12 2ZM13 15.2L10.5 12.5L5.7 15.2L11 9.6L13.5 12.3L18.3 9.6L13 15.2Z"/>
+            </svg>
+        </div>
+        <span class="text-xs text-stone-600 font-medium">Messenger</span>
+      </a>
+
+      {/* Copy Link */}
+      <button class="flex flex-col items-center gap-2 group copy-btn" data-platform="Default">
+        <div class="w-12 h-12 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center shadow-sm group-hover:bg-stone-200 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+        </div>
+        <span class="text-xs text-stone-600 font-medium">複製連結</span>
+      </button>
+
+    </div>
+
+    {/* Footer Hint */}
+    <div class="bg-stone-50 p-3 text-center">
+       <span id="copy-feedback" class="text-xs font-semibold text-emerald-600 opacity-0 transition-opacity">已複製連結！</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // DOM Elements
+  const shareBtn = document.getElementById('share-trigger-btn');
+  const modal = document.getElementById('share-modal');
+  const backdrop = document.getElementById('share-modal-backdrop');
+  const modalContent = modal?.querySelector('div'); // The inner white box
+  const closeBtn = document.getElementById('share-modal-close');
+  const copyBtns = document.querySelectorAll('.copy-btn');
+  const feedback = document.getElementById('copy-feedback');
+
+  // Toggle Functions
+  const openModal = async () => {
+    // 🟢 [UX] Mobile Native Share API Priority
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: document.title,
+                text: '快來看看這個超棒的營區！',
+                url: window.location.href
+            });
+        } catch (err) {
+            console.log('Native share cancelled/failed', err);
+        }
+        return; // 🛑 Stop here regardless of success/cancel
+    }
+
+    modal?.classList.remove('hidden');
+    backdrop?.classList.remove('hidden');
+    // Small delay for transition
+    setTimeout(() => {
+        backdrop?.classList.remove('opacity-0');
+        modalContent?.classList.remove('opacity-0', 'scale-95');
+        modalContent?.classList.add('opacity-100', 'scale-100');
+    }, 10);
+  };
+
+  const closeModal = () => {
+    backdrop?.classList.add('opacity-0');
+    modalContent?.classList.remove('opacity-100', 'scale-100');
+    modalContent?.classList.add('opacity-0', 'scale-95');
+    
+    setTimeout(() => {
+        modal?.classList.add('hidden');
+        backdrop?.classList.add('hidden');
+    }, 200);
+  };
+
+  // Event Listeners
+  shareBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+
+  // Copy Logic
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            
+            // Show Feedback
+            if (feedback) {
+                feedback.textContent = '連結已複製！';
+                feedback.classList.remove('opacity-0');
+                
+                // Keep feedback visible briefly
+                setTimeout(() => {
+                    feedback.classList.add('opacity-0');
+                }, 2000);
+            }
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    });
+  });
+</script>

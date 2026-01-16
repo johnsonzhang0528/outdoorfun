@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CampgroundCard from '../components/CampgroundCard.astro';
+import NativeAdCard from '../components/NativeAdCard.astro';
+import campgrounds from '../data/campgrounds_enriched.json';
+
+// Simple types for the dataset
+type Campground = {
+	name: string;
+	city: string;
+	area: string;
+	phone: string;
+	elevation: number;
+	description: string;
+	tags: string[];
+	features: {
+		has_glamping: boolean;
+		pet_friendly: boolean;
+		high_altitude: boolean;
+	};
+};
+
+const camps = campgrounds as Campground[];
+
+// 🟢 動態計算熱門縣市
+const cityStats = camps.reduce((acc, camp) => {
+  acc[camp.city] = (acc[camp.city] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const popularCities = Object.entries(cityStats)
+  .sort(([, countA], [, countB]) => countB - countA)
+  .slice(0, 8)
+  .map(([city, count]) => ({ city, count }));
+
+// 🟢 [SEO] Global Schemas (WebSite & Organization)
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Outdoor Camping World 台灣站",
+      "url": Astro.site,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${Astro.site}search?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "name": "Outdoor Camping World",
+      "url": Astro.site,
+      "description": "台灣最完整的露營區搜尋引擎與裝備指南",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${Astro.site}favicon.svg`,
+        "width": 112,
+        "height": 112
+      },
+      "sameAs": [
+        "https://www.facebook.com/outdoorcampingworld", 
+        // 預留其他社群連結
+      ],
+      "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+886-2-00000000",
+          "contactType": "customer service",
+          "areaServed": "TW",
+          "availableLanguage": "Traditional Chinese"
+      }
+    }
+  ]
+};
+---
+
+<Layout 
+	title="Outdoor Camping World 台灣站 | 終極露營指南 Since 2004"
+    omitSuffix={true}
+    preloadImage="/hero-bg.webp"
+>
+    <!-- Inject Schema -->
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(homeSchema)}></script>
+    
+    <div class="relative bg-stone-900 -mt-[64px] pt-[64px]">
+        <div class="absolute inset-0 overflow-hidden">
+            <img 
+                src="/hero-bg.webp" 
+                alt="Camping Background" 
+                class="w-full h-full object-cover opacity-60"
+                fetchpriority="high"
+                loading="eager"
+                width="1920"
+                height="1080"
+                decoding="async"
+            />
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-stone-50/10"></div>
+        </div>
+
+        <div class="container mx-auto px-4 py-20 md:py-32 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold tracking-wider mb-6 backdrop-blur-sm">
+                SINCE 2004 • TAIWAN EDITION
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
+                發現你的下一個<br/><span class="text-emerald-400">戶外冒險</span>
+            </h1>
+            <p class="text-lg md:text-xl text-stone-200 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
+                收錄全台 {camps.length} 個精選露營區，結合 AI 海拔分析與氣候建議，
+                <br class="hidden md:inline"/>讓每一次的紮營，都是最完美的體驗。
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="/search?sort=elevation-desc" class="w-full md:w-auto bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-900/50 active:scale-95 transform duration-100 inline-flex items-center justify-center gap-2">
+                    <span>🔭</span> 找高海拔營地
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section class="container mx-auto px-4 -mt-16 mb-16 relative z-20">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-stone-100 relative group">
+            
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-sm font-bold text-stone-600 uppercase tracking-wider">熱門露營地區</h2>
+                    <p class="text-2xl font-bold text-stone-800 mt-1">你想去哪裡露營？</p>
+                </div>
+                <a href="/search" class="hidden md:block text-emerald-700 text-sm font-bold hover:underline">探索所有地區 &rarr;</a>
+            </div>
+            
+            {/* 🟢 [UX FIX] Mobile Scroll Container */}
+            <div class="relative">
+                {/* 1. 捲動容器: 改用 grid-flow-col 讓排列更整齊，並調整 gap */}
+                <div class="flex overflow-x-auto pb-4 gap-3 md:grid md:grid-cols-4 lg:grid-cols-6 md:overflow-visible md:pb-0 snap-x scrollbar-hide -mx-2 px-2 md:mx-0 md:px-0">
+                    {popularCities.map(({ city, count }) => (
+                        <a 
+                            href={`/city/${city}`} 
+                            /* 🟢 寬度優化: 手機版設為 w-[26%] (約3.5個)，讓第4個露出一半，暗示可捲動 */
+                            class="snap-start shrink-0 w-[26%] md:w-auto flex flex-col items-center justify-center p-3 md:p-4 rounded-xl bg-stone-50 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 group/btn border border-stone-100 hover:border-emerald-200 hover:shadow-md active:scale-95"
+                        >
+                            <span class="w-8 h-8 rounded-full bg-white text-base md:text-lg flex items-center justify-center mb-2 shadow-sm group-hover/btn:scale-110 transition-transform">📍</span>
+                            <span class="font-bold text-stone-800 text-sm md:text-base group-hover/btn:text-emerald-700 whitespace-nowrap">{city}</span>
+                            <span class="text-[10px] md:text-xs text-stone-600 mt-1 whitespace-nowrap">{count} 個</span>
+                        </a>
+                    ))}
+                    
+                    {/* 查看更多的「假卡片」(Optional, 增加點擊入口) */}
+                    <a href="/search" class="snap-start shrink-0 w-[26%] md:hidden flex flex-col items-center justify-center p-3 rounded-xl border-2 border-dashed border-stone-200 text-stone-400 hover:text-emerald-600 hover:border-emerald-300 transition-colors">
+                        <span class="text-xl mb-1">➔</span>
+                        <span class="text-xs font-bold">更多</span>
+                    </a>
+                </div>
+
+                {/* 2. 漸層遮罩 (Visual Hint): 右側淡淡的白霧，暗示還有內容 */}
+                <div class="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
+            </div>
+            
+            <div class="mt-4 md:hidden text-center border-t border-stone-100 pt-4">
+                 <a href="/search" class="text-emerald-700 text-sm font-bold flex items-center justify-center gap-1 active:opacity-70">
+                    探索所有地區 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                 </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 pb-12">
+		<section class="pb-8">
+			<div class="flex items-center justify-between mb-6 md:mb-8">
+				<h2 class="text-xl md:text-2xl font-bold text-stone-800 flex items-center gap-2">
+                    <span>🔥</span> 熱門精選營區
+                </h2>
+				<a href="/search" class="text-emerald-700 font-medium hover:underline text-sm md:text-base">瀏覽所有營區 &rarr;</a>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+				{camps.slice(0, 9).map((camp, index) => (
+					<>
+						<CampgroundCard camp={camp} />
+						{/* Insert Native Ad every 6th item (index 5) */}
+						{index === 5 && <NativeAdCard />}
+					</>
+				))}
+			</div>
+		</section>
+	</div>
+</Layout>

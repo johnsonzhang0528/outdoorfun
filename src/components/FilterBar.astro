@@ -1,0 +1,93 @@
+---
+import campgrounds from '../data/campgrounds_enriched.json';
+
+// 1. 定義固定篩選項目 (對應 search.astro 的功能或特殊查詢)
+const fixedFilters = [
+  { label: '全部', value: 'all', icon: '⛺' },
+  { label: '高海拔', value: 'high-altitude', icon: '⛰️' },
+  { label: '豪華露營', value: 'glamping', icon: '✨' },
+  { label: '寵物友善', value: 'pet-friendly', icon: '🐾' },
+];
+
+// 2. 動態統計標籤出現次數
+const tagCounts: Record<string, number> = {};
+campgrounds.forEach(camp => {
+    camp.tags.forEach(tag => {
+        if (tag) {
+            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+        }
+    });
+});
+
+// 移除已經在固定篩選中的標籤 (避免重複)
+fixedFilters.forEach(f => delete tagCounts[f.label]);
+
+// 3. 定義標籤對應的圖示
+const iconMap: Record<string, string> = {
+    '森林系': '🌲',
+    '溪流': '💧',
+    '雲海': '☁️',
+    '螢火蟲': '✨',
+    '櫻花': '🌸',
+    '親子': '👨‍👩‍👧‍👦',
+    '溫泉': '♨️',
+    '海景': '🌊',
+    '夜景': '🌃',
+    '雨棚': '🏠',
+    '小包區': '🏕️',
+    '釣魚': '🎣',
+    '登山': '🥾',
+    '落羽松': '🍂',
+    '秘境': '🤫',
+    '戲水': '🔫',
+    '少帳包區': '⛺',
+    '大草皮': '⛳'
+};
+const defaultIcon = '🏷️';
+
+// 4. 选择前 5 名熱門標籤 (Reduced from 15)
+const sortedTags = Object.entries(tagCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([tag]) => ({
+        label: tag,
+        value: tag,
+        icon: iconMap[tag] || defaultIcon
+    }));
+
+// 合併所有篩選項目
+const filters = [...fixedFilters, ...sortedTags];
+---
+
+<div class="sticky top-16 md:top-20 z-40 bg-stone-50/95 backdrop-blur-sm border-b border-stone-200 py-3 transition-all duration-300">
+  <div class="container mx-auto px-4">
+    <!-- Horizontal Scroll Container -->
+    <div class="flex items-center gap-3 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth">
+      {filters.map((filter) => (
+        <a 
+            href={filter.value === 'all' ? '/search' : `/search?q=${filter.label}`} 
+            class="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-stone-200 text-stone-600 text-sm font-medium shadow-sm active:scale-95 transition-all hover:border-emerald-500 hover:text-emerald-700 whitespace-nowrap"
+        >
+          <span>{filter.icon}</span>
+          <span>{filter.label}</span>
+        </a>
+      ))}
+      
+      <!-- Padding details for right side of scrolling area -->
+      <div class="w-4 flex-shrink-0 md:hidden"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+  }
+</style>

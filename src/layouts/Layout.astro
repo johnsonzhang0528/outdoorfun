@@ -1,0 +1,250 @@
+---
+// src/layouts/Layout.astro
+
+import MobileHeader from '../components/MobileHeader.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+title: string;
+description?: string;
+noindex?: boolean;
+    preloadImage?: string;
+    omitSuffix?: boolean; // 🟢 [NEW] 控制是否省略標題後綴
+    image?: string;       // 🟢 [NEW] 自訂 OG Image
+}
+
+const { 
+    title, 
+    description = "Outdoor Camping World 台灣站 (Since 2004) - 您的終極露營指南。收錄全台 300+ 熱門營區地圖、豪華露營推薦，以及專業的露營裝備導購評測。",
+    noindex = false,
+    preloadImage,
+    omitSuffix = false,
+    image
+} = Astro.props;
+
+const pageTitle = omitSuffix ? title : `${title} | Outdoor Camping World - Since 2004`;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image || '/social-card.webp', Astro.url);
+---
+
+<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={description} />
+
+        <link rel="preconnect" href="https://www.googletagmanager.com">
+        <link rel="preconnect" href="https://www.conn.tw">
+        <link rel="preconnect" href="https://www.transparenttextures.com">
+<!-- 🟢 [Performance] Preconnect to Map Tilet Servers -->
+    <link rel="preconnect" href="https://a.tile.openstreetmap.org" crossorigin />
+    <link rel="preconnect" href="https://b.tile.openstreetmap.org" crossorigin />
+    <link rel="preconnect" href="https://c.tile.openstreetmap.org" crossorigin />
+
+        {/* 🟢 [LCP FIX] 加入 fetchpriority="high" 以消除 LCP 警告 */}
+        <link 
+            rel="preload" 
+            href="https://www.transparenttextures.com/patterns/stardust.png" 
+            as="image" 
+            fetchpriority="high"
+        />
+
+        {preloadImage && (
+            <link rel="preload" href={preloadImage} as="image" fetchpriority="high" />
+        )}
+
+{noindex ? (
+<meta name="robots" content="noindex, nofollow" />
+) : (
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+)}
+{!noindex && <link rel="canonical" href={canonicalURL} />}
+
+		<script is:inline>
+            (function() {
+                // 防止重複載入的旗標
+                let gtmLoaded = false;
+                const gtmId = 'G-CS5334JZT3';
+
+                function loadGTM() {
+                    if (gtmLoaded) return;
+                    gtmLoaded = true;
+
+                    const script = document.createElement('script');
+                    script.src = "https://www.googletagmanager.com/gtag/js?id=" + gtmId;
+                    script.async = true;
+                    document.head.appendChild(script);
+
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', gtmId);
+                }
+
+                // 定義會觸發載入的「使用者互動」事件
+                const userEvents = ['mousemove', 'click', 'keydown', 'scroll', 'touchstart'];
+                
+                function onUserInteraction() {
+                    loadGTM();
+                    // 觸發一次後，就移除所有監聽器，節省資源
+                    userEvents.forEach(event => window.removeEventListener(event, onUserInteraction));
+                }
+
+                // 綁定事件監聽
+                userEvents.forEach(event => window.addEventListener(event, onUserInteraction, { passive: true, once: true }));
+                
+                // 安全機制：如果使用者完全不動（例如掛網），5 秒後還是自動載入
+                // 5 秒通常足夠避開 PSI 的關鍵檢測期
+                setTimeout(loadGTM, 5000);
+            })();
+		</script>
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:site_name" content="Outdoor Camping World (台灣站)" />
+<meta property="og:locale" content="zh_TW" />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={pageTitle} />
+<meta property="twitter:description" content={description.substring(0, 200)} />
+<meta property="twitter:image" content={socialImageURL} />
+
+{/* 🟢 [RESTORED] 恢復 ClientRouter 與 分潤變數 */}
+<ClientRouter />
+<script is:inline>
+    var oeya_member = "3F8Gh";
+    var oeya_uid1 = "";
+    var oeya_uid2 = "";
+    var oeya_uid3 = "";
+    var oeya_uid4 = "";
+    var oeya_uid5 = "";
+</script>
+
+<slot name="head" />
+	</head>
+<body class="bg-stone-50 min-h-screen text-stone-800 font-sans flex flex-col pb-16 md:pb-0">
+<MobileHeader />
+
+<main class="flex-grow">
+<slot />
+</main>
+
+<footer class="bg-stone-900 text-stone-300 py-8 md:py-12 mt-12 md:mt-20">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div>
+<h3 class="text-white font-bold text-lg mb-4">關於本站</h3>
+<p class="text-sm leading-relaxed">
+Outdoor Camping World 台灣站 (Since 2004) 致力於提供最透明、最準確的露營區資訊。
+結合 AI 技術，為您分析海拔氣候與設施特色。
+</p>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-4">熱門連結</h3>
+<ul class="space-y-2 text-sm">
+							<li><a href="/topic/high-altitude" class="hover:text-white transition">高海拔避暑</a></li>
+							<li><a href="/topic/glamping" class="hover:text-white transition">豪華露營</a></li>
+                            <li><a href="/directory" class="hover:text-white transition">全台營區索引</a></li>
+							
+							<li class="pt-2 border-t border-stone-800 mt-2 text-xs text-stone-400 font-mono">地區推薦</li>
+							<li><a href="/city/苗栗縣" class="hover:text-white transition">苗栗露營</a></li>
+							<li><a href="/city/南投縣" class="hover:text-white transition">南投露營</a></li>
+<li><a href="/city/新竹縣" class="hover:text-white transition">新竹露營</a></li>
+<li><a href="/city/宜蘭縣" class="hover:text-white transition">宜蘭露營</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-4">免責聲明</h3>
+<p class="text-xs leading-relaxed">
+本站資訊由 AI 輔助整理，實際狀況請以營區官方公告為準。
+部分連結可能包含合作推廣內容。
+</p>
+</div>
+</div>
+<div class="border-t border-stone-800 mt-8 pt-8 text-center text-xs text-stone-400">
+<p class="mb-2">
+聯盟行銷聲明：本站部分內容包含推廣連結。當您透過這些連結購買商品時，我們可能會獲得微薄的佣金，這不會增加您的購買成本，但能支持我們持續創作優質內容。
+</p>
+&copy; 2004-{new Date().getFullYear()} Outdoor Camping World. All rights reserved.
+</div>
+</div>
+</footer>
+
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe">
+<div class="grid grid-cols-4 h-16">
+<a href="/" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">🏠</span>
+<span class="text-[10px] font-medium">首頁</span>
+</a>
+<a href="/search" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">🔍</span>
+<span class="text-[10px] font-medium">搜尋</span>
+</a>
+<a href="/topic/glamping" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">✨</span>
+<span class="text-[10px] font-medium">豪華</span>
+</a>
+<a href="/topic/high-altitude" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">⛰️</span>
+<span class="text-[10px] font-medium">高山</span>
+</a>
+</div>
+</nav>
+
+        <script is:inline src="https://www.conn.tw/track/script/oeya_member_url.js" defer></script>
+
+<script>
+            // 🪙 Global Affiliate Link Rewriter
+            const ICHANNELS_PREFIX = "https://product.mchannles.com/redirect_wa.php?k=3F8Gh&tourl=";
+            const TARGET_DOMAINS = ["momoshop.com.tw", "klook.com"];
+            function processAffiliateLink(anchor) {
+                if (!anchor || !anchor.href) return;
+                const url = anchor.href;
+                if (url.includes('product.mchannles.com')) return;
+                const isTargetDomain = TARGET_DOMAINS.some(domain => url.includes(domain));
+                if (isTargetDomain) {
+                    anchor.href = `${ICHANNELS_PREFIX}${encodeURIComponent(url)}`;
+                    anchor.rel = "nofollow sponsored";
+                    anchor.target = "_blank";
+                }
+            }
+
+            function initAffiliateLinks() {
+                document.querySelectorAll('a[href^="http"]').forEach(processAffiliateLink);
+            }
+
+            const adObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1) {
+                             const el = node; 
+                             if (el.tagName === 'A') processAffiliateLink(el);
+                             if (el.querySelectorAll) {
+                                 el.querySelectorAll('a[href^="http"]').forEach(processAffiliateLink);
+                             }
+                        }
+                    });
+                });
+            });
+            function startObserver() {
+                initAffiliateLinks();
+                adObserver.disconnect();
+                adObserver.observe(document.body, { childList: true, subtree: true });
+            }
+
+            document.addEventListener('astro:page-load', startObserver);
+            document.addEventListener('DOMContentLoaded', startObserver);
+        </script>
+</body>
+</html>

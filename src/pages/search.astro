@@ -1,0 +1,810 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CampgroundCard from '../components/CampgroundCard.astro';
+import NativeAdCard from '../components/NativeAdCard.astro';
+import campgroundsData from '../data/campgrounds_enriched.json';
+
+// 1. 伺服器端預先排序 (CLS 優化)
+const campgrounds = [...campgroundsData].sort((a, b) => 
+    a.name.localeCompare(b.name, 'zh-TW')
+);
+
+// 取得唯一縣市列表
+const cities = [...new Set(campgroundsData.map(c => c.city))].sort();
+
+// 定義排序選項 (供前端渲染使用)
+const sortOptions = [
+    { value: 'default', label: '預設排序 (筆畫)' },
+    { value: 'elevation-desc', label: '海拔：由高到低' },
+    { value: 'elevation-asc', label: '海拔：由低到高' },
+];
+
+type Campground = {
+	name: string;
+	city: string;
+	area: string;
+	description: string;
+	tags: string[];
+    elevation: number;
+	features: {
+		has_glamping: boolean;
+		pet_friendly: boolean;
+		high_altitude: boolean;
+	};
+};
+
+// Define grouped filters
+const filterGroups = [
+    {
+        title: '地區與位置',
+        icon: '📍',
+        items: [
+            { label: '苗栗', key: '苗栗', type: 'location' },
+            { label: '新竹', key: '新竹', type: 'location' },
+            { label: '南投', key: '南投', type: 'location' },
+            { label: '五峰', key: '五峰', type: 'location' },
+            { label: '泰安', key: '泰安', type: 'location' },
+            { label: '尖石', key: '尖石', type: 'location' },
+            { label: '阿里山', key: '阿里山', type: 'location' },
+        ]
+    },
+    {
+        title: '自然景觀',
+        icon: '🌲',
+        items: [
+            { id: 'filter-high-altitude', label: '高海拔', icon: '⛰️', type: 'feature', key: 'high_altitude' }, // Kept existing feature
+            { label: '雲海', key: '雲海', type: 'tag' },
+            { label: '螢火蟲', key: '螢火蟲', type: 'tag' },
+            { label: '櫻花', key: '櫻花', type: 'tag' },
+            { label: '夜景', key: '夜景', type: 'tag' },
+            { label: '溪流', key: '溪流', type: 'tag' },
+            { label: '森林系', key: '森林系', type: 'tag' },
+            { label: '落羽松', key: '落羽松', type: 'tag' },
+        ]
+    },
+    {
+        title: '營地設施',
+        icon: '⛺',
+        items: [
+            { id: 'filter-glamping', label: '豪華露營', icon: '✨', type: 'feature', key: 'glamping' }, // Kept existing feature
+            { label: '有冰箱', key: '有冰箱/冰箱', type: 'tag' }, // Handle slight variations if needed
+            { label: '有冷凍', key: '有冷凍', type: 'tag' },
+            { label: '飲水機', key: '飲水機', type: 'tag' },
+            { label: '提供電源', key: '提供電源', type: 'tag' },
+            { label: '吹風機', key: '吹風機', type: 'tag' },
+            { label: '雨棚', key: '雨棚', type: 'tag' },
+            { label: '室內營位', key: '室內營位', type: 'tag' },
+            { label: '包區', key: '包區', type: 'tag' },
+            { label: '小包區', key: '小包區', type: 'tag' },
+            { label: '少帳包區', key: '少帳包區', type: 'tag' },
+            { label: '車露', key: '車露', type: 'tag' },
+            { label: '可停露營拖車', key: '可停露營拖車', type: 'tag' },
+            { label: '部份區域可車露', key: '部份區域可車露', type: 'tag' },
+        ]
+    },
+    {
+        title: '親子與活動',
+        icon: '👨‍👩‍👧‍👦',
+        items: [
+            { id: 'filter-pet', label: '寵物友善', icon: '🐾', type: 'feature', key: 'pet_friendly' }, // Kept existing feature
+            { label: '親子', key: '親子', type: 'tag' },
+            { label: '沙坑', key: '沙坑', type: 'tag' },
+            { label: '戲水池', key: '戲水池', type: 'tag' },
+            { label: '溜滑梯', key: '溜滑梯', type: 'tag' },
+            { label: '烤肉', key: '烤肉', type: 'tag' },
+        ]
+    },
+    {
+        title: '便利性',
+        icon: '📶',
+        items: [
+            { label: 'WIFI', key: 'WIFI', type: 'tag' },
+            { label: '3G/4G訊號', key: '3G/4G訊號', type: 'tag' },
+            { label: '裝備租借', key: '裝備租借', type: 'tag' },
+        ]
+    }
+];
+---
+
+<Layout 
+    title="全台露營區搜尋" 
+    noindex={true}
+>
+	<div class="bg-stone-100 py-6 md:py-12 border-b border-stone-200">
+		<div class="container mx-auto px-4">
+			<h1 class="text-2xl md:text-3xl font-bold text-stone-900 mb-4 md:mb-6 text-center">尋找理想營區</h1>
+			
+			<div class="max-w-4xl mx-auto space-y-4">
+                {/* Main Search Panel */}
+				<div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-stone-200" id="search-controls-main">
+					<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+						{/* Search Input */}
+						<div class="md:col-span-12">
+							<label class="block text-sm font-semibold text-stone-700 mb-1">關鍵字搜尋</label>
+							<input 
+								type="text" 
+								id="search-input" 
+								placeholder="輸入營區名稱、地區 (例如: 苗栗、五峰)..." 
+								class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+							/>
+						</div>
+
+						{/* 🟢 [NEW] Filter & Sort Buttons (Trigger Modals) */}
+						<div class="md:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+							{/* City Filter Trigger */}
+							<div>
+								<label class="block text-xs font-bold text-stone-500 mb-1">區域縣市</label>
+                                {/* Hidden input to store value for JS logic */}
+                                <input type="hidden" id="filter-city" value="" />
+                                <button 
+                                    id="btn-city-picker"
+                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-emerald-500 hover:ring-1 hover:ring-emerald-500 transition active:scale-[0.98]"
+                                >
+                                    <span class="truncate">所有縣市</span>
+                                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+							</div>
+							
+							{/* Sort Order Trigger */}
+							<div>
+								<label class="block text-xs font-bold text-stone-500 mb-1">排序方式</label>
+                                {/* Hidden input to store value for JS logic */}
+                                <input type="hidden" id="sort-order" value="default" />
+                                <button 
+                                    id="btn-sort-picker"
+                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-emerald-500 hover:ring-1 hover:ring-emerald-500 transition active:scale-[0.98]"
+                                >
+                                    <span class="truncate">預設排序</span>
+                                    <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+							</div>
+						</div>
+					</div>
+                    
+                    {/* Status Bar */}
+                    <div class="mt-4 pt-4 border-t border-stone-100 flex justify-between items-center text-xs text-stone-500">
+                        <span class="ml-auto">目前顯示 <span id="count-display" class="font-bold text-stone-800">{campgrounds.length}</span> 筆結果</span>
+                    </div>
+				</div>
+
+                {/* Advanced Filter Button */}
+                <div class="flex gap-3 mt-4">
+                    <button 
+                        id="open-filter-modal"
+                        class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white border border-stone-300 px-6 py-3 rounded-lg text-stone-700 font-bold hover:border-emerald-500 hover:text-emerald-600 transition shadow-sm"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        進階篩選
+                        <span id="active-filter-count" class="hidden bg-emerald-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">0</span>
+                    </button>
+
+                    <button id="quick-clear" class="hidden text-stone-400 hover:text-red-500 text-sm font-medium px-4">
+                        清除重設
+                    </button>
+                </div>
+			</div>
+		</div>
+	</div>
+
+    {/* 🟢 [NEW] Universal Picker Modal (Single Selection) */}
+    <div id="picker-modal" class="fixed inset-0 z-[110] hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" id="picker-backdrop"></div>
+        <div class="fixed inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center pointer-events-none">
+            <div class="bg-white w-full md:w-[400px] md:h-auto md:max-h-[80vh] md:rounded-2xl flex flex-col max-h-[70vh] rounded-t-2xl shadow-2xl pointer-events-auto transform transition-transform duration-300 translate-y-full" id="picker-panel">
+                
+                <div class="px-6 py-4 border-b border-stone-100 flex items-center justify-between bg-white md:rounded-t-2xl">
+                    <h3 id="picker-title" class="text-lg font-bold text-stone-800">請選擇</h3>
+                    <button id="close-picker-x" class="p-2 -mr-2 text-stone-400 hover:text-stone-800 rounded-full hover:bg-stone-100 transition">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-2 bg-stone-50" id="picker-content">
+                    {/* Content will be injected dynamically or toggled */}
+                    
+                    {/* 1. City Options List */}
+                    <div id="options-city" class="hidden space-y-1">
+                        <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value="" data-type="city">
+                            <span class="font-medium text-stone-700 group-hover:text-emerald-700">所有縣市</span>
+                            <span class="text-emerald-600 hidden check-icon">✓</span>
+                        </button>
+                        {cities.map(city => (
+                            <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value={city} data-type="city">
+                                <span class="font-medium text-stone-700 group-hover:text-emerald-700">{city}</span>
+                                <span class="text-emerald-600 hidden check-icon">✓</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* 2. Sort Options List */}
+                    <div id="options-sort" class="hidden space-y-1">
+                        {sortOptions.map(opt => (
+                            <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value={opt.value} data-type="sort">
+                                <span class="font-medium text-stone-700 group-hover:text-emerald-700">{opt.label}</span>
+                                <span class="text-emerald-600 hidden check-icon">✓</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {/* Original Advanced Filter Modal */}
+    <div id="filter-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+        <div class="fixed inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center pointer-events-none">
+            <div class="bg-white w-full md:w-[800px] md:h-[85vh] md:rounded-2xl flex flex-col h-[90vh] rounded-t-2xl shadow-2xl pointer-events-auto transform transition-transform duration-300 translate-y-full md:translate-y-0" id="modal-panel">
+                
+                <div class="px-6 py-4 border-b border-stone-100 flex items-center justify-between bg-white md:rounded-t-2xl">
+                    <button id="close-modal-x" class="p-2 -ml-2 text-stone-400 hover:text-stone-800 rounded-full hover:bg-stone-100 transition">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                    <h3 class="text-lg font-bold text-stone-800">篩選條件</h3>
+                    <button id="modal-clear-btn" class="text-sm font-bold text-stone-400 hover:text-red-500 underline">重設</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-6 bg-stone-50/50">
+                    <div class="space-y-8">
+                        {filterGroups.map(group => (
+                            <div class="bg-white p-5 rounded-xl border border-stone-100 shadow-sm">
+                                <h3 class="flex items-center gap-2 text-sm font-bold text-stone-800 mb-4 uppercase tracking-wide">
+                                    <span class="text-xl">{group.icon}</span>
+                                    {group.title}
+                                </h3>
+                                <div class="flex flex-wrap gap-2">
+                                    {group.items.map(filter => (
+                                        <label class="relative flex items-center cursor-pointer group/item select-none">
+                                            <input 
+                                                type="checkbox" 
+                                                id={`filter-${filter.key}`}
+                                                data-type={filter.type} 
+                                                data-key={filter.key}
+                                                class="peer sr-only filter-checkbox" 
+                                            />
+                                            <div class="px-3 py-2 rounded-lg border border-stone-200 bg-stone-50 text-stone-600 text-sm font-medium transition-all
+                                                peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:border-emerald-600 peer-checked:shadow-md
+                                                group-hover/item:border-emerald-300">
+                                                {filter.label}
+                                            </div>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div class="p-4 border-t border-stone-100 bg-white md:rounded-b-2xl pb-safe">
+                    <button id="apply-filters-btn" class="w-full bg-emerald-600 text-white font-bold text-lg py-3 rounded-xl shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 active:scale-[0.98] transition-transform">
+                        顯示 <span id="modal-match-count">{campgrounds.length}</span> 個營區
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="container mx-auto px-4 py-12">
+		<div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+			{campgrounds.map((camp) => (
+                <div 
+                    class="camp-item opacity-100 transition-opacity duration-300"
+                    data-name={camp.name.toLowerCase()}
+                    data-city={camp.city}
+                    data-area={camp.area}
+                    data-tags={camp.tags.join(',')}
+                    data-elevation={camp.elevation}
+                    data-high-altitude={camp.features.high_altitude}
+                    data-glamping={camp.features.has_glamping}
+                    data-pet={camp.features.pet_friendly}
+                    /* 🟢 [PERFORMANCE FIX] 加入 CSS Containment */
+                    style="content-visibility: auto; contain-intrinsic-size: 1px 400px;"
+                >
+                    <CampgroundCard camp={camp as Campground} />
+                </div>
+			))}
+		</div>
+
+        {/* Template for Client-side Ad Injection */}
+        <template id="native-ad-template">
+            <div class="native-ad-injected h-full">
+                <NativeAdCard />
+            </div>
+        </template>
+
+        {/* No Results Message */}
+        <div id="no-results" class="hidden text-center py-20">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-bold text-stone-800 mb-2">找不到符合條件的營區</h3>
+            <p class="text-stone-500">試著減少篩選條件，或搜尋其他關鍵字</p>
+        </div>
+	</div>
+</Layout>
+
+<script>
+    // Define State Variables
+    let searchInput: HTMLInputElement | null;
+    let filterCityInput: HTMLInputElement | null; // Changed to Hidden Input
+    let sortOrderInput: HTMLInputElement | null; // Changed to Hidden Input
+    let checkboxes: NodeListOf<HTMLInputElement>;
+    let resultsGrid: HTMLElement | null;
+    let noResults: HTMLElement | null;
+    let countDisplay: HTMLElement | null;
+    let items: NodeListOf<HTMLElement>;
+    
+    // Filter Modal Elements
+    let modal: HTMLElement | null;
+    let modalPanel: HTMLElement | null;
+    let openModalBtn: HTMLElement | null;
+    let closeModalBtn: HTMLElement | null;
+    let backdrop: HTMLElement | null;
+    let applyBtn: HTMLElement | null;
+    let modalClearBtn: HTMLElement | null;
+    let modalMatchCount: HTMLElement | null;
+    let activeFilterCount: HTMLElement | null;
+    let quickClearBtn: HTMLElement | null;
+
+    // 🟢 [NEW] Picker Modal Elements
+    let pickerModal: HTMLElement | null;
+    let pickerPanel: HTMLElement | null;
+    let pickerBackdrop: HTMLElement | null;
+    let pickerCloseBtn: HTMLElement | null;
+    let pickerTitle: HTMLElement | null;
+    let btnCityPicker: HTMLElement | null;
+    let btnSortPicker: HTMLElement | null;
+    let pickerOptions: NodeListOf<HTMLElement>;
+
+    // Helper to randomize ad content on client-side
+    function randomizeAdCard(adElement: Element) {
+        const article = adElement.querySelector('.js-native-ad') as HTMLElement;
+        if (!article || !article.dataset.adsPool) return;
+
+        try {
+            // 1. Get the pool
+            const ads = JSON.parse(article.dataset.adsPool);
+            // 2. Pick random
+            const ad = ads[Math.floor(Math.random() * ads.length)];
+            
+            // 3. Update DOM Elements
+            const img = article.querySelector('.js-ad-img') as HTMLImageElement;
+            const title = article.querySelector('.js-ad-title');
+            const desc = article.querySelector('.js-ad-desc');
+            const cta = article.querySelector('.js-ad-cta');
+            const link = article.querySelector('.js-ad-link') as HTMLAnchorElement;
+            const badgesContainer = article.querySelector('.js-ad-badges');
+
+            if (img) { img.src = ad.image; img.alt = ad.title; }
+            if (title) title.textContent = ad.title;
+            if (desc) desc.textContent = ad.desc;
+            if (cta) cta.textContent = ad.cta;
+            if (link) {
+                link.href = ad.link;
+                link.setAttribute('aria-label', ad.title);
+            }
+
+            // 4. Update Badges (Rebuild HTML)
+            if (badgesContainer && ad.badges) {
+                badgesContainer.innerHTML = ad.badges.map((b: any) => 
+                    `<span class="${b.classString}">${b.text}</span>`
+                ).join('');
+            }
+
+        } catch (e) {
+            console.error('Failed to randomize ad', e);
+        }
+    }
+
+    // Helper to calculate potential matches
+    function calculateMatches(simulateCheckboxes = false): number {
+        if (!items) return 0;
+        const term = searchInput ? searchInput.value.toLowerCase() : '';
+        const cityFilter = filterCityInput?.value || '';
+        const activeCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
+
+        let count = 0;
+        items.forEach((el) => {
+            const name = el.dataset.name || '';
+            const city = el.dataset.city || '';
+            const area = el.dataset.area || '';
+            const tags = el.dataset.tags || '';
+            
+            const isHighAlt = el.dataset.highAltitude === 'true';
+            const isGlamping = el.dataset.glamping === 'true';
+            const isPet = el.dataset.pet === 'true';
+
+            let matchesSearch = term === '' || 
+                                  name.includes(term) || 
+                                  city.includes(term) || 
+                                  area.includes(term) ||
+                                  tags.includes(term);
+            
+            if (!matchesSearch) {
+                if (term.includes('豪華') && isGlamping) matchesSearch = true;
+                if (term.includes('高海拔') && isHighAlt) matchesSearch = true;
+                if (term.includes('寵物') && isPet) matchesSearch = true;
+            }
+            
+            const matchesCity = cityFilter === '' || city === cityFilter;
+
+            const matchesAdvanced = activeCheckboxes.every(cb => {
+                const type = cb.dataset.type;
+                const rawKey = cb.dataset.key || '';
+                const keys = rawKey.split('/');
+
+                if (type === 'feature') {
+                    if (rawKey === 'high_altitude') return isHighAlt;
+                    if (rawKey === 'glamping') return isGlamping;
+                    if (rawKey === 'pet_friendly') return isPet;
+                } else if (type === 'tag') {
+                    return keys.some(k => tags.includes(k));
+                } else if (type === 'location') {
+                     return keys.some(k => 
+                        city.includes(k) || 
+                        area.includes(k) || 
+                        tags.includes(k)
+                     );
+                }
+                return true;
+            });
+
+            if (matchesSearch && matchesCity && matchesAdvanced) {
+                count++;
+            }
+        });
+        return count;
+    }
+
+    // Main Render Function
+    // Main Render Function
+    function renderResults() {
+        if (!resultsGrid || !sortOrderInput || !items) return;
+
+        // 1. 先移除舊廣告 (Write)
+        resultsGrid.querySelectorAll('.native-ad-injected').forEach(el => el.remove());
+
+        const adTemplate = document.getElementById('native-ad-template') as HTMLTemplateElement;
+        const order = sortOrderInput.value;
+        const itemArray = Array.from(items);
+
+        // 2. 排序 (In-memory, no layout thrashing)
+        if (order === 'default') {
+             itemArray.sort((a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || ''));
+        } else if (order === 'elevation-desc') {
+            itemArray.sort((a, b) => Number(b.dataset.elevation) - Number(a.dataset.elevation));
+        } else if (order === 'elevation-asc') {
+            itemArray.sort((a, b) => Number(a.dataset.elevation) - Number(b.dataset.elevation));
+        }
+
+        // 3. 準備篩選條件
+        let visibleCount = 0;
+        const term = searchInput ? searchInput.value.toLowerCase() : '';
+        const cityFilter = filterCityInput?.value || '';
+        const activeCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
+
+        // 更新篩選器 UI (Write)
+        if (activeFilterCount) {
+            activeFilterCount.textContent = activeCheckboxes.length.toString();
+            if (activeCheckboxes.length > 0) {
+                activeFilterCount.classList.remove('hidden');
+                quickClearBtn?.classList.remove('hidden');
+            } else {
+                activeFilterCount.classList.add('hidden');
+                if (!term && !cityFilter) quickClearBtn?.classList.add('hidden');
+            }
+        }
+        if (quickClearBtn) {
+            quickClearBtn.classList.toggle('hidden', !term && !cityFilter && activeCheckboxes.length === 0);
+        }
+
+        // 4. 單次遍歷渲染 (Single Pass Rendering)
+        // 🟢 關鍵優化：在同一個迴圈內完成篩選、排序與廣告插入
+        // 避免了 Read-Write-Read-Write 的惡性循環
+        
+        itemArray.forEach((el) => {
+            const name = el.dataset.name || '';
+            const city = el.dataset.city || '';
+            const area = el.dataset.area || '';
+            const tags = el.dataset.tags || '';
+            const isHighAlt = el.dataset.highAltitude === 'true';
+            const isGlamping = el.dataset.glamping === 'true';
+            const isPet = el.dataset.pet === 'true';
+
+            // ... (匹配邏輯保持不變) ...
+            let matchesSearch = term === '' || name.includes(term) || city.includes(term) || area.includes(term) || tags.includes(term);
+            if (!matchesSearch) {
+                 if (term.includes('豪華') && isGlamping) matchesSearch = true;
+                 if (term.includes('高海拔') && isHighAlt) matchesSearch = true;
+                 if (term.includes('寵物') && isPet) matchesSearch = true;
+            }
+            const matchesCity = cityFilter === '' || city === cityFilter;
+            const matchesAdvanced = activeCheckboxes.every(cb => {
+                const type = cb.dataset.type;
+                const rawKey = cb.dataset.key || '';
+                const keys = rawKey.split('/');
+                if (type === 'feature') {
+                    if (rawKey === 'high_altitude') return isHighAlt;
+                    if (rawKey === 'glamping') return isGlamping;
+                    if (rawKey === 'pet_friendly') return isPet;
+                } else if (type === 'tag') {
+                    return keys.some(k => tags.includes(k));
+                } else if (type === 'location') return keys.some(k => city.includes(k) || area.includes(k) || tags.includes(k));
+                return true;
+            });
+
+            // 🟢 Render Logic
+            if (matchesSearch && matchesCity && matchesAdvanced) {
+                el.style.display = 'block'; // Write
+                resultsGrid?.appendChild(el); // Write (Reorder/Move)
+                visibleCount++;
+
+                // 🟢 立即插入廣告 (避免第二階段迴圈)
+                if (visibleCount % 6 === 0 && adTemplate) {
+                     const adClone = adTemplate.content.cloneNode(true) as HTMLElement;
+                     const wrapper = adClone.querySelector('.native-ad-injected') as HTMLElement;
+                     
+                     if (wrapper) {
+                        // 為廣告也加上效能隔離，防止廣告內容引起重排
+                        wrapper.style.contentVisibility = 'auto';
+                        wrapper.style.containIntrinsicSize = '1px 400px';
+                        randomizeAdCard(wrapper);
+                     }
+
+                     resultsGrid?.appendChild(adClone); // Write
+                }
+            } else {
+                el.style.display = 'none'; // Write
+                resultsGrid?.appendChild(el); // Write (Move hidden items to end/keep strictly sorted)
+            }
+        });
+
+        // Update UI State (Write)
+        if (countDisplay) countDisplay.textContent = visibleCount.toString();
+        if (visibleCount === 0) {
+            resultsGrid?.classList.add('hidden');
+            noResults?.classList.remove('hidden');
+        } else {
+            resultsGrid?.classList.remove('hidden');
+            noResults?.classList.add('hidden');
+        }
+    }
+
+    // --- Modal Logic (Advanced Filters) ---
+    function openModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            if (modalPanel) modalPanel.classList.remove('translate-y-full');
+        }, 10);
+        updateModalCount();
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        if (modalPanel) modalPanel.classList.add('translate-y-full');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    function updateModalCount() {
+        const count = calculateMatches(true);
+        if (modalMatchCount) modalMatchCount.textContent = count.toString();
+    }
+
+    // --- 🟢 [NEW] Picker Logic (City & Sort) ---
+    function openPicker(type: 'city' | 'sort') {
+        if (!pickerModal) return;
+        
+        // Update Title
+        if (pickerTitle) pickerTitle.textContent = type === 'city' ? '選擇縣市' : '排序方式';
+        
+        // Toggle Content
+        const cityList = document.getElementById('options-city');
+        const sortList = document.getElementById('options-sort');
+        
+        if (type === 'city') {
+            cityList?.classList.remove('hidden');
+            sortList?.classList.add('hidden');
+        } else {
+            cityList?.classList.add('hidden');
+            sortList?.classList.remove('hidden');
+        }
+
+        // Update Active State
+        const currentValue = type === 'city' ? filterCityInput?.value : sortOrderInput?.value;
+        pickerOptions.forEach(opt => {
+            const checkIcon = opt.querySelector('.check-icon');
+            if (opt.dataset.type === type && opt.dataset.value === currentValue) {
+                opt.classList.add('bg-emerald-50');
+                checkIcon?.classList.remove('hidden');
+            } else {
+                opt.classList.remove('bg-emerald-50');
+                checkIcon?.classList.add('hidden');
+            }
+        });
+
+        // Show Modal
+        pickerModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            if (pickerPanel) pickerPanel.classList.remove('translate-y-full');
+        }, 10);
+    }
+
+    function closePicker() {
+        if (!pickerModal) return;
+        if (pickerPanel) pickerPanel.classList.add('translate-y-full');
+        setTimeout(() => {
+            pickerModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    function handlePickerSelection(el: HTMLElement) {
+        const type = el.dataset.type;
+        const value = el.dataset.value || '';
+        const label = el.querySelector('span.font-medium')?.textContent || '';
+
+        // 1. Update Hidden Input & Trigger Button Text
+        if (type === 'city') {
+            if (filterCityInput) filterCityInput.value = value;
+            if (btnCityPicker) {
+                 const span = btnCityPicker.querySelector('span');
+                 if (span) span.textContent = value === '' ? '所有縣市' : value;
+            }
+        } else if (type === 'sort') {
+            if (sortOrderInput) sortOrderInput.value = value;
+            if (btnSortPicker) {
+                 const span = btnSortPicker.querySelector('span');
+                 if (span) span.textContent = label;
+            }
+        }
+
+        // 2. Refresh Results & Close
+        renderResults();
+        closePicker();
+    }
+
+    function init() {
+        // Elements
+        searchInput = document.getElementById('search-input') as HTMLInputElement;
+        filterCityInput = document.getElementById('filter-city') as HTMLInputElement;
+        sortOrderInput = document.getElementById('sort-order') as HTMLInputElement;
+        checkboxes = document.querySelectorAll('.filter-checkbox');
+        resultsGrid = document.getElementById('results-grid');
+        noResults = document.getElementById('no-results');
+        countDisplay = document.getElementById('count-display');
+        items = document.querySelectorAll('.camp-item');
+        
+        // Advanced Filter Modal
+        modal = document.getElementById('filter-modal');
+        modalPanel = document.getElementById('modal-panel');
+        openModalBtn = document.getElementById('open-filter-modal');
+        closeModalBtn = document.getElementById('close-modal-x');
+        backdrop = document.getElementById('modal-backdrop');
+        applyBtn = document.getElementById('apply-filters-btn');
+        modalClearBtn = document.getElementById('modal-clear-btn');
+        modalMatchCount = document.getElementById('modal-match-count');
+        activeFilterCount = document.getElementById('active-filter-count');
+        quickClearBtn = document.getElementById('quick-clear');
+
+        // 🟢 [NEW] Picker Elements
+        pickerModal = document.getElementById('picker-modal');
+        pickerPanel = document.getElementById('picker-panel');
+        pickerBackdrop = document.getElementById('picker-backdrop');
+        pickerCloseBtn = document.getElementById('close-picker-x');
+        pickerTitle = document.getElementById('picker-title');
+        btnCityPicker = document.getElementById('btn-city-picker');
+        btnSortPicker = document.getElementById('btn-sort-picker');
+        pickerOptions = document.querySelectorAll('.picker-option');
+
+        // Event Listeners (Main)
+        if (searchInput) searchInput.addEventListener('input', () => { renderResults(); });
+        
+        // Advanced Filter Events
+        if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+        checkboxes.forEach(cb => { cb.addEventListener('change', () => { updateModalCount(); }); });
+        if (modalClearBtn) modalClearBtn.addEventListener('click', () => {
+            checkboxes.forEach(cb => cb.checked = false);
+            updateModalCount();
+        });
+        if (applyBtn) applyBtn.addEventListener('click', () => { renderResults(); closeModal(); });
+        
+        // 🟢 [NEW] Picker Events
+        if (btnCityPicker) btnCityPicker.addEventListener('click', () => openPicker('city'));
+        if (btnSortPicker) btnSortPicker.addEventListener('click', () => openPicker('sort'));
+        if (pickerCloseBtn) pickerCloseBtn.addEventListener('click', closePicker);
+        if (pickerBackdrop) pickerBackdrop.addEventListener('click', closePicker);
+        pickerOptions.forEach(opt => {
+            opt.addEventListener('click', () => handlePickerSelection(opt as HTMLElement));
+        });
+
+        // Quick Clear
+        if (quickClearBtn) quickClearBtn.addEventListener('click', () => {
+             // 1. Reset Search Input
+             if(searchInput) searchInput.value = '';
+             
+             // 2. Reset City
+             if(filterCityInput) filterCityInput.value = '';
+             if(btnCityPicker) { 
+                 const s = btnCityPicker.querySelector('span'); 
+                 if(s) s.textContent = '所有縣市'; 
+             }
+
+             // 3. 🟢 [FIX] Reset Sort Order
+             if(sortOrderInput) sortOrderInput.value = 'default';
+             if(btnSortPicker) {
+                 const s = btnSortPicker.querySelector('span');
+                 if(s) s.textContent = '預設排序 (筆畫)';
+             }
+             
+             // 4. Reset Checkboxes
+             checkboxes.forEach(cb => cb.checked = false);
+             
+             // 5. Re-render
+             renderResults();
+        });
+
+        // 🟢 [PERFORMANCE FIX] 延後初始渲染，解決 "Forced Reflow"
+        // 將 renderResults 的繁重寫入操作推遲到下一個 Event Loop tick，
+        // 讓 ClientRouter (View Transitions) 先完成它的 Read 操作與轉場。
+        setTimeout(() => {
+            initFromURL();
+        }, 0);
+    }
+
+    function initFromURL() {
+         const params = new URLSearchParams(window.location.search);
+         const query = params.get('q');
+         const city = params.get('city');
+         const tag = params.get('tag');
+         const sort = params.get('sort');
+
+         if (query && searchInput) searchInput.value = query;
+         
+         // 🟢 [NEW] Init City Button Text
+         if (city && filterCityInput) {
+             filterCityInput.value = city;
+             if (btnCityPicker) {
+                 const span = btnCityPicker.querySelector('span');
+                 if (span) span.textContent = city;
+             }
+         }
+
+         // 🟢 [NEW] Init Sort Order
+         if (sort && sortOrderInput) {
+             sortOrderInput.value = sort;
+             if (btnSortPicker) {
+                 const span = btnSortPicker.querySelector('span');
+                 // 找到對應的選項文字
+                 const targetOption = document.querySelector(`.picker-option[data-type="sort"][data-value="${sort}"] span.font-medium`);
+                 if (span && targetOption && targetOption.textContent) {
+                     span.textContent = targetOption.textContent;
+                 }
+             }
+         }
+
+         if (tag) {
+             let found = false;
+             checkboxes.forEach(cb => {
+                 const label = cb.parentElement?.textContent || '';
+                 if (cb.dataset.key === tag || label.includes(tag)) {
+                     cb.checked = true;
+                     found = true;
+                 }
+             });
+             if (!found && !query && searchInput) {
+                 searchInput.value = tag;
+             }
+         }
+         renderResults();
+    }
+
+    document.addEventListener('astro:page-load', init);
+</script>

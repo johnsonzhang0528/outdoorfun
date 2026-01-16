@@ -1,0 +1,115 @@
+---
+import 'leaflet/dist/leaflet.css';
+
+interface Props {
+  lat: number;
+  lng: number;
+  name: string;
+}
+
+const { lat, lng, name } = Astro.props;
+---
+
+<div id="camp-map" data-lat={lat} data-lng={lng} data-name={name} class="z-0 w-full h-full rounded-lg"></div>
+
+<style>
+  /* Fix for Leaflet tiles in some environments */
+  #camp-map {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    z-index: 0;
+  }
+</style>
+
+<script>
+  import L from 'leaflet';
+
+  // Fix for default marker icons missing in production builds sometimes
+  // This is a common Leaflet issue when bundling
+  const fixLeafletIcons = () => {
+    // @ts-ignore
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    });
+  };
+
+  class CampMap extends HTMLElement {
+    constructor() {
+      super();
+      const mapContainer = this.querySelector('#camp-map');
+      if (!mapContainer) return;
+
+      const lat = parseFloat(mapContainer.getAttribute('data-lat') || '23.5');
+      const lng = parseFloat(mapContainer.getAttribute('data-lng') || '121');
+      const name = mapContainer.getAttribute('data-name') || 'Campground';
+
+      // Initialize map
+      // Use a slight timeout to ensure container has size
+      
+        fixLeafletIcons();
+        
+        const map = L.map('camp-map').setView([lat, lng], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(`<b>${name}</b><br>位於此處`)
+          .openPopup();
+      
+    }
+  }
+
+  // We are not using a custom element for the whole logic to keep it simple with the id selector for now,
+  // but to avoid running multiple times if we had client-side transitions, we just run it once.
+  // Since Astro is MPA by default, a simple script execution works.
+  
+  // Re-write to run on load
+  function initMap() {
+    const mapEl = document.getElementById('camp-map');
+    if (!mapEl) return;
+    
+    // Check if map is already initialized to prevent errors during hot reload or navigation
+    // @ts-ignore
+    if (mapEl._leaflet_id) return;
+
+    const lat = parseFloat(mapEl.dataset.lat || '0');
+    const lng = parseFloat(mapEl.dataset.lng || '0');
+    const name = mapEl.dataset.name || '';
+
+    fixLeafletIcons();
+
+    // Default to Taiwan center if coordinates are missing (0,0)
+    const validLat = lat !== 0 ? lat : 23.97565;
+    const validLng = lng !== 0 ? lng : 120.9738819;
+    const zoom = lat !== 0 ? 15 : 7;
+
+    const map = L.map('camp-map').setView([validLat, validLng], zoom);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    if (lat !== 0 && lng !== 0) {
+      L.marker([validLat, validLng])
+        .addTo(map)
+        .bindPopup(`<div class="font-bold text-base">${name}</div><div class="text-sm">經度: ${validLng.toFixed(4)}<br>緯度: ${validLat.toFixed(4)}</div>`)
+        .openPopup();
+    }
+  }
+
+  // Run on load with requestAnimationFrame to avoid "Forced Synchronous Layout"
+  // This ensures the map initializes after the browser has finished the Critical Rendering Path (CRP)
+  requestAnimationFrame(() => {
+     initMap();
+  });
+  
+  // Support Astro View Transitions if enabled in future
+  document.addEventListener('astro:page-load', () => requestAnimationFrame(initMap));
+</script>

@@ -1,0 +1,256 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CampgroundCard from '../../components/CampgroundCard.astro';
+import NativeAdCard from '../../components/NativeAdCard.astro';
+import GearChecklist from '../../components/GearChecklist.astro'; // 🟢 [NEW] 引入導購元件
+import campgrounds from '../../data/campgrounds_enriched.json';
+
+export async function getStaticPaths() {
+  const allCamps = campgrounds;
+
+  // 1. Basic Static Topics
+  const staticTopics = [
+    {
+      params: { id: 'glamping' },
+      props: {
+        title: '全台豪華露營推薦',
+        subtitle: '免搭帳、星級體驗',
+        description: '精選全台豪華露營(Glamping)地點，提供冷氣、舒適床鋪與絕美景觀，不用大包小包也能享受大自然。',
+        camps: allCamps.filter(c => c.features.has_glamping),
+        // 🟢 [NEW] 設定導購參數：針對豪華露營客群
+        checklistTags: ['glamping', 'luxury'], 
+        checklistElevation: 0
+      }
+    },
+    {
+      params: { id: 'high-altitude' },
+      props: {
+        title: '全台高海拔避暑露營',
+        subtitle: '雲海、星空、涼爽',
+        description: '海拔1000公尺以上的避暑勝地。享受天然冷氣，欣賞壯闊的雲海與無光害的星空。',
+        camps: allCamps.filter(c => c.features.high_altitude),
+        // 🟢 [NEW] 設定導購參數：針對高山露營客群
+        checklistTags: ['high_altitude'],
+        checklistElevation: 1500
+      }
+    },
+    {
+      params: { id: 'pet-friendly' },
+      props: {
+        title: '全台寵物友善露營',
+        subtitle: '帶著毛小孩一起去旅行',
+        description: '精選全台寵物友善露營區，大草皮、專屬圍欄，讓狗狗開心奔跑。',
+        camps: allCamps.filter(c => c.features.pet_friendly),
+        checklistTags: ['pet', 'park'],
+        checklistElevation: 500
+      }
+    }
+  ];
+
+  // 2. Programmatic SEO: City + Feature Logic
+  // 將「地區」與「使用者需求」交叉組合，生成大量高價值的 Landing Pages
+  // 例如：/topic/miaoli-glamping (苗栗豪華露營), /topic/hsinchu-high-altitude (新竹高海拔)
+  
+  const cityMap = {
+      '苗栗縣': { slug: 'miaoli', name: '苗栗' },
+      '新竹縣': { slug: 'hsinchu', name: '新竹' },
+      '南投縣': { slug: 'nantou', name: '南投' },
+      '宜蘭縣': { slug: 'yilan', name: '宜蘭' },
+      '台中市': { slug: 'taichung', name: '台中' },
+      '桃園市': { slug: 'taoyuan', name: '桃園' },
+      '新北市': { slug: 'new-taipei', name: '新北' },
+      '嘉義縣': { slug: 'chiayi', name: '嘉義' },
+      '高雄市': { slug: 'kaohsiung', name: '高雄' },
+      '屏東縣': { slug: 'pingtung', name: '屏東' },
+      '花蓮縣': { slug: 'hualien', name: '花蓮' },
+      '台東縣': { slug: 'taitung', name: '台東' }
+  };
+
+  const featureMap = [
+      { 
+          slug: 'glamping', 
+          name: '豪華露營', 
+          filter: c => c.features.has_glamping,
+          descTemplate: '不用大包小包，{CITY}精選豪華露營(Glamping)推薦。冷氣帳棚、露營車、星級衛浴。',
+          tags: ['glamping']
+      },
+      { 
+          slug: 'high-altitude', 
+          name: '高海拔露營', 
+          filter: c => c.features.high_altitude,
+          descTemplate: '{CITY}高海拔(1000m+)避暑露營區推薦。夏天避暑、冬天賞雲海最佳選擇。',
+          tags: ['high_altitude']
+      },
+       { 
+          slug: 'pet-friendly', 
+          name: '寵物友善露營', 
+          filter: c => c.features.pet_friendly,
+          descTemplate: '帶著毛小孩去{CITY}露營！精選{CITY}寵物友善營區，提供大草皮讓狗狗盡情奔跑。',
+          tags: ['pet']
+      },
+      {
+          slug: 'forest',
+          name: '森林系露營',
+          filter: c => c.tags.some(t => t.includes('森林') || t.includes('樹林')),
+          descTemplate: '沈浸在芬多精裡。{CITY}森林系露營區推薦，享受樹林下的寧靜與涼爽。',
+          tags: ['forest'] 
+      }
+  ];
+
+  const generatedTopics = [];
+
+  Object.entries(cityMap).forEach(([fullCityName, cityData]) => {
+      featureMap.forEach(feature => {
+          // Filter matching camps
+          const matchingCamps = allCamps.filter(c => 
+              c.city === fullCityName && feature.filter(c)
+          );
+
+          // Threshold: Only generate page if >= 3 camps exist to avoid "Thin Content"
+          if (matchingCamps.length >= 3) {
+              generatedTopics.push({
+                  params: { id: `${cityData.slug}-${feature.slug}` },
+                  props: {
+                      title: `${cityData.name}${feature.name}推薦`,
+                      subtitle: `${cityData.name}精選 ${matchingCamps.length} 間${feature.name}`,
+                      description: feature.descTemplate.replaceAll('{CITY}', cityData.name),
+                      camps: matchingCamps,
+                      checklistTags: [...feature.tags, cityData.slug],
+                      checklistElevation: feature.slug === 'high-altitude' ? 1500 : 500
+                  }
+              });
+          }
+      });
+  });
+
+  return [...staticTopics, ...generatedTopics];
+}
+
+const { title, subtitle, description, camps, checklistTags, checklistElevation } = Astro.props;
+const { id } = Astro.params;
+
+// 🟢 [SEO] Date Strategy for pSEO Pages
+// 由於這些頁面是「聚合頁 (Collection Page)」，它們的上線時間通常設定為「網站已生成的時間」。
+// 如果您需要「排程發布 (Drip Feed)」，可以在 getStaticPaths 中傳入 releaseDate 屬性控制。
+// 目前設定：所有頁面視為已上線 (2026-01-15 起始)，並以 build 時間為最後更新日。
+const publishedTime = new Date('2026-01-15T00:00:00+08:00').toISOString(); // 網站初始上線日
+const modifiedTime = new Date().toISOString(); // 每次 Build 更新
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+      {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": Astro.site },
+        // 判斷是否為「城市+主題」頁面 (e.g. miaoli-glamping) 還是「全站主題」 (e.g. glamping)
+        ...(id.includes('-') 
+            ? [{ "@type": "ListItem", "position": 2, "name": "主題精選", "item": `${Astro.site}topic/${id}` }] 
+            : [{ "@type": "ListItem", "position": 2, "name": title, "item": `${Astro.site}topic/${id}` }]
+        )
+      ]
+    },
+    {
+        "@type": "CollectionPage",
+        "name": title,
+        "description": description,
+        "url": new URL(Astro.url.pathname, Astro.site).toString(),
+        "datePublished": publishedTime,
+        "dateModified": modifiedTime,
+        "mainEntity": {
+             "@type": "ItemList",
+             "itemListElement": camps.slice(0, 10).map((camp, index) => ({
+             "@type": "ListItem",
+             "position": index + 1,
+             "url": new URL(`/camp/${camp.name}`, Astro.site).toString(),
+             "name": camp.name
+             }))
+        }
+    }
+  ]
+};
+---
+
+<Layout title={title} description={description}>
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+
+    {/* Hero Section */}
+    <div class="bg-emerald-900 text-white py-16 md:py-24 relative overflow-hidden">
+        {/* 背景紋理 */}
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">{title}</h1>
+            <p class="text-xl text-emerald-100 font-light mb-6">{subtitle}</p>
+            <p class="max-w-2xl mx-auto text-emerald-200/80 leading-relaxed">
+                {description}
+            </p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* Main Content */}
+            <div class="lg:col-span-8">
+                <div class="flex justify-between items-center mb-6 border-b border-stone-200 pb-4">
+                    <span class="text-stone-500 text-sm">共找到 <strong class="text-stone-800">{camps.length}</strong> 個營區</span>
+                    <div class="text-sm text-stone-500">
+                        排序：<span class="font-medium text-emerald-700">熱門程度</span>
+                    </div>
+                </div>
+
+                {camps.length > 0 ? (
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {camps.map((camp, index) => (
+                            <>
+                                <CampgroundCard camp={camp} />
+                                
+                                {/* 🟢 [MOBILE OPTIMIZATION] 手機版導購插入點 */}
+                                {/* 在第 2 個營區後，插入裝備推薦清單 */}
+                                {index === 1 && (
+                                    <div class="md:col-span-2 lg:hidden my-4">
+                                        <GearChecklist 
+                                            tags={checklistTags} 
+                                            elevation={checklistElevation} 
+                                            className="shadow-md ring-1 ring-stone-200"
+                                        />
+                                    </div>
+                                )}
+
+                                {/* 原生廣告插入點 (每 6 個顯示一次) */}
+                                {(index + 1) % 6 === 0 && <NativeAdCard />}
+                            </>
+                        ))}
+                    </div>
+                ) : (
+                    <div class="text-center py-20 bg-stone-50 rounded-2xl border border-stone-100">
+                        <p class="text-xl text-stone-400 mb-2">這裡目前還沒有資料喔</p>
+                        <a href="/" class="inline-block mt-6 text-emerald-600 hover:text-emerald-700 font-medium">回首頁逛逛 &rarr;</a>
+                    </div>
+                )}
+            </div>
+
+            {/* 🟢 [DESKTOP SIDEBAR] 桌機版側邊欄 */}
+            {/* 加入 hidden lg:block，確保手機版隱藏，避免重複顯示 */}
+            <aside class="lg:col-span-4 space-y-8 hidden lg:block">
+                <div class="sticky top-24">
+                    <GearChecklist 
+                        tags={checklistTags} 
+                        elevation={checklistElevation} 
+                        className="shadow-lg ring-1 ring-emerald-900/5"
+                    />
+                    
+                    <div class="mt-8 bg-stone-50 p-6 rounded-xl border border-stone-100 text-center">
+                        <h3 class="font-bold text-stone-800 mb-2">找不到喜歡的？</h3>
+                        <p class="text-sm text-stone-500 mb-4">使用我們的進階搜尋功能，依照地區、設施篩選您的理想營地。</p>
+                        <a href="/search" class="inline-block w-full bg-white border border-stone-300 text-stone-700 font-bold py-3 rounded-lg hover:border-emerald-500 hover:text-emerald-600 transition">
+                            前往進階搜尋
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</Layout>
