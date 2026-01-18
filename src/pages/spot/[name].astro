@@ -342,23 +342,46 @@ const relatedSpots = spots
                         </div>
                     </div>
                 )}
-            </aside>
-
+             </aside>
         </div>
     </div>
-
-    {/* Sticky Bottom Bar for Mobile */}
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 p-4 pb-safe z-50 md:hidden shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <div class="grid grid-cols-5 gap-4 items-center h-12">
-            <div class="col-span-2 text-xs text-stone-500">
-                <p>浪點難度</p>
-                <p class={`text-lg font-bold ${isBeginner ? 'text-green-600' : 'text-red-600'}`}>{spot.difficulty}</p>
-            </div>
+    
+    {/* Sticky Bottom Bar for Mobile Conversion */}
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 p-3 pb-safe z-50 md:hidden shadow-[0_-4px_15px_-3px_rgba(0,0,0,0.1)]">
+        <div class="grid grid-cols-12 gap-3 items-center h-12">
+            
+            {/* 左側：工具按鈕 (導航) - 佔 3 等份 */}
+            {/* 保留原本好用的功能，但縮小佔比 */}
             <a href={`https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`} 
-               target="_blank"
-               class="col-span-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg h-full flex items-center justify-center shadow-md active:scale-95 transition-transform">
-                前往導航
+            target="_blank"
+            class="col-span-3 flex flex-col items-center justify-center text-stone-500 active:text-emerald-600 transition-colors">
+                <div class="bg-stone-100 p-2 rounded-full mb-0.5">
+                    <span class="text-lg">🧭</span>
+                </div>
+                <span class="text-[10px] font-bold">導航</span>
             </a>
+
+            {/* 🟢 [Feature 3] 右側：變現按鈕 (Call to Action) - 佔 9 等份 */}
+            {/* 這裡是真正的「印鈔機」區域 */}
+            <div class="col-span-9 flex gap-2 h-full">
+                
+                {/* 副按鈕：推廣教學或租板 (Klook / KKday / Line) */}
+                <a href="https://www.klook.com/zh-TW/activity/list/?keywords=衝浪" 
+                target="_blank"
+                class="flex-1 bg-blue-50 text-blue-700 font-bold rounded-xl flex items-center justify-center text-sm border border-blue-100 active:scale-95 transition-transform">
+                🏄 找教練
+                </a>
+
+                {/* 主按鈕：推廣住宿 (Cross-Promo to Camping Site) */}
+                {/* 這就是所謂的「深度情境互連」的最後一哩路 */}
+                <a href={`https://www.outdoorcampingworld.com/city/${spot.city}?utm_source=surf_sticky&utm_medium=bottom_bar`} 
+                target="_blank"
+                class="flex-1 bg-emerald-600 text-white font-bold rounded-xl flex items-center justify-center text-sm shadow-md shadow-emerald-200 active:scale-95 transition-transform">
+                ⛺ 找住宿
+                </a>
+                
+            </div>
         </div>
     </div>
+
 </Layout>
