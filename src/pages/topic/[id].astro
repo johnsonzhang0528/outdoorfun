@@ -66,6 +66,8 @@ export async function getStaticPaths() {
       // 根據 ID 硬編碼的特定篩選邏輯
       if (topic.id === 'all-beginner') {
           matchedSpots = safeSpots.filter(s => s.difficulty === '初學者' || s.tags?.includes('新手') || s.tags?.includes('教學'));
+      } else if (topic.id === 'all-advanced') {
+          matchedSpots = safeSpots.filter(s => s.difficulty === '中級' || s.difficulty === '專家' || s.tags?.includes('進階') || s.tags?.includes('高手'));
       } else if (topic.id === 'best-winter') {
           matchedSpots = safeSpots.filter(s => s.best_swell?.includes('東北') || s.tags?.includes('東北季風'));
       } else if (topic.id === 'summer-vibes') {
@@ -147,93 +149,64 @@ const breadcrumbSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   
   {/* Hero Header */}
-  <div class="bg-gradient-to-b from-slate-900 to-slate-800 text-white pt-32 pb-16 px-4">
-    <div class="container mx-auto max-w-6xl">
-        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-            <div>
-                <nav class="flex items-center text-sm text-slate-400 mb-4 space-x-2">
-                    <a href="/" class="hover:text-sky-400 transition-colors">首頁</a>
-                    <span>/</span>
-                    <span class="text-white">主題策展</span>
-                </nav>
-                <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                    {title}
-                </h1>
-                <p class="text-lg text-slate-300 max-w-2xl leading-relaxed">
-                    {description}
-                </p>
-            </div>
-            
-            <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 min-w-[150px] text-center">
-                <div class="text-3xl font-bold text-sky-400">{pageSpots.length}</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest mt-1">收錄浪點</div>
-            </div>
-        </div>
+  <div class="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden">
+    {/* 背景紋理 */}
+    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+
+    <div class="container mx-auto px-4 relative z-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+            {title}
+        </h1>
+        <p class="max-w-2xl mx-auto text-slate-300 text-lg md:text-xl leading-relaxed font-light">
+            {description}
+        </p>
     </div>
   </div>
 
   {/* Main Content Area */}
   <div class="bg-stone-50 min-h-screen py-12 px-4">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             
-            {/* Left Column: Spots Grid (Occupies 3 cols) */}
-            <div class="lg:col-span-3">
-                
-                {/* 簡單的篩選標籤顯示 */}
-                <div class="flex flex-wrap gap-2 mb-8">
-                    <span class="px-3 py-1 bg-sky-100 text-sky-800 rounded-full text-sm font-bold">
-                        #{keyword}
-                    </span>
-                    {city && (
-                        <span class="px-3 py-1 bg-stone-200 text-stone-700 rounded-full text-sm">
-                            #{city}
-                        </span>
-                    )}
-                    <span class="px-3 py-1 bg-stone-200 text-stone-700 rounded-full text-sm">
-                        共 {pageSpots.length} 個結果
-                    </span>
+            {/* Main Content: Spots Grid */}
+            <div class="lg:col-span-2">
+                <div class="flex justify-between items-center mb-6 border-b border-stone-200 pb-4">
+                    <span class="text-stone-500 text-sm">共找到 <strong class="text-stone-800">{pageSpots.length}</strong> 個浪點</span>
+                    <div class="text-sm text-stone-500">
+                        排序：<span class="font-medium text-sky-700">熱門程度</span>
+                    </div>
                 </div>
 
                 {/* Spots Listing */}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {pageSpots.map((spot, index) => (
-                        <>
-                            {/* 1. 渲染浪點卡片 */}
-                            <SpotCard spot={spot} />
+                    {pageSpots.map((spot, index) => {
+                        // 🟢 [Ad Logic] 每 6 個插入一次廣告，且不佔兩欄
+                        const showAd = (index + 1) % 6 === 0;
+                        
+                        return (
+                            <>
+                                {/* 1. 渲染浪點卡片 */}
+                                <SpotCard spot={spot} />
 
-                            {/* 2. 🟢 [Feature 1] 手機版導購插入 (Mobile In-Feed Injection) */}
-                            {/* 邏輯：在第 2 個浪點 (index 1) 之後，強制插入「裝備檢查表」 */}
-                            {index === 1 && (
-                                <div class="md:hidden col-span-1 my-4">
-                                    {/* 這裡我們隨機挑選一些 tags 傳入，或者根據 topic 類型傳入 */}
-                                    <div class="bg-stone-50 border-y border-stone-200 -mx-4 px-4 py-6">
-                                        <h3 class="font-bold text-stone-800 mb-4 flex items-center gap-2">
-                                            <span>🎒</span> 上山下海裝備檢查
-                                        </h3>
-                                        {/* 傳入一個虛擬的 spot 物件讓 Checklist 運作，或是修改 Checklist 接受 tags */}
+                                {/* 2. Feature 1 手機版購物車 (Mobile In-Feed Injection) */}
+                                {index === 1 && (
+                                    <div class="md:col-span-2 lg:hidden my-4">
                                         <GearChecklist spot={{ 
                                             difficulty: '初學者', 
                                             bottom_type: '沙灘', 
                                             tags: ['新手', '防曬'] 
                                         }} />
-                                        <p class="text-xs text-center text-stone-400 mt-2">
-                                            工欲善其事，必先利其器
-                                        </p>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
-                            {/* 3. 🟢 [Feature 2] 週期性廣告循環 (Cyclic Ad Injection) */}
-                            {/* 邏輯：每隔 6 個浪點插入一張廣告 (index 5, 11, 17...) */}
-                            {(index + 1) % 6 === 0 && (
-                                <div class="col-span-1 md:col-span-2 py-4">
+                                {/* 3. Feature 2 廣告 (Native Ad) */}
+                                {showAd && (
                                     <NativeAdCard />
-                                </div>
-                            )}
-                        </>
-                    ))}
+                                )}
+                            </>
+                        );
+                    })}
                 </div>
 
                 {/* Empty State Fallback (Should be rare due to getStaticPaths filtering) */}
@@ -247,18 +220,22 @@ const breadcrumbSchema = {
                 )}
             </div>
 
-            {/* Right Column: Sidebar (Occupies 1 col) */}
-            <div class="lg:col-span-1 space-y-8">
-                
-                {/* 1. Contextual Ad (Data-Driven Smart Fallback) */}
+            {/* Sidebar (Occupies 1 col) */}
+            <aside class="lg:col-span-1 space-y-8 hidden lg:block">
                 <div class="sticky top-24">
-                   <NativeAdCard city={city || undefined} />
+                    <GearChecklist spot={{ 
+                        difficulty: '初學者', 
+                        bottom_type: '沙灘', 
+                        tags: ['新手', '防曬'] 
+                    }} />
+
+                   <div class="mt-8">
+                        <NativeAdCard city={city || undefined} />
+                   </div>
                 </div>
-
-            </div>
-
+            </aside>
+        
         </div>
     </div>
   </div>
-
 </Layout>

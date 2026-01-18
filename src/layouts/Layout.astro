@@ -11,6 +11,7 @@ noindex?: boolean;
     preloadImage?: string;
     omitSuffix?: boolean; // 🟢 [NEW] 控制是否省略標題後綴
     image?: string;       // 🟢 [NEW] 自訂 OG Image
+    hideBottomNav?: boolean; // 🟢 [NEW] 特定頁面隱藏底部導航
 }
 
 const { 
@@ -19,7 +20,8 @@ const {
     noindex = false,
     preloadImage,
     omitSuffix = false,
-    image
+    image,
+    hideBottomNav = false
 } = Astro.props;
 
 const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
@@ -153,8 +155,8 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 <div>
 <h3 class="text-white font-bold text-lg mb-4">熱門連結</h3>
 <ul class="space-y-2 text-sm">
-							<li><a href="/topic/advanced" class="hover:text-white transition">進階浪點</a></li>
-							<li><a href="/topic/beginner" class="hover:text-white transition">新手體驗</a></li>
+							<li><a href="/topic/all-advanced" class="hover:text-white transition">進階浪點</a></li>
+							<li><a href="/topic/all-beginner" class="hover:text-white transition">新手體驗</a></li>
                             <li><a href="/directory" class="hover:text-white transition">全台浪點索引</a></li>
 							
 							<li class="pt-2 border-t border-stone-800 mt-2 text-xs text-stone-400 font-mono">地區推薦</li>
@@ -181,6 +183,7 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 </div>
 </footer>
 
+{!hideBottomNav && (
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe">
 <div class="grid grid-cols-4 h-16">
 <a href="/" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
@@ -191,16 +194,17 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 <span class="text-xl">🔍</span>
 <span class="text-[10px] font-medium">搜尋</span>
 </a>
-<a href="/topic/beginner" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/topic/all-beginner" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
 <span class="text-xl">🔰</span>
 <span class="text-[10px] font-medium">新手</span>
 </a>
-<a href="/topic/advanced" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/topic/all-advanced" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
 <span class="text-xl">🌊</span>
 <span class="text-[10px] font-medium">進階</span>
 </a>
 </div>
 </nav>
+)}
 
         <script is:inline src="https://www.conn.tw/track/script/oeya_member_url.js" defer></script>
 
