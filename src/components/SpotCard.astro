@@ -1,0 +1,201 @@
+---
+interface Props {
+	spot: {
+		name: string;
+		city: string;
+		area: string;
+		difficulty: string;
+		bottom_type: string;
+        best_swell?: string;
+		description: string;
+		tags?: string[];
+	};
+}
+
+const { spot } = Astro.props;
+
+// Color mapping for difficulty
+const difficultyColor = {
+    "初學者": "bg-green-500",
+    "中級": "bg-blue-500",
+    "專家": "bg-red-500"
+};
+const diffBg = difficultyColor[spot.difficulty] || "bg-stone-500";
+
+// --- Visual Assets ---
+
+// 1. 定義豐富的漸層配色盤 (Visual Styles)
+// 改用雜湊演算法 (Hash) 隨機分配，讓畫面更豐富，不再單純受地形綁死
+const COLOR_PALETTES = [
+  // Ocean Blue (Classic)
+  { 
+    gradient: 'bg-gradient-to-br from-blue-600 to-blue-800', 
+    accent: 'bg-blue-400', 
+    text: 'text-blue-50',
+    opacity: 0.15 
+  },
+  // Sunset Orange (Warm)
+  { 
+    gradient: 'bg-gradient-to-br from-orange-400 to-red-500', 
+    accent: 'bg-orange-300', 
+    text: 'text-orange-50',
+    opacity: 0.2
+  },
+  // Teal Water (Tropical)
+  { 
+    gradient: 'bg-gradient-to-br from-teal-500 to-emerald-600', 
+    accent: 'bg-teal-300', 
+    text: 'text-teal-50',
+    opacity: 0.15
+  },
+  // Navy Deep (Pro)
+  { 
+    gradient: 'bg-gradient-to-br from-slate-700 to-slate-900', 
+    accent: 'bg-slate-500', 
+    text: 'text-slate-100',
+    opacity: 0.1
+  },
+  // Sandy Gold (Earthy)
+  { 
+    gradient: 'bg-gradient-to-br from-amber-600 to-yellow-700', 
+    accent: 'bg-yellow-400', 
+    text: 'text-amber-50',
+    opacity: 0.18
+  },
+  // Berry/Purple (Vibrant)
+  { 
+    gradient: 'bg-gradient-to-br from-indigo-500 to-purple-600', 
+    accent: 'bg-indigo-300',
+    text: 'text-indigo-50',
+    opacity: 0.15
+  },
+  // Cyan (Fresh)
+  {
+    gradient: 'bg-gradient-to-br from-cyan-500 to-blue-600',
+    accent: 'bg-cyan-300',
+    text: 'text-cyan-50',
+    opacity: 0.15
+  }
+];
+
+// 2. 定義地形圖示 (Icons based on Bottom Type)
+// 圖示依然嚴格對應地形，保持資訊正確性
+const GEO_ICONS = {
+  sand: `<path d="M12 21C7.5 21 4 17 4 12C4 7 7.5 3 12 3C16.5 3 20 7 20 12C20 17 16.5 21 12 21Z M12 21V13 M8 19L12 13L16 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`, // Shell
+  reef: `<path d="M21 21H3L9 9L13 14L16 8L21 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/>`, // Rocks
+  stone: `<circle cx="8" cy="14" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="18" cy="10" r="4" stroke="currentColor" stroke-width="2" fill="none"/>`, // Stones
+  mixed: `<path d="M2 12Q6 7 10 12T18 12T26 12" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round"/>`, // Waves
+  default: `<path d="M12 20V10 M6 6C6 6 8 10 12 10C16 10 18 6 18 6 M12 10C9 14 5 12 5 12 M12 10C15 14 19 12 19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>` // Palm
+};
+
+const getHashIndex = (str: string, max: number) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash % max);
+};
+
+// Logic: Color is Random(Hash), Icon is Info(Bottom)
+const theme = COLOR_PALETTES[getHashIndex(spot.name + spot.city, COLOR_PALETTES.length)];
+
+let iconSvg = GEO_ICONS.default;
+const bottom = spot.bottom_type || "";
+if (bottom.includes("沙")) iconSvg = GEO_ICONS.sand;
+else if (bottom.includes("礁") || bottom.includes("岩")) iconSvg = GEO_ICONS.reef;
+else if (bottom.includes("石")) iconSvg = GEO_ICONS.stone;
+else if (bottom.includes("混合")) iconSvg = GEO_ICONS.mixed;
+
+// Pattern Params
+const PATTERN_SIZE = 48;
+const ICON_SIZE = 24;
+const OFFSET = (PATTERN_SIZE - ICON_SIZE) / 2;
+
+const patternSvg = `
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="pattern-${spot.name}" x="0" y="0" width="${PATTERN_SIZE}" height="${PATTERN_SIZE}" patternUnits="userSpaceOnUse">
+       <g transform="translate(${OFFSET}, ${OFFSET})" opacity="${theme.opacity}" color="currentColor" class="${theme.text}">
+         ${iconSvg}
+       </g>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-${spot.name})" />
+</svg>
+`;
+
+// Dynamic Glow Position
+const glowPos = getHashIndex(spot.name, 4);
+const glowClasses = [
+    '-top-12 -left-12', 
+    '-top-12 -right-12', 
+    '-bottom-12 -left-12', 
+    '-bottom-12 -right-12'
+];
+
+// Typography
+const isLongName = spot.name.length > 8;
+const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
+---
+
+<a href={`/spot/${spot.name}`} class="block group h-full">
+	<article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col active:scale-[0.98] transform duration-100">
+		<div class={`relative overflow-hidden h-40 flex flex-col items-center justify-center p-4 text-center ${theme.gradient}`}>
+            
+            {/* Layer 1: Dynamic Spotlight */}
+            <div class={`absolute w-40 h-40 rounded-full opacity-30 blur-3xl mix-blend-screen ${theme.accent} ${glowClasses[glowPos]}`}></div>
+
+            {/* Layer 2: Tiled Pattern */}
+            <div class="absolute inset-0 w-full h-full text-white pointer-events-none mix-blend-overlay" set:html={patternSvg} />
+            
+            {/* Layer 3: Noise Texture */}
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+
+            {/* Content Layer */}
+            <div class="relative z-10 flex flex-col items-center gap-1">
+                <span class={`text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/30 pb-1 mb-1 shadow-sm ${theme.text}`}>
+                TW SURF
+                </span>
+                
+                <div class={`font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans ${fontSize}`}>
+                {spot.name}
+                </div>
+
+                <div class="w-6 h-1 bg-white/50 rounded-full mt-1 backdrop-blur-sm shadow-sm"></div>
+            </div>
+            
+            {/* Badges (Kept from original) */}
+			<div class="absolute top-2 right-2 flex gap-2 z-20">
+				<span class={`${diffBg} text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm shadow-sm bg-opacity-90`}>
+					{spot.difficulty}
+				</span>
+			</div>
+            
+            <div class="absolute bottom-2 left-2 text-white/80 text-xs font-bold drop-shadow-md z-20">
+                🌊 {spot.bottom_type}
+            </div>
+		</div>
+		
+		<div class="p-5 flex-grow flex flex-col">
+			<div class="flex justify-between items-start mb-2">
+				<h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-700 transition-colors">
+					{spot.name}
+				</h2>
+				<span class="text-xs font-semibold bg-stone-100 text-stone-600 px-2 py-1 rounded-full">
+					{spot.city}
+				</span>
+			</div>
+
+			<p class="text-stone-500 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">
+				{spot.description}
+			</p>
+
+            {/* Quick Stats */}
+            <div class="flex items-center gap-3 text-xs text-stone-400 border-t border-stone-100 pt-3">
+                {spot.best_swell && (
+                    <span>最佳浪向: {spot.best_swell}</span>
+                )}
+            </div>
+		</div>
+	</article>
+</a>

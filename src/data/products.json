@@ -1,241 +1,233 @@
 [
   {
-    "id": "booking-always",
+    "id": "surf-lesson",
     "tags": [
+      "beginner",
       "always_show"
     ],
     "keywords": [
-      "露營訂位",
-      "營地推薦"
+      "衝浪教學",
+      "體驗"
     ],
-    "title": "🏕️ 撿便宜營位",
+    "title": "🏄‍♂️ 新手第一道浪",
     "items": [
       {
-        "name": "Klook 露營專區",
-        "price": "95折起",
-        "link": "https://www.klook.com/zh-TW/activity/list/?keywords=露營",
-        "desc": "輸入代碼 CAMP2026 再折$100",
-        "cta": "查詢空位"
+        "name": "Klook 衝浪體驗",
+        "price": "9折起",
+        "link": "https://www.klook.com/zh-TW/activity/list/?keywords=衝浪",
+        "desc": "專業教練帶領，保證站起來",
+        "cta": "預約教練"
       }
     ]
   },
   {
-    "id": "category-1",
+    "id": "wetsuit-category",
     "tags": [
-      "high_altitude",
-      "sleep"
+      "wetsuit",
+      "beginner",
+      "safety"
     ],
     "keywords": [
-      "厚睡袋",
-      "羽絨睡袋",
-      "冬季睡袋",
-      "保暖睡袋",
-      "露營睡袋",
-      "極寒睡袋",
-      "睡袋推薦",
-      "保暖度數"
+      "潛水衣",
+      "保暖",
+      "冬季衝浪",
+      "防寒",
+      "全套式潛水衣",
+      "分開式潛水衣"
     ],
-    "title": "❄️ 冬季露營必備：超暖睡袋大集合",
+    "title": "🥶 冬季保暖專區",
     "items": [
       {
-        "name": "【Coleman】冒險者紓壓睡袋 / C5(CM-38136M000)",
-        "price": "$3,591",
-        "search_keyword": "coleman 羽絨睡袋",
-        "desc": "滿1件享9折",
-        "cta": "看評價",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=coleman%20%E7%BE%BD%E7%B5%A8%E7%9D%A1%E8%A2%8B&searchType=1"
-      },
-      {
-        "name": "【Naturehike】E200保暖舒適羽絨棉睡袋夾層 棉被(台灣總代理公司貨)",
-        "price": "$775",
-        "search_keyword": "naturehike 羽絨睡袋",
-        "desc": "可當睡袋夾層、棉被、睡墊",
-        "cta": "查優惠",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=naturehike%20%E7%BE%BD%E7%B5%A8%E7%9D%A1%E8%A2%8B&searchType=1"
-      },
-      {
-        "name": "【Therm-A-Rest】Hyperion 0°C 羽絨睡袋 R(TAR-10721)",
-        "price": "$17,820",
-        "search_keyword": "thermarest 睡袋",
-        "desc": "900-fill",
-        "cta": "立即選購",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=thermarest%20%E7%9D%A1%E8%A2%8B&searchType=1"
-      }
-    ]
-  },
-  {
-    "id": "category-2",
-    "tags": [
-      "high_altitude",
-      "cooking"
-    ],
-    "keywords": [
-      "煤油暖爐",
-      "露營暖爐",
-      "圍爐",
-      "暖爐",
-      "煤油爐",
-      "保暖神器",
-      "露營保暖",
-      "圍爐火鍋"
-    ],
-    "title": "🔥 圍爐暖心：冬季露營暖爐專區",
-    "items": [
-      {
-        "name": "【CORONA】SL-6625 煤油暖爐(適用15坪_日本製)",
-        "price": "$7,990",
-        "search_keyword": "corona 暖爐",
-        "desc": "遠紅外線 減味消臭",
-        "cta": "查優惠",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=corona%20%E6%9A%96%E7%88%90&searchType=1"
-      },
-      {
-        "name": "【TOYOTOMI】傳統熱能對流式煤油暖爐KS-67(白色/黑色)",
-        "price": "$8,910",
-        "search_keyword": "toyotomi 暖爐",
-        "desc": "滿1件享9折",
-        "cta": "看評價",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=toyotomi%20%E6%9A%96%E7%88%90&searchType=1"
-      },
-      {
-        "name": "【VWV】電陶爐 迷你煮茶爐 電熱煮茶器(800W功率 不挑鍋具 旋鈕控溫 適用陶壺玻璃壺 圍爐茶具)",
-        "price": "$1,690",
-        "search_keyword": "gstove 圍爐",
-        "desc": "不挑鍋具｜萬用搭配",
-        "cta": "立即選購",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=gstove%20%E5%9C%8D%E7%88%90&searchType=1"
-      }
-    ]
-  },
-  {
-    "id": "category-3",
-    "tags": [
-      "cooking",
-      "general"
-    ],
-    "keywords": [
-      "露營火鍋",
-      "火鍋組",
-      "電火鍋",
-      "瓦斯火鍋",
-      "冬季露營",
-      "圍爐火鍋",
-      "露營美食",
-      "火鍋推薦"
-    ],
-    "title": "🍲 冬日暖胃：露營火鍋組任你選",
-    "items": [
-      {
-        "name": "【TATUNG 大同】5L鴛鴦電火鍋(TSB-B50A23C)",
-        "price": "$1,290",
-        "search_keyword": "naturehike 火鍋",
-        "desc": "",
-        "cta": "查優惠",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=naturehike%20%E7%81%AB%E9%8D%8B&searchType=1"
-      },
-      {
-        "name": "【Coleman】雙平底鍋 / CM-38934(露營煎鍋 雙面鍋 不沾鍋)",
-        "price": "$1,620",
-        "search_keyword": "coleman 火鍋",
-        "desc": "滿1件享9折",
-        "cta": "看評價",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=coleman%20%E7%81%AB%E9%8D%8B&searchType=1"
-      },
-      {
-        "name": "Logitech 露營電火鍋",
-        "price": "$2500起",
-        "search_keyword": "logitech 火鍋",
-        "desc": "安全方便，美味暖心！",
-        "cta": "立即選購",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=logitech%20%E7%81%AB%E9%8D%8B&searchType=1"
-      }
-    ]
-  },
-  {
-    "id": "category-4",
-    "tags": [
-      "general",
-      "sleep"
-    ],
-    "keywords": [
-      "保暖墊",
-      "鋁箔墊",
-      "地布",
-      "露營保暖",
-      "防潮墊",
-      "保暖層",
-      "睡墊",
-      "保暖防寒"
-    ],
-    "title": "🛡️ 冬季露營：保暖防潮墊升級",
-    "items": [
-      {
-        "name": "【野一夏】超輕量登山折疊蛋殼鋁箔睡墊 泡棉防潮墊(露營睡墊 野餐墊 保潔墊)",
-        "price": "$559",
-        "search_keyword": "thermarest 鋁箔墊",
+        "name": "【SWIMFLOW】成人 ZCCO 專業連體潛水衣(潛水服 UPF50 3mm加厚 連身長袖潛水服 浮潛衣 衝浪 泳衣)",
+        "search_keyword": "3mm 潛水衣 全套",
         "desc": "滿1件享8折",
-        "cta": "查優惠",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=thermarest%20%E9%8B%81%E7%AE%94%E5%A2%8A&searchType=1"
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=3mm%20%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E5%85%A8%E5%A5%97&searchType=1",
+        "price": "$1,599"
       },
       {
-        "name": "【SEA TO SUMMIT】自動充氣睡墊 輕量系列-R-橘(SEA TO SUMMIT/登山/露營/睡墊/輕量/充氣款)",
-        "price": "$3,222",
-        "search_keyword": "sea to summit 睡墊",
-        "desc": "為輕量所設計，輕鬆攜帶",
-        "cta": "看評價",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=sea%20to%20summit%20%E7%9D%A1%E5%A2%8A&searchType=1"
+        "name": "【Aropec】5mm Neoprene 拉鍊潛水鞋 黑(BT-50U2T-BK)",
+        "search_keyword": "5mm 潛水衣 全套",
+        "desc": "側邊拉鍊設計，方便穿脫",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=5mm%20%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E5%85%A8%E5%A5%97&searchType=1",
+        "price": "$999"
       },
       {
-        "name": "【美國 Coleman】氣候達人ST DOME 270 專用地布250×250cm.防潮墊.地墊.帳篷外墊(CM-A0078)",
-        "price": "$3,570",
-        "search_keyword": "coleman 地布",
-        "desc": "露營帳篷最佳配件",
-        "cta": "立即選購",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=coleman%20%E5%9C%B0%E5%B8%83&searchType=1"
+        "name": "【TOMMY HILFIGER】藍白紅拼接 連帽外套 潛水布 雙拉鍊 繡標 鋪棉外套 防風 防潑水 防風衣 外套(1389AE1)",
+        "search_keyword": "潛水衣 連帽",
+        "desc": "滿1件享9折",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E9%80%A3%E5%B8%BD&searchType=1",
+        "price": "$3,582"
       }
     ]
   },
   {
-    "id": "category-5",
+    "id": "sun-protection-category",
     "tags": [
-      "general",
-      "sleep"
+      "sun_protection",
+      "beach_lifestyle",
+      "safety"
     ],
     "keywords": [
-      "保暖衣",
-      "發熱衣",
-      "刷毛衣",
-      "保暖褲",
-      "露營保暖",
-      "禦寒衣物",
-      "發熱內衣",
-      "保暖層"
+      "防曬",
+      "衝浪帽",
+      "防曬衣",
+      "水母衣",
+      "UV protection",
+      "長袖防曬"
     ],
-    "title": "🧥 冬季露營：禦寒保暖衣物推薦",
+    "title": "☀️ 陽光防護大作戰",
     "items": [
       {
-        "name": "【UNIQLO】<現貨> Uniqlo 極暖 Heattech 棉質 圓領 發熱衣 長袖 女款 五色",
-        "price": "$580",
-        "search_keyword": "uniqlo 發熱衣",
-        "desc": "",
-        "cta": "查優惠",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=uniqlo%20%E7%99%BC%E7%86%B1%E8%A1%A3&searchType=1"
+        "name": "【TAVARUA】衝浪帽 潛水帽 防曬帽(下巴帶、速乾、水陸兩用、鴨舌帽)",
+        "search_keyword": "衝浪帽 下巴帶",
+        "desc": "經典熱銷鴨舌帽，下巴扣升級款",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%E5%B8%BD%20%E4%B8%8B%E5%B7%B4%E5%B8%B6&searchType=1",
+        "price": "$1,500"
       },
       {
-        "name": "【Columbia 哥倫比亞】男款-刷毛外套-Fast Trek™-深藍(UAE30390NY/JF)",
-        "price": "$2,280",
-        "search_keyword": "columbia 刷毛",
-        "desc": "滿3800折380",
-        "cta": "看評價",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=columbia%20%E5%88%B7%E6%AF%9B&searchType=1"
+        "name": "【Chic Chic 琪琪】SGS檢驗合格 UPF50+戶外冰絲防紫外線加大帽檐防晒衣(抗UV防曬 男女款)",
+        "search_keyword": "UPF 50+ 防曬衣",
+        "desc": "抗UV防曬防紫外線輕薄防曬衣",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=UPF%2050%2B%20%E9%98%B2%E6%9B%AC%E8%A1%A3&searchType=1",
+        "price": "$499"
       },
       {
-        "name": "Montbell 保暖內褲",
-        "price": "$1200起",
-        "search_keyword": "montbell 保暖褲",
-        "desc": "極致保暖，舒適禦寒！",
-        "cta": "立即選購",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=montbell%20%E4%BF%9D%E6%9A%96%E8%A4%B2&searchType=1"
+        "name": "【Kosmiya】1套 三件式 水母衣 潛水服 泳裝/多件式泳裝/保守泳裝/溫泉泳裝/防曬泳裝(L-2XL)",
+        "search_keyword": "水母衣",
+        "desc": "滿1件享9折",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%B0%B4%E6%AF%8D%E8%A1%A3&searchType=1",
+        "price": "$629"
+      }
+    ]
+  },
+  {
+    "id": "surf-hardware-category",
+    "tags": [
+      "surf_hardware",
+      "beginner",
+      "safety"
+    ],
+    "keywords": [
+      "防滑板繩",
+      "衝浪板",
+      "板面防滑墊",
+      "Leash",
+      "Surfboard",
+      "traction pad"
+    ],
+    "title": "🏄‍♀️ 衝浪硬體升級",
+    "items": [
+      {
+        "name": "【WinWin】五階梯 防滑加強 耐重150KG(五階梯/摺疊梯/防滑梯/梯子/家用梯/室內梯/人字梯/A字梯/鋁梯)",
+        "search_keyword": "防滑板繩 加強",
+        "desc": "SGS認證! 耐重150公斤!",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%BB%91%E6%9D%BF%E7%B9%A9%20%E5%8A%A0%E5%BC%B7&searchType=1",
+        "price": "$2,050"
+      },
+      {
+        "name": "【YAKIMA】SupDawg 衝浪板固定架(合各式橫桿 免組裝開箱即可用)",
+        "search_keyword": "軟板 衝浪板",
+        "desc": "可安裝衝浪板外也可擺放立槳",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%BB%9F%E6%9D%BF%20%E8%A1%9D%E6%B5%AA%E6%9D%BF&searchType=1",
+        "price": "$9,000"
+      },
+      {
+        "name": "平衡板 單板衝浪訓練木質平衡板 防滑瑜伽滑雪板 平衡感訓練 全樺木板衝浪板滑雪板瑜伽健身核心訓練成人板",
+        "search_keyword": "衝浪板 防滑墊",
+        "desc": "滿880元折88元",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%E6%9D%BF%20%E9%98%B2%E6%BB%91%E5%A2%8A&searchType=1",
+        "price": "$5,360售價已折"
+      }
+    ]
+  },
+  {
+    "id": "beach-lifestyle-category",
+    "tags": [
+      "beach_lifestyle",
+      "sun_protection"
+    ],
+    "keywords": [
+      "防水袋",
+      "沙灘巾",
+      "保溫瓶",
+      "防水手機殼",
+      "沙灘鞋"
+    ],
+    "title": "🏖️ 海邊生活好幫手",
+    "items": [
+      {
+        "name": "【OMG】游泳潛水防水手機袋 觸屏防塵手機防水袋(IPX8防水等級)",
+        "search_keyword": "防水手機袋",
+        "desc": "滿1件享95折",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%B0%B4%E6%89%8B%E6%A9%9F%E8%A2%8B&searchType=1",
+        "price": "$160"
+      },
+      {
+        "name": "【YODOXIUI】日本雲朵絨柔軟超吸水快乾毛巾(大浴巾 沙灘巾 成人浴巾)",
+        "search_keyword": "沙灘巾 超吸水",
+        "desc": "大尺寸浴巾，超強吸水8秒瞬吸",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%B2%99%E7%81%98%E5%B7%BE%20%E8%B6%85%E5%90%B8%E6%B0%B4&searchType=1",
+        "price": "$387"
+      },
+      {
+        "name": "【HOUSUXI 舒希 官方直營】大容量保冷保溫瓶-附吸管-1200ml(3色任選)",
+        "search_keyword": "保溫瓶 保冷瓶",
+        "desc": "1200ml大容量保冷保溫瓶",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E4%BF%9D%E6%BA%AB%E7%93%B6%20%E4%BF%9D%E5%86%B7%E7%93%B6&searchType=1",
+        "price": "$550"
+      }
+    ]
+  },
+  {
+    "id": "safety-category",
+    "tags": [
+      "safety",
+      "beginner"
+    ],
+    "keywords": [
+      "救生衣",
+      "哨子",
+      "急救包",
+      "防寒帽",
+      "安全繩"
+    ],
+    "title": "🚨 安全第一！",
+    "items": [
+      {
+        "name": "【LEZUN 樂尊】皮劃艇救生衣成人兒童帆船沖浪釣魚浮力衣遊泳漂流馬甲夏 季求生衣",
+        "search_keyword": "衝浪 救生衣",
+        "desc": "皮劃艇救生衣",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%20%E6%95%91%E7%94%9F%E8%A1%A3&searchType=1",
+        "price": "$3,464"
+      },
+      {
+        "name": "【HH】理享家 求生 警報器 2入組(防災電子哨 蜂鳴器 電子哨子 電子口哨 緊急救難避難防狼專用)",
+        "search_keyword": "緊急哨子",
+        "desc": "滿1件享77折",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E7%B7%8A%E6%80%A5%E5%93%A8%E5%AD%90&searchType=1",
+        "price": "$236"
+      },
+      {
+        "name": "【AHOYE】戶外運動專用防水醫藥包(急救包 醫療包 醫藥包 醫護包)",
+        "search_keyword": "防水 急救包",
+        "desc": "滿5000折300",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%B0%B4%20%E6%80%A5%E6%95%91%E5%8C%85&searchType=1",
+        "price": "$249"
       }
     ]
   }

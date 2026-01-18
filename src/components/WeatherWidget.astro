@@ -11,238 +11,171 @@ interface ForecastDay {
   icon: string;
 }
 
-interface Props {
-  forecast: ForecastDay[];
-  city?: string; // Used for fallback message
-  updatedAt?: string; // ISO string
+interface MarineData {
+  hourly: {
+    time: string[];
+    wave_height: number[];
+    wave_period: number[];
+    swell_wave_height: number[];
+    swell_wave_period: number[];
+    swell_wave_direction: number[];
+  };
 }
 
-const { forecast, city, updatedAt } = Astro.props;
+interface Props {
+  forecast?: ForecastDay[]; // Legacy (Camping)
+  marineData?: MarineData;  // New (Surf)
+  spotName?: string;
+  city?: string;
+  updatedAt?: string;
+}
 
-// Formatting Helpers
+const { forecast, marineData, spotName, city, updatedAt } = Astro.props;
+
+// determine mode
+const isSurfMode = !!marineData;
+
+// Surf Logic
+let currentWave = 0;
+let currentSwell = 0;
+let currentPeriod = 0;
+let chartData = [];
+
+if (isSurfMode && marineData?.hourly) {
+    const now = new Date();
+    // Simple closest hour (Open-Meteo returns ISO strings)
+    // Find index where time > now - 1 hour
+    const nowTime = now.getTime();
+    const times = marineData.hourly.time.map(t => new Date(t).getTime());
+    let index = times.findIndex(t => t >= nowTime);
+    if (index === -1) index = 0; // Fallback or end of list
+
+    currentWave = marineData.hourly.wave_height[index] || 0;
+    currentSwell = marineData.hourly.swell_wave_height[index] || 0;
+    currentPeriod = marineData.hourly.swell_wave_period[index] || 0;
+
+    // Prepare Chart Data (Next 24 Hours)
+    // Simple bar chart normalized to max height
+    const hoursToShow = 24;
+    const sliceStart = index;
+    const sliceEnd = index + hoursToShow;
+    
+    // Ensure we don't go out of bounds
+    const safeSliceEnd = Math.min(sliceEnd, marineData.hourly.time.length);
+
+    const sliceTimes = marineData.hourly.time.slice(sliceStart, safeSliceEnd);
+    const sliceWaves = marineData.hourly.wave_height.slice(sliceStart, safeSliceEnd);
+    
+    const maxWave = Math.max(...sliceWaves, 0.5); // Min 0.5m for scale
+    
+    chartData = sliceWaves.map((h, i) => ({
+        height: h,
+        barHeight: (h / maxWave) * 100, // Percentage
+        time: new Date(sliceTimes[i]).getHours(),
+        isDay: new Date(sliceTimes[i]).getHours() >= 6 && new Date(sliceTimes[i]).getHours() <= 18
+    }));
+}
+
+// Camping Logic Helpers (Legacy)
 function formatDate(dateStr: string) {
   const date = new Date(dateStr);
   const today = new Date();
-  
-  // Check if it's today
   if (date.toDateString() === today.toDateString()) return "今天";
-  
   return `${date.getMonth() + 1}/${date.getDate()}`;
 }
-
-function getDayName(dateStr: string) {
-  const date = new Date(dateStr);
-  const days = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
-  return days[date.getDay()];
-}
-
-// Map icon codes to Emojis (Lightweight & Colorful)
 const ICONS: Record<string, string> = {
-  "clear-day": "☀️",
-  "partly-cloudy-day": "⛅",
-  "cloudy": "☁️",
-  "overcast": "☁️",
-  "fog": "🌫️",
-  "drizzle": "🌦️",
-  "rain": "🌧️",
-  "sleet": "🌨️",
-  "snow": "❄️",
-  "thunderstorm": "⛈️"
+  "clear-day": "☀️", "partly-cloudy-day": "⛅", "cloudy": "☁️", "overcast": "☁️",
+  "fog": "🌫️", "drizzle": "🌦️", "rain": "🌧️", "sleet": "🌨️", "snow": "❄️", "thunderstorm": "⛈️"
 };
-
-// Calculate Tips (Smart Analysis for 14 Days)
-const tips = [];
-const getSimpleDate = (dStr: string) => {
-    const date = new Date(dStr);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-};
-
-// 1. Extreme Weather Checks (Priority: Warning > Heavy Rain)
-// Rain Check (High Probability > 60%)
-const rainyDays = forecast.filter(d => d.rain_prob >= 60);
-if (rainyDays.length > 0) {
-    const firstRain = rainyDays[0];
-     tips.push({ 
-        type: 'warning', 
-        text: `${getSimpleDate(firstRain.date)} 起降雨機率高 (${firstRain.rain_prob}%)，建議備妥雨具 ☔` 
-    });
-}
-
-// Cold Check (Min Temp <= 10)
-const coldDays = forecast.filter(d => d.min_temp <= 8);
-if (coldDays.length > 0) {
-    // Find the coldest day
-    const coldest = coldDays.reduce((prev, curr) => prev.min_temp < curr.min_temp ? prev : curr);
-    tips.push({ 
-        type: 'cold', 
-        text: `預測 ${getSimpleDate(coldest.date)}前後 低溫下探 ${coldest.min_temp}°C，請務必做好保暖 🧥` 
-    });
-}
-
-// Heat Check (Max Temp >= 32)
-const hotDays = forecast.filter(d => d.max_temp >= 32);
-if (hotDays.length > 0) {
-     const firstHot = hotDays[0];
-     tips.push({ 
-        type: 'hot', 
-        text: `${getSimpleDate(firstHot.date)} 預測高溫達 ${firstHot.max_temp}°C，請注意防曬與補水 ☀️` 
-    });
-}
-
-// 2. Weekend Opportunity Check (Priority: Good Weather)
-// Logic: Find the nearest cluster of Fri/Sat/Sun
-const weekendGroups: ForecastDay[][] = [];
-let currentGroup: ForecastDay[] = [];
-
-forecast.forEach((d, idx) => {
-    const date = new Date(d.date);
-    const day = date.getDay();
-    if (day === 5 || day === 6 || day === 0) { // Fri, Sat, Sun
-        // Check continuity with previous item in group
-        // Since we iterate array sequentially, we just need to calculate index diff if we tracked indexes, 
-        // or just rely on the fact that if we hit a non-weekend day, we flushed the group.
-        // But here we only enter this block for weekend days.
-        // We need to know if the previous day in forecast was pushed to currentGroup.
-        const prevInGroup = currentGroup[currentGroup.length - 1];
-        if (!prevInGroup) {
-            currentGroup.push(d);
-        } else {
-            // Check if this 'd' is the day immediately after 'prevInGroup'
-            const prevDate = new Date(prevInGroup.date);
-            const diffTime = Math.abs(date.getTime() - prevDate.getTime());
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            if (diffDays <= 1) {
-                currentGroup.push(d);
-            } else {
-                weekendGroups.push(currentGroup);
-                currentGroup = [d];
-            }
-        }
-    }
-});
-if (currentGroup.length > 0) weekendGroups.push(currentGroup);
-
-// Analyze the first Weekend Group found
-const targetWeekend = weekendGroups[0];
-if (targetWeekend && targetWeekend.length > 0) {
-    const isNice = targetWeekend.every(d => d.rain_prob < 40 && d.min_temp > 10 && d.max_temp < 32);
-    // Only show if we strictly haven't shown too many warnings yet
-    if (isNice) {
-        const range = targetWeekend.length > 1 
-            ? `${getSimpleDate(targetWeekend[0].date)}-${getSimpleDate(targetWeekend[targetWeekend.length-1].date)}`
-            : getSimpleDate(targetWeekend[0].date);
-        
-        tips.push({ 
-            type: 'good', 
-            text: `本週末 (${range}) 天氣舒適，非常適合露營！ ⛺` 
-        });
-    }
-}
-
-// 3. Fallback / General Generalization
-if (tips.length === 0) {
-     const isGenerallyGood = forecast.every(d => d.rain_prob < 45); // Relaxed threshold
-     const range = `${getSimpleDate(forecast[0].date)}~${getSimpleDate(forecast[forecast.length-1].date)}`;
-     
-     if (isGenerallyGood) {
-         tips.push({ 
-             type: 'good', 
-             text: `未來兩週 (${range}) 氣候大致穩定，適合安排戶外行程 🏕️` 
-        });
-     } else {
-         tips.push({ type: 'info', text: `未來兩週 (${range}) 天氣變化較大，請留意最新預報 ℹ️` });
-     }
-}
-
-// Filter and Sort Tips (Priority: Warning > Cold > Good > Info)
-// Show max 2 unqiue tips
-const uniqueTips = tips.filter((t, index, self) => 
-    index === self.findIndex((t2) => t2.type === t.type && t2.text === t.text)
-);
-
-const displayTips = uniqueTips.slice(0, 2);
-
 ---
 
-<div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden font-sans">
-  
-  {/* Header */}
-  <div class="bg-emerald-50/50 px-5 py-3 border-b border-emerald-100 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-        <span class="text-xl">🌤️</span>
-    <h2 class="font-bold text-stone-800 text-xl border-l-4 border-emerald-500 pl-3">未來兩周天氣預報</h2>
+<div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-6">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+        <h2 class="text-xl font-bold text-stone-800 flex items-center gap-2">
+            {isSurfMode ? '🌊 即時浪況預報' : '🌦️ 一週天氣預報'}
+        </h2>
+        {isSurfMode && spotName && (
+            <p class="text-xs text-stone-500 mt-1">地點: {spotName} (Open-Meteo Marine)</p>
+        )}
     </div>
-    {updatedAt && (
-        <span class="text-[10px] text-stone-400 bg-white px-2 py-1 rounded-full border border-stone-100">
-            更新於 {new Date(updatedAt).toLocaleDateString()}
-        </span>
-    )}
   </div>
 
-  {/* Tips Section */}
-  {displayTips.length > 0 && (
-    <div class="px-5 pt-4">
-        {displayTips.map(tip => (
-            <div class={`text-xs md:text-sm px-3 py-2 rounded-lg mb-2 flex items-center gap-2 font-medium
-                ${tip.type === 'warning' ? 'bg-amber-50 text-amber-800 border border-amber-100' : ''}
-                ${tip.type === 'cold' ? 'bg-blue-50 text-blue-800 border border-blue-100' : ''}
-                ${tip.type === 'hot' ? 'bg-orange-50 text-orange-800 border border-orange-100' : ''}
-                ${tip.type === 'good' ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : ''}
-                ${tip.type === 'info' ? 'bg-stone-50 text-stone-600' : ''}
-            `}>
-                <span>
-                 {tip.type === 'warning' && '⚠️'}
-                 {tip.type === 'cold' && '❄️'}
-                 {tip.type === 'hot' && '☀️'}
-                 {tip.type === 'good' && '✨'}
-                 {tip.type === 'info' && 'ℹ️'}
-                </span>
-                {tip.text}
+  {isSurfMode ? (
+    <div class="space-y-6">
+        {/* Current Stats */}
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center p-3 bg-blue-50 rounded-xl border border-blue-100">
+                <span class="block text-2xl font-black text-blue-700">{currentWave}<span class="text-sm">m</span></span>
+                <span class="text-xs text-blue-800 font-bold">浪高</span>
             </div>
-        ))}
-    </div>
-  )}
-
-  {/* Forecast List */}
-  <div class="p-4 overflow-x-auto pb-6 scrollbar-hide">
-    {(!forecast || forecast.length === 0) ? (
-        <div class="text-center py-8 text-stone-500 text-sm">
-            暫無詳細氣象資料，請參考 <span class="font-bold">{city}</span> 天氣預報。
+            <div class="text-center p-3 bg-teal-50 rounded-xl border border-teal-100">
+                <span class="block text-2xl font-black text-teal-700">{currentPeriod}<span class="text-sm">s</span></span>
+                <span class="text-xs text-teal-800 font-bold">週期</span>
+            </div>
+            <div class="text-center p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                <span class="block text-2xl font-black text-indigo-700">{currentSwell}<span class="text-sm">m</span></span>
+                <span class="text-xs text-indigo-800 font-bold">湧浪</span>
+            </div>
         </div>
-    ) : (
-        <div class="flex gap-4 min-w-max">
-            {forecast.map((day, idx) => (
-                <div class={`flex flex-col items-center min-w-[70px] p-2 rounded-xl border ${idx === 0 ? 'bg-emerald-50/30 border-emerald-200 ring-1 ring-emerald-100' : 'bg-transparent border-transparent'}`}>
-                    <span class={`text-xs font-bold mb-1 ${idx === 0 ? 'text-emerald-700' : 'text-stone-500'}`}>
-                        {formatDate(day.date)}
-                    </span>
-                    <span class="text-[10px] text-stone-400 mb-2">{getDayName(day.date)}</span>
-                    
-                    <span class="text-3xl mb-3 filter drop-shadow-sm transform hover:scale-110 transition cursor-default" title={day.label}>
-                        {ICONS[day.icon] || "☁️"}
-                    </span>
-                    
-                    {/* Temperature Bar Visualization - Simplified to Text Only */}
-                    <div class="flex flex-col items-center w-full gap-1">
-                         <div class="text-xs font-bold text-stone-700">
-                            <span class="text-sky-600">{day.min_temp}°</span>
-                            <span class="text-stone-300 mx-0.5">/</span>
-                            <span class="text-orange-500">{day.max_temp}°</span>
-                         </div>
-                    </div>
 
-                    {/* Rain Probability */}
-                    <div class="mt-3 h-4 flex items-center">
-                        {day.rain_prob > 0 && (
-                            <span class={`text-[10px] font-bold flex items-center gap-0.5 
-                                ${day.rain_prob >= 50 ? 'text-blue-600' : 'text-stone-400'}`}>
-                                💧 {day.rain_prob}%
+        {/* 24H Trend Chart */}
+        <div>
+            <h3 class="text-sm font-bold text-stone-600 mb-3 ml-1">未來 24 小時浪高趨勢</h3>
+            <div class="h-32 flex items-end gap-[2%] pt-6 pb-2 px-1 relative">
+                {/* Grid Lines */}
+                <div class="absolute inset-x-0 bottom-0 h-px bg-stone-200"></div>
+                <div class="absolute inset-x-0 top-0 h-px bg-stone-100 border-t border-dashed border-stone-200"></div>
+                
+                {chartData.map((d) => (
+                    <div class="flex-1 flex flex-col items-center group relative group h-full justify-end">
+                        <div 
+                            style={`height: ${d.barHeight}%`} 
+                            class={`w-full rounded-t-sm transition-all duration-300 ${d.isDay ? 'bg-blue-400' : 'bg-indigo-300'} group-hover:bg-blue-600`}
+                        ></div>
+                        {d.time % 3 === 0 && (
+                            <span class="absolute -bottom-5 text-[10px] text-stone-400 font-mono">
+                                {d.time}
                             </span>
                         )}
+                        {/* Tooltip */}
+                        <div class="hidden group-hover:block absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-stone-800 text-white text-[10px] py-1 px-2 rounded pointer-events-none whitespace-nowrap z-10">
+                            {d.height}m / {d.time}:00
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
-    )}
-  </div>
+        
+        <div class="p-3 bg-amber-50 border border-amber-100 rounded-lg text-xs text-amber-800 flex items-start gap-2 mt-4">
+            <span class="text-base">💡</span>
+            <span>浪況變化快速，新手建議在無風且浪高 1m 以下時下水。若遇紅旗請勿強行下水。</span>
+        </div>
+    </div>
+  ) : (
+    /* Existing Camping Weather (Legacy) */
+    <div class="space-y-4">
+        {forecast && forecast.length > 0 ? (
+            <div class="flex gap-4 overflow-x-auto pb-4 snap-x">
+                {forecast.map((day, idx) => (
+                    <div class="snap-start shrink-0 w-24 flex flex-col items-center p-3 rounded-xl border border-stone-100 bg-stone-50">
+                        <span class="text-xs text-stone-500 font-medium mb-1">{formatDate(day.date)}</span>
+                        <span class="text-2xl mb-1">{ICONS[day.icon] || "⛅"}</span>
+                        <div class="flex items-end gap-1 mb-1">
+                            <span class="text-stone-800 font-bold">{day.max_temp}°</span>
+                            <span class="text-stone-400 text-xs">{day.min_temp}°</span>
+                        </div>
+                        {day.rain_prob > 0 && (
+                            <span class="text-[10px] text-blue-500 font-bold">☂ {day.rain_prob}%</span>
+                        )}
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <div class="p-8 text-center text-stone-400 bg-stone-50 rounded-xl border border-dashed border-stone-200">
+                暫無天氣資料
+            </div>
+        )}
+    </div>
+  )}
 </div>

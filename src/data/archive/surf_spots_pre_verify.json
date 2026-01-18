@@ -1,0 +1,6318 @@
+[
+  {
+    "name": "烏石港",
+    "city": "宜蘭縣",
+    "area": "頭城鎮",
+    "address": "宜蘭縣頭城鎮港口路",
+    "lat": 24.8705,
+    "lng": 121.8349,
+    "bottom_type": "沙灘",
+    "best_swell": "東北",
+    "best_wind": "西南",
+    "difficulty": "初學者",
+    "features": [
+      "淋浴間",
+      "衝浪店",
+      "停車場",
+      "公廁",
+      "租板服務"
+    ],
+    "tags": [
+      "新手友善",
+      "沙岸",
+      "北堤",
+      "教學"
+    ],
+    "description": "北台灣最著名的衝浪聖地，寬闊平緩的沙灘非常適合新手入門。周邊衝浪店林立，租借設備與教學資源豐富。秋冬東北季風強勁時也有不錯的好浪。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "雙獅海灘",
+    "city": "宜蘭縣",
+    "area": "頭城鎮",
+    "address": "宜蘭縣頭城鎮濱海路二段",
+    "lat": 24.885,
+    "lng": 121.845,
+    "bottom_type": "沙灘",
+    "best_swell": "東北",
+    "best_wind": "西南",
+    "difficulty": "中級",
+    "features": [
+      "路邊停車",
+      "無淋浴"
+    ],
+    "tags": [
+      "人少",
+      "沙岸",
+      "進階"
+    ],
+    "description": "位於外澳以北，因有兩座像獅子的礁石而得名。浪型較烏石港有力，人潮較少，適合想要避開擁擠的新手與中級浪人。",
+    "release_date": "2024-01-15"
+  },
+  {
+    "name": "金樽漁港",
+    "city": "台東縣",
+    "area": "東河鄉",
+    "address": "台東縣東河鄉金樽路",
+    "lat": 22.945,
+    "lng": 121.285,
+    "bottom_type": "混合地形",
+    "best_swell": "東北",
+    "best_wind": "東北",
+    "difficulty": "專家",
+    "features": [
+      "停車場",
+      "公廁",
+      "觀景台",
+      "淋浴間"
+    ],
+    "tags": [
+      "國際賽事",
+      "定點浪",
+      "管浪"
+    ],
+    "description": "台灣國際衝浪公開賽的舉辦地點，擁有全台頂級的定點浪型。東北季風強勁時可形成漂亮的管浪，是高手挑戰極限的舞台，不建議新手在此下水。",
+    "release_date": "2024-02-01"
+  },
+  {
+    "name": "佳樂水",
+    "city": "屏東縣",
+    "area": "滿州鄉",
+    "address": "屏東縣滿州鄉茶山路",
+    "lat": 21.995,
+    "lng": 120.855,
+    "bottom_type": "礁岩",
+    "best_swell": "東",
+    "best_wind": "北",
+    "difficulty": "中級",
+    "features": [
+      "停車場",
+      "淋浴間",
+      "衝浪店"
+    ],
+    "tags": [
+      "長板天堂",
+      "礁岩地形",
+      "四季有浪"
+    ],
+    "description": "墾丁地區最穩定的浪點之一，河口地形造就了綿長的浪壁，被譽為長板天堂。須注意底部的礁岩，退潮時需特別小心。",
+    "release_date": "2024-03-01"
+  },
+  {
+    "name": "南灣",
+    "city": "屏東縣",
+    "area": "恆春鎮",
+    "address": "屏東縣恆春鎮南灣路",
+    "lat": 21.958,
+    "lng": 120.765,
+    "bottom_type": "沙灘",
+    "best_swell": "南",
+    "best_wind": "北",
+    "difficulty": "初學者",
+    "features": [
+      "便利商店",
+      "淋浴間",
+      "水上活動",
+      "酒吧"
+    ],
+    "tags": [
+      "渡假氛圍",
+      "比基尼",
+      "颱風浪"
+    ],
+    "description": "墾丁最熱門的沙灘，夏季西南氣流帶來穩定的浪況。周邊設施極度完善，適合衝浪兼度假。颱風前後常有大浪出現。",
+    "release_date": "2024-03-15"
+  },
+  {
+    "name": "新月沙灘",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8668448,
+    "lng": 120.9429661,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中角灣國際衝浪基地",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2393907,
+    "lng": 121.6337353,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "Surf rental",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9896688,
+    "lng": 120.8422237,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "板下海灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1780199,
+    "lng": 121.6580945,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蚵間石滬",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.9504571,
+    "lng": 120.9932425,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "小自然海岸",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6351532,
+    "lng": 120.257436,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "黃沙灣海灘",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6392638,
+    "lng": 120.2553325,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "假日之森(衝浪基地)",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6950739,
+    "lng": 120.8540528,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "澎澎灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6588395,
+    "lng": 119.640245,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三灣鄉",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.654934,
+    "lng": 120.9601568,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣裡交流道",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9322559,
+    "lng": 120.1988964,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三寮灣交流道",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2422625,
+    "lng": 120.1062171,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三寮灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2386514,
+    "lng": 120.1117595,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣交流道",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0049204,
+    "lng": 120.248055,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "青山漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.1890775,
+    "lng": 120.0849608,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "將軍漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2117149,
+    "lng": 120.0873137,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "八代灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.0253828,
+    "lng": 121.5489128,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "馬沙溝漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2208086,
+    "lng": 120.0980578,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣裡",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9237001,
+    "lng": 120.1816856,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣裡消防分隊",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9327957,
+    "lng": 120.1814106,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "王功漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.9690385,
+    "lng": 120.3245489,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣仔",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.9143448,
+    "lng": 120.337342,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "二沙灣砲台",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1396016,
+    "lng": 121.7568044,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "淺水灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2496276,
+    "lng": 121.4665496,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "防潮門漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.15875,
+    "lng": 120.4505833,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "肉粽角海灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.1251256,
+    "lng": 120.4042118,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣仔埔",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.4966686,
+    "lng": 120.2098266,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "泰灣曼谷",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9863084,
+    "lng": 120.1954069,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0059608,
+    "lng": 120.2659081,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣坑頭山",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9745606,
+    "lng": 121.9104242,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "藍色海灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.349765,
+    "lng": 120.3686605,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蛤板灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.3358483,
+    "lng": 120.3615964,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "八里灣山",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.5447215,
+    "lng": 121.488985,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "原灣山",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.3245177,
+    "lng": 121.3450046,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "岩灣山",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.827964,
+    "lng": 121.105482,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "頂岩灣四格山",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.809982,
+    "lng": 121.109229,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣潭竹子山",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9302731,
+    "lng": 121.7899371,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "小南灣山",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1283432,
+    "lng": 121.355047,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣仔口山",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.0237038,
+    "lng": 120.5778033,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "亞麻灣山西峰",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6304909,
+    "lng": 120.6573311,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣潭路",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.9363914,
+    "lng": 121.6843528,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣仔內",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6488018,
+    "lng": 120.3149894,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.28579,
+    "lng": 120.78339,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "岩灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.8061427,
+    "lng": 121.1259406,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣花生糖",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9872476,
+    "lng": 120.1973668,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "旗津漁港",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.5903677,
+    "lng": 120.2866182,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "八寮灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.4322815,
+    "lng": 120.8714136,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣崎北極殿",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.9933673,
+    "lng": 120.3091595,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蚵仔寮漁港(北極殿)",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.7275341,
+    "lng": 120.2576692,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蚵仔寮漁港",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.7269497,
+    "lng": 120.2557286,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "香港銅鑼灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.7981455,
+    "lng": 120.9980664,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣瓦",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.6046704,
+    "lng": 120.7384838,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣子內(仁武)",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6823936,
+    "lng": 120.3550931,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "香蕉灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9246565,
+    "lng": 120.8319303,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "海灣咖啡",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1738972,
+    "lng": 121.4340766,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "澳底漁港",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.0571902,
+    "lng": 121.9248584,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "金沙灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.0746028,
+    "lng": 121.9156886,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍洞灣公園",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1174597,
+    "lng": 121.9162398,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "通灣里南",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.5039132,
+    "lng": 120.6873549,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "通灣里北",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.5095904,
+    "lng": 120.6895341,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "興達遠洋漁港",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.8767944,
+    "lng": 120.214289,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣三街",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0043303,
+    "lng": 120.2662218,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北灣里",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0133594,
+    "lng": 120.271647,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "竹子腳(大灣)",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0290992,
+    "lng": 120.2940688,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "東三寮灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2393079,
+    "lng": 120.1177321,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣國家風景區",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4542646,
+    "lng": 120.476363,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "田組漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.3096719,
+    "lng": 121.4460264,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北宜灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.21068,
+    "lng": 121.400854,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "宜灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.2089134,
+    "lng": 121.3989154,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南宜灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.2076242,
+    "lng": 121.3966503,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "岩灣客棧",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.7979403,
+    "lng": 121.1269967,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "神秘海灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.4354147,
+    "lng": 121.8010744,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "石梯灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.4962678,
+    "lng": 121.5042667,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "加灣",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.0815056,
+    "lng": 121.6099633,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "進福大灣花生糖",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9999187,
+    "lng": 120.1627636,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "石梯漁港北口",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.494774,
+    "lng": 121.5042191,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "石城漁港",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9816227,
+    "lng": 121.9517564,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "河灣渡假村",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.0468478,
+    "lng": 121.7808613,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "梧棲觀光漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.2939898,
+    "lng": 120.5217639,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "翡翠灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1871082,
+    "lng": 121.6831487,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龜吼漁港",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1945991,
+    "lng": 121.6866554,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中角灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2408068,
+    "lng": 121.6333815,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "富基漁港",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2875537,
+    "lng": 121.531552,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "白沙灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.284307,
+    "lng": 121.5213739,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "十九灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6708617,
+    "lng": 120.3614676,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三沙灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1370468,
+    "lng": 121.7499338,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大沙灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.145329,
+    "lng": 121.761151,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "頂岩灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.825206,
+    "lng": 121.110548,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "嘎嘮吧灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.992778,
+    "lng": 121.290556,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "二沙灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1385319,
+    "lng": 121.7597063,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "沙灣子",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.075028,
+    "lng": 121.913681,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣穹",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.027636,
+    "lng": 121.823888,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "黑琵灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.08924,
+    "lng": 120.0370153,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣子口",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.018756,
+    "lng": 120.562781,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣街口",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8423664,
+    "lng": 120.9752008,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "丹霞灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1597712,
+    "lng": 121.4543927,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "目加溜灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.1198914,
+    "lng": 120.3185841,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大武崙沙灘",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1644053,
+    "lng": 121.7078714,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "鳳梨灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.9762646,
+    "lng": 121.6098195,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下灣子內",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.570448,
+    "lng": 120.317543,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣內",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.503836,
+    "lng": 120.30844,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "牛挑灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.4118,
+    "lng": 120.254324,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "頂灣子內",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.577337,
+    "lng": 120.319877,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣休憩區",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.5323062,
+    "lng": 121.5070811,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "漁港公園",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4856697,
+    "lng": 120.4000669,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "小灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9418012,
+    "lng": 120.8053695,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "加母子灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.8634619,
+    "lng": 121.2063834,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣子內(岡山)",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.8090822,
+    "lng": 120.282761,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "一級古蹟 二沙灣礮台 地圖",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1379358,
+    "lng": 121.7581276,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "牛角灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.939444,
+    "lng": 121.056111,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "白沙屯漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.5710834,
+    "lng": 120.7067112,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中角灣咖啡餐飲",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2407072,
+    "lng": 121.6333521,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣遊湖",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4532774,
+    "lng": 120.4794846,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "八里灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.567547,
+    "lng": 121.486171,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "阿巴灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.483312,
+    "lng": 121.412866,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "後扈灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6476326,
+    "lng": 119.5134847,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "後灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.561166,
+    "lng": 119.689429,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣底",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.625543,
+    "lng": 119.514542,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "竹灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.632805,
+    "lng": 119.520852,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "青灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.526616,
+    "lng": 119.556464,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "鼎灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.593335,
+    "lng": 119.617882,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "上灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.519276,
+    "lng": 120.77517,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "上通霄灣",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.536369,
+    "lng": 120.695499,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下灣仔",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.472222,
+    "lng": 120.710833,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中埤灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.614906,
+    "lng": 120.820747,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.51861,
+    "lng": 120.7988,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "二灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.66511,
+    "lng": 120.964682,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.639479,
+    "lng": 120.992382,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南通灣",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.501538,
+    "lng": 120.687174,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "四灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.633806,
+    "lng": 120.987454,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "柳樹灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.604237,
+    "lng": 120.809663,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣寶莊",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6522,
+    "lng": 120.8126,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣潭尾",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.44741,
+    "lng": 120.874466,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣角",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.516415,
+    "lng": 120.7136,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "石頭灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.534001,
+    "lng": 120.753088,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "芎蕉灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.515205,
+    "lng": 120.794716,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "通霄灣",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.510304,
+    "lng": 120.688581,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣潭崙",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9240585,
+    "lng": 121.8114038,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣潭營地",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9289127,
+    "lng": 121.8112878,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "星砂灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.942463,
+    "lng": 120.7452354,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大九灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6834,
+    "lng": 120.3739,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "牛路灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.8325,
+    "lng": 120.393333,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.973333,
+    "lng": 120.443056,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣里",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.9,
+    "lng": 120.480833,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣内",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.684712,
+    "lng": 120.356707,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣子內",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.813611,
+    "lng": 120.283056,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣子頭",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.620205,
+    "lng": 120.359135,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南灣頭",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1347856,
+    "lng": 121.3625035,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "牡丹灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.1931524,
+    "lng": 120.88439,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "排灣 Payuwan",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.630157,
+    "lng": 120.62669,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "十八灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.079167,
+    "lng": 120.743889,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "潭仔灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.950556,
+    "lng": 120.778889,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "夢幻沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.740107,
+    "lng": 120.1750014,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下龍灣",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.4971359,
+    "lng": 121.8448257,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "沙灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.958056,
+    "lng": 121.916389,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龜灣鼻",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6466647,
+    "lng": 121.47335,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龜灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6446575,
+    "lng": 121.4830754,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "布洛灣",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1704419,
+    "lng": 121.5735551,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "那魯灣手藝工坊",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.9770177,
+    "lng": 121.604101,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "新竹漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.848988,
+    "lng": 120.9259216,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "沙拉灣瀑布",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6580386,
+    "lng": 120.7210033,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下四灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6355035,
+    "lng": 120.9941744,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "上三灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6513174,
+    "lng": 120.9549216,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北灣子口",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.0197089,
+    "lng": 120.5600412,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "粉鳥林秘境沙灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.4971648,
+    "lng": 121.8437943,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "戀戀海豚灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.7395999,
+    "lng": 119.609372,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "西大灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.8572265,
+    "lng": 120.4337452,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蒔裡漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5289894,
+    "lng": 119.5711917,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "紅羅漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5984885,
+    "lng": 119.6402777,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣１",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4582673,
+    "lng": 120.4779625,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣２",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4557563,
+    "lng": 120.4851991,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "亞麻灣山",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.635543,
+    "lng": 120.674077,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "托莫灣山",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1400266,
+    "lng": 121.5823881,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "湖海灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1703133,
+    "lng": 121.7090617,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "小南灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.103987,
+    "lng": 121.321103,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "小南灣坑",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.097869,
+    "lng": 121.347536,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "玻璃海灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.5789432,
+    "lng": 121.8750004,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "戀灣旅棧",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9607523,
+    "lng": 120.7641299,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "哈拉灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.3169444,
+    "lng": 121.3380556,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南灣天晴",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9615502,
+    "lng": 120.76254,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "漁港便利超商",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4763523,
+    "lng": 120.4400712,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "新港 (大溪漁港)",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9419096,
+    "lng": 121.898384,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "濂洞灣(陰陽海)",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1238181,
+    "lng": 121.8647861,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "山灣咖啡",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6712116,
+    "lng": 120.9689274,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "高雄西子灣快樂角背包客棧",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6243576,
+    "lng": 120.2694098,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4572937,
+    "lng": 120.480089,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "來灣島夯吐司",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.1769173,
+    "lng": 120.7245787,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "杉板灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.3423401,
+    "lng": 120.3642135,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三沙灣米苔目",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1375944,
+    "lng": 121.7513832,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "萬丹灣內村飯湯",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.5669393,
+    "lng": 120.4638406,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣裡火城麵",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9318617,
+    "lng": 120.1829658,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣裡街幼稚園",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.1312586,
+    "lng": 120.3056815,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三沙灣麵線羹",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1377126,
+    "lng": 121.7510918,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南寮漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6588644,
+    "lng": 121.4746335,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "杉福漁港",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.3407406,
+    "lng": 120.3639954,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大福漁港",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.3347385,
+    "lng": 120.3742458,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "布洛灣 Bruwan",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1708669,
+    "lng": 121.5730128,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "永安漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.9882072,
+    "lng": 121.0185376,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "182 水桶灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.9235185,
+    "lng": 120.4195118,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣灣公園",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.1177338,
+    "lng": 120.8469313,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6603289,
+    "lng": 121.4755082,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大沙灣洋式砲台遺構",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1412979,
+    "lng": 121.7584238,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "洲子灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2203183,
+    "lng": 121.4406158,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "東牛挑灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.4096005,
+    "lng": 120.2565958,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣寶",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6484604,
+    "lng": 120.8107764,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "尚海灘",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8698657,
+    "lng": 120.9513875,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "漁港口",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8448688,
+    "lng": 120.9290089,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "星光港灣BBQ4",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.568319,
+    "lng": 119.5755883,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大灣碼頭",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.0927112,
+    "lng": 121.4606311,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "海灣綠洲",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2917375,
+    "lng": 121.5452604,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中洲沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9497772,
+    "lng": 120.7477445,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "春陽號漁港小書房",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.5825484,
+    "lng": 121.8679668,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大鵬灣端",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4415024,
+    "lng": 120.4976372,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "下北灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6402326,
+    "lng": 120.9924187,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "外埔漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.650184,
+    "lng": 120.7731977,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北灣平價牛排",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.7467122,
+    "lng": 121.7496874,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "松柏漁港",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.4275792,
+    "lng": 120.61906,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "落日灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.4443383,
+    "lng": 120.4856256,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中角灣咖啡簡餐",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.240393,
+    "lng": 121.6332177,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "淺水灣藍色愛琴海",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.255093,
+    "lng": 121.4743517,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "幸福灣莊園",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.261851,
+    "lng": 121.4838197,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣福兒童公園",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.65359,
+    "lng": 120.31724,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "西子灣風景區",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.61824,
+    "lng": 120.26609,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "後龍灣客棧",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.6098465,
+    "lng": 120.762224,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "那魯灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.7614834,
+    "lng": 120.9065579,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "春天悅灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.133226,
+    "lng": 121.461957,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍洞漁港",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.111675,
+    "lng": 121.915569,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大南灣溪橋",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.121783,
+    "lng": 121.32755,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "深澳漁港",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.13,
+    "lng": 121.81852,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "正濱漁港彩虹屋",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1525042,
+    "lng": 121.7689936,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "阿拉寶灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.156185,
+    "lng": 121.770581,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "隘門沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5607006,
+    "lng": 119.6347256,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍洞四季灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.101213,
+    "lng": 121.918283,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "排灣族五年祭",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.6152519,
+    "lng": 120.7421609,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三灣石母祠",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6499602,
+    "lng": 120.952504,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍泉灣",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6337647,
+    "lng": 120.2591568,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "黃沙灣",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6385002,
+    "lng": 120.2556689,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "淺水灣海濱公園",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2514579,
+    "lng": 121.4697885,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "白砂灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.932457,
+    "lng": 120.7163176,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蜜月灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9336599,
+    "lng": 121.8875199,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "都蘭灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.866512,
+    "lng": 121.2247731,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "圓山灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9392089,
+    "lng": 120.8044204,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "港口灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9858094,
+    "lng": 120.8491815,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "八瑤灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.1149832,
+    "lng": 120.8955152,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "亞灣大教室",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.5980978,
+    "lng": 120.3090988,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍泉灣亭",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6340019,
+    "lng": 120.2594358,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "更新漁港",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.9052038,
+    "lng": 121.8696595,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍鳳漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.7002783,
+    "lng": 120.8596701,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "榴會灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2489317,
+    "lng": 119.667267,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "泊船灣兜",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2629935,
+    "lng": 119.6736749,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "九仔婆灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2500575,
+    "lng": 119.6659018,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "港灣溜魚文化工作室",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.0530572,
+    "lng": 120.436384,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "梧棲觀光漁港/漁人碼頭意象",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.2891012,
+    "lng": 120.539619,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "頂岩灣四格山步道導覽圖",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.8106007,
+    "lng": 121.1087276,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "赤馬沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5860642,
+    "lng": 119.5045119,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "後寮沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6724405,
+    "lng": 119.571982,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "三灣鵝肉",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.6505227,
+    "lng": 120.9546044,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "青草漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.7164531,
+    "lng": 120.8630365,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大安海灘",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.3816736,
+    "lng": 120.5842836,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "東清灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.0538936,
+    "lng": 121.5685109,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "霞灣",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2151088,
+    "lng": 121.5074017,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣流 · 灣留餐酒食坊",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9950071,
+    "lng": 120.7439422,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍洞灣岬",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1075964,
+    "lng": 121.9224215,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "愛河灣",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6172793,
+    "lng": 120.2904299,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "建興光陽沙灘車",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8547848,
+    "lng": 121.0031307,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "昆布海灣露營區",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.0967052,
+    "lng": 121.362757,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣美洋酒",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8409746,
+    "lng": 120.9752197,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大砂灣西砲台",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1398944,
+    "lng": 121.7591312,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大砂灣東砲臺",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.139725,
+    "lng": 121.7598297,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "新東灣早午餐",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0120437,
+    "lng": 120.2682196,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "上灣福德祠",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.5202484,
+    "lng": 120.7748951,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "巴茲風岸 (都歷沙灘) 潛在災害警示",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.0251815,
+    "lng": 121.3351113,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "加走灣瞭望台",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.3140529,
+    "lng": 121.4515287,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "水尾漁港周邊簡介",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2260689,
+    "lng": 121.6506103,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "員貝漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6474862,
+    "lng": 119.6308943,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "金崙海灘",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.5307537,
+    "lng": 120.969267,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "都蘭鼻 海灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.8656646,
+    "lng": 121.23096,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "華源海灣觀景點",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6477057,
+    "lng": 121.0152021,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "鳳凰灣",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.122406,
+    "lng": 121.8854089,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "花蓮漁港航道北側燈杆",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.9981619,
+    "lng": 121.6381681,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "花蓮漁港航道南側燈杆",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.9979671,
+    "lng": 121.6379495,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣愛公園",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 22.65987,
+    "lng": 120.31819,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "東石漁港",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.4499964,
+    "lng": 120.139277,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "新月沙灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8659767,
+    "lng": 120.9437409,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "綠島漁業資源保育區龜灣分區",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6394831,
+    "lng": 121.4934607,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "西灣里滯洪池",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.0155385,
+    "lng": 120.2632247,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "亞洲新灣區",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6094006,
+    "lng": 120.2985679,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "永新灣",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.8152825,
+    "lng": 120.2090852,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "成功新港漁港",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.0977112,
+    "lng": 121.3834502,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "灣灣車業",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.1412682,
+    "lng": 120.6777908,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "竹篙灣",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6331506,
+    "lng": 119.5163929,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "加走灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.3170703,
+    "lng": 121.456429,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "梧棲觀光漁港(海洋路)",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.2951269,
+    "lng": 120.5223687,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "新北港汕",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2468893,
+    "lng": 120.0905906,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "船帆石沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9352582,
+    "lng": 120.8208934,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "墾丁小灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.941305,
+    "lng": 120.8046519,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大武崙白沙灘",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1654042,
+    "lng": 121.7069118,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "南灣沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9591202,
+    "lng": 120.7631417,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "外澳海灘",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 24.8777382,
+    "lng": 121.8435841,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "漫波海灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1162764,
+    "lng": 121.6421735,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "老梅沙灘",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2931854,
+    "lng": 121.5451839,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中角沙灘",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.2362017,
+    "lng": 121.6374146,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "烏角岩",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.5353315,
+    "lng": 121.8733748,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "和仁礫灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.2375517,
+    "lng": 121.7136885,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "杉原灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.8285842,
+    "lng": 121.1888633,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "海濱",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.7488735,
+    "lng": 121.1596016,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "金沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9577729,
+    "lng": 120.8401407,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "白沙灣海灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9339547,
+    "lng": 120.7178247,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "坛南湾沙滩",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.4243836,
+    "lng": 119.7525122,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "福隆海濱公園",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.0200105,
+    "lng": 121.9485134,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "Fulung",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.0195407,
+    "lng": 121.9448652,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "人造沙灘區",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.4490035,
+    "lng": 120.1359395,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "吉貝沙尾",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.7324006,
+    "lng": 119.6017221,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "幸福沙灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.8385344,
+    "lng": 120.9182836,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蛤板灣 (威尼斯沙灘)",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.334352,
+    "lng": 120.3599224,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "中澳沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.3499409,
+    "lng": 120.3876302,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大白沙",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6379728,
+    "lng": 121.4937442,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "金樽沙灘",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.9412175,
+    "lng": 121.2827282,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龙凤路头沙滩",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.5167412,
+    "lng": 119.8083813,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "沙灘",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 22.6391888,
+    "lng": 121.503717,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "蒔裡沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5255028,
+    "lng": 119.5666844,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "山水沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5125616,
+    "lng": 119.5920566,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "鳳坑沙灣",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 24.9044485,
+    "lng": 120.9667589,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "留夏沙灘",
+    "city": "宜蘭縣",
+    "area": "待確認",
+    "address": "宜蘭縣沿海",
+    "lat": 25.1619357,
+    "lng": 121.7630237,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於宜蘭縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "清水",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.2157597,
+    "lng": 121.6885844,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "情人灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9395144,
+    "lng": 120.7986982,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "龍門沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.5664918,
+    "lng": 119.6851589,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "草漯沙丘",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.0742604,
+    "lng": 121.1317031,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "朗島灣沙灘",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 22.0787142,
+    "lng": 121.5307403,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "肉粽角沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 24.1254765,
+    "lng": 120.4133571,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "青螺沙嘴",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.6078094,
+    "lng": 119.648792,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "柴山小漁港",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6438925,
+    "lng": 120.2522714,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "松柏港北堤沙灘",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.4309068,
+    "lng": 120.6174926,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "苑裡出水沙灘",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.4543974,
+    "lng": 120.6421285,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "大安沙灘",
+    "city": "苗栗縣",
+    "area": "待確認",
+    "address": "苗栗縣沿海",
+    "lat": 24.3791798,
+    "lng": 120.5821153,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於苗栗縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "七尺門沙灘",
+    "city": "台灣沿海",
+    "area": "待確認",
+    "address": "台灣沿海沿海",
+    "lat": 23.2558832,
+    "lng": 119.5142514,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台灣沿海的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "寄居蟹灣",
+    "city": "屏東縣",
+    "area": "待確認",
+    "address": "屏東縣沿海",
+    "lat": 21.9518617,
+    "lng": 120.7727768,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於屏東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "巴茲風岸 (都歷沙灘)",
+    "city": "台東縣",
+    "area": "待確認",
+    "address": "台東縣沿海",
+    "lat": 23.0228988,
+    "lng": 121.3359234,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台東縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "崇德海灘",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.1799891,
+    "lng": 121.660782,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "內埤海岸",
+    "city": "花蓮縣",
+    "area": "待確認",
+    "address": "花蓮縣沿海",
+    "lat": 24.574886,
+    "lng": 121.8707513,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於花蓮縣的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "西子灣沙灘",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.6319486,
+    "lng": 120.2605193,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "四鯤鯓海灘",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9453403,
+    "lng": 120.1690868,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "月亮灣",
+    "city": "台南市",
+    "area": "待確認",
+    "address": "台南市沿海",
+    "lat": 22.9784335,
+    "lng": 120.1534559,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於台南市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  },
+  {
+    "name": "北堤沙灘",
+    "city": "新北市",
+    "area": "待確認",
+    "address": "新北市沿海",
+    "lat": 25.1659209,
+    "lng": 121.4074775,
+    "bottom_type": "沙灘",
+    "best_swell": "未知",
+    "best_wind": "未知",
+    "difficulty": "初學者",
+    "features": [],
+    "tags": [
+      "OSM"
+    ],
+    "description": "位於新北市的海岸，可能是適合衝浪或戲水的地點。資料來自 OpenStreetMap。",
+    "release_date": "2024-01-01"
+  }
+]

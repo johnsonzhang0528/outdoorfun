@@ -1,45 +1,44 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CampgroundCard from '../components/CampgroundCard.astro';
+import SpotCard from '../components/SpotCard.astro';
 import NativeAdCard from '../components/NativeAdCard.astro';
-import campgrounds from '../data/campgrounds_enriched.json';
+import spots from '../data/surf_spots.json';
 
 // Simple types for the dataset
-type Campground = {
+type Spot = {
 	name: string;
 	city: string;
 	area: string;
-	phone: string;
-	elevation: number;
+	difficulty: string;
+	bottom_type: string;
+    best_swell: string;
 	description: string;
-	tags: string[];
-	features: {
-		has_glamping: boolean;
-		pet_friendly: boolean;
-		high_altitude: boolean;
-	};
+    tags?: string[];
 };
 
-const camps = campgrounds as Campground[];
+// 篩選熱門精選浪點 (優先選擇資料較完整、有 features 且 difficulty 明確的點)
+// 這裡簡單模擬：取 tag 最多或描述最長的浪點
+const surfSpots = (spots as Spot[])
+    .sort((a, b) => (b.tags?.length || 0) - (a.tags?.length || 0))
+    .slice(0, 8); // 取前 8 個 (配合 3 欄佈局 + 1 個廣告 = 9 格)
 
-// 🟢 動態計算熱門縣市
-const cityStats = camps.reduce((acc, camp) => {
-  acc[camp.city] = (acc[camp.city] || 0) + 1;
+// 動態計算熱門縣市
+const cityStats = spots.reduce((acc, spot) => {
+  acc[spot.city] = (acc[spot.city] || 0) + 1;
   return acc;
 }, {} as Record<string, number>);
 
 const popularCities = Object.entries(cityStats)
   .sort(([, countA], [, countB]) => countB - countA)
-  .slice(0, 8)
   .map(([city, count]) => ({ city, count }));
 
-// 🟢 [SEO] Global Schemas (WebSite & Organization)
+// Global Schema
 const homeSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
-      "name": "Outdoor Camping World 台灣站",
+      "name": "Surf Taiwan - 全台衝浪情報誌",
       "url": Astro.site,
       "potentialAction": {
         "@type": "SearchAction",
@@ -52,68 +51,58 @@ const homeSchema = {
     },
     {
       "@type": "Organization",
-      "name": "Outdoor Camping World",
+      "name": "Surf Taiwan (Outdoor Fun)",
       "url": Astro.site,
-      "description": "台灣最完整的露營區搜尋引擎與裝備指南",
+      "description": "提供全台灣衝浪地圖、即時浪況預報、新手教學與衝浪店資訊的專業情報網站。",
       "logo": {
         "@type": "ImageObject",
-        "url": `${Astro.site}favicon.svg`,
-        "width": 112,
-        "height": 112
-      },
-      "sameAs": [
-        "https://www.facebook.com/outdoorcampingworld", 
-        // 預留其他社群連結
-      ],
-      "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+886-2-00000000",
-          "contactType": "customer service",
-          "areaServed": "TW",
-          "availableLanguage": "Traditional Chinese"
+        "url": `${Astro.site}favicon.svg`
       }
+    },
+    {
+      "@type": "WebPage",
+      "name": "Surf Taiwan 首頁",
+      "url": Astro.site,
+      "description": "全台衝浪與戶外運動情報，收錄超過 200 個浪點、即時海況與天氣預報。"
     }
   ]
 };
 ---
 
 <Layout 
-	title="Outdoor Camping World 台灣站 | 終極露營指南 Since 2004"
+	title="Outdoor Fun (Surf Taiwan) | 全台衝浪與戶外運動情報 Since 2005"
     omitSuffix={true}
-    preloadImage="/hero-bg.webp"
+    preloadImage="/images/hero-bg-surf.jpg"
 >
     <!-- Inject Schema -->
     <script type="application/ld+json" slot="head" set:html={JSON.stringify(homeSchema)}></script>
     
-    <div class="relative bg-stone-900 -mt-[64px] pt-[64px]">
+    <div class="relative bg-slate-900 -mt-[64px] pt-[64px]">
         <div class="absolute inset-0 overflow-hidden">
             <img 
-                src="/hero-bg.webp" 
-                alt="Camping Background" 
-                class="w-full h-full object-cover opacity-60"
+                src="/images/hero-bg-surf.jpg" 
+                alt="Surf Background" 
+                class="w-full h-full object-cover opacity-60 mix-blend-overlay"
                 fetchpriority="high"
                 loading="eager"
-                width="1920"
-                height="1080"
-                decoding="async"
             />
-            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-stone-50/10"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-transparent to-stone-50/10"></div>
         </div>
 
         <div class="container mx-auto px-4 py-20 md:py-32 relative z-10 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold tracking-wider mb-6 backdrop-blur-sm">
-                SINCE 2004 • TAIWAN EDITION
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/30 text-xs font-bold tracking-wider mb-6 backdrop-blur-sm">
+                OUTDOORFUN.COM.TW • SINCE 2005
             </span>
             <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
-                發現你的下一個<br/><span class="text-emerald-400">戶外冒險</span>
+                尋找你的<br/><span class="text-sky-400">完美浪點</span>
             </h1>
             <p class="text-lg md:text-xl text-stone-200 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
-                收錄全台 {camps.length} 個精選露營區，結合 AI 海拔分析與氣候建議，
-                <br class="hidden md:inline"/>讓每一次的紮營，都是最完美的體驗。
+                收錄全台 {spots.length} 個精選熱門浪點，結合即時海象與預報分析，
+                <br class="hidden md:inline"/>隨時掌握最佳下水時機。
             </p>
             <div class="flex justify-center gap-4">
-                <a href="/search?sort=elevation-desc" class="w-full md:w-auto bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-900/50 active:scale-95 transform duration-100 inline-flex items-center justify-center gap-2">
-                    <span>🔭</span> 找高海拔營地
+                <a href="/search" class="w-full md:w-auto bg-sky-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-sky-500 transition shadow-lg shadow-sky-900/50 active:scale-95 transform duration-100 inline-flex items-center justify-center gap-2">
+                    <span>🏄</span> 搜尋浪點
                 </a>
             </div>
         </div>
@@ -124,10 +113,10 @@ const homeSchema = {
             
             <div class="flex justify-between items-end mb-6">
                 <div>
-                    <h2 class="text-sm font-bold text-stone-600 uppercase tracking-wider">熱門露營地區</h2>
-                    <p class="text-2xl font-bold text-stone-800 mt-1">你想去哪裡露營？</p>
+                    <h2 class="text-sm font-bold text-stone-600 uppercase tracking-wider">熱門衝浪縣市</h2>
+                    <p class="text-2xl font-bold text-stone-800 mt-1">你想去哪裡衝浪？</p>
                 </div>
-                <a href="/search" class="hidden md:block text-emerald-700 text-sm font-bold hover:underline">探索所有地區 &rarr;</a>
+                <a href="/search" class="hidden md:block text-sky-700 text-sm font-bold hover:underline">看完整地圖 &rarr;</a>
             </div>
             
             {/* 🟢 [UX FIX] Mobile Scroll Container */}
@@ -142,7 +131,7 @@ const homeSchema = {
                         >
                             <span class="w-8 h-8 rounded-full bg-white text-base md:text-lg flex items-center justify-center mb-2 shadow-sm group-hover/btn:scale-110 transition-transform">📍</span>
                             <span class="font-bold text-stone-800 text-sm md:text-base group-hover/btn:text-emerald-700 whitespace-nowrap">{city}</span>
-                            <span class="text-[10px] md:text-xs text-stone-600 mt-1 whitespace-nowrap">{count} 個</span>
+                            <span class="text-[10px] md:text-xs text-stone-600 mt-1 whitespace-nowrap">{count} 個浪點</span>
                         </a>
                     ))}
                     
@@ -165,23 +154,52 @@ const homeSchema = {
         </div>
     </section>
 
-    <div class="container mx-auto px-4 pb-12">
-		<section class="pb-8">
-			<div class="flex items-center justify-between mb-6 md:mb-8">
-				<h2 class="text-xl md:text-2xl font-bold text-stone-800 flex items-center gap-2">
-                    <span>🔥</span> 熱門精選營區
-                </h2>
-				<a href="/search" class="text-emerald-700 font-medium hover:underline text-sm md:text-base">瀏覽所有營區 &rarr;</a>
-			</div>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-				{camps.slice(0, 9).map((camp, index) => (
-					<>
-						<CampgroundCard camp={camp} />
-						{/* Insert Native Ad every 6th item (index 5) */}
-						{index === 5 && <NativeAdCard />}
-					</>
-				))}
-			</div>
-		</section>
-	</div>
+    {/* Featured Spots Grid */}
+    <section class="container mx-auto px-4 mb-20">
+         <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">
+                <span class="text-3xl">🔥</span> 熱門精選浪點
+            </h2>
+            <a href="/search" class="text-emerald-600 font-bold hover:text-emerald-700 flex items-center gap-1 text-sm md:text-base transition-colors">
+                瀏覽所有浪點 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {surfSpots.map((spot, index) => (
+                <>
+                    <SpotCard spot={spot} />
+                    {/* Insert Native Ad after the 6th item */}
+                    {index === 5 && (
+                        <div class="h-full">
+                            <NativeAdCard />
+                        </div>
+                    )}
+                </>
+            ))}
+         </div>
+    </section>
+
+    {/* Friendly Links / Partner Sites */}
+    <section class="container mx-auto px-4 mb-20 bg-slate-50 rounded-xl p-8 border border-slate-100">
+      <h2 class="text-xl font-bold text-stone-800 mb-6 flex items-center gap-2">
+        <span class="text-2xl">🤝</span> 合作夥伴與推薦連結
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a 
+          href="https://www.outdoorcampingworld.com/?utm_source=surf_site&utm_medium=home_partner" 
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-4 bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-1 border border-stone-100 group"
+        >
+          <div class="h-14 w-14 bg-blue-50/80 rounded-full flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-inner">
+            ⛺
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-800 text-lg group-hover:text-blue-600 transition-colors">Outdoor Camping World</h3>
+            <p class="text-stone-500 text-sm mt-1">全台最完整的露營區指南，找營地、看評價、查天氣。</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
 </Layout>

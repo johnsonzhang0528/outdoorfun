@@ -32,35 +32,32 @@ jobs:
           # date +%u returns 7 for Sunday
           echo "is_weekly_update=$(if [ $(date +%u) -eq 7 ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_OUTPUT
 
-      - name: Run Weekly Data Pipeline
-        if: steps.check_schedule.outputs.is_weekly_update == 'true'
+      - name: Run Daily Data Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          cd py
-          python update_pipeline.py
-          python generate_products.py
-
-      - name: Run Daily Weather Update
-        run: |
-          python py/fetch_weather.py
+          # 使用新的整合 Pipeline，一次執行所有 ETL 任務
+          # 包含：抓天氣、同步露營資料、生成商品推薦、生成互惠 Feed
+          python py/update_pipeline.py
 
       - name: Commit and Push
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'action@github.com'
           
-          # Check for specific data file changes (Weekly Update or Daily Weather)
-          # Always add weather data if improved
-          git add src/data/weather_forecast.json
+          # Stage specific generated files
+          git add src/data/sea_conditions.json
+          git add src/data/top_camps.json
+          git add src/data/products.json
+          git add public/feeds/top_spots.json
 
-          if [[ -n $(git status -s src/data/campgrounds_enriched.json src/data/products.json src/data/weather_forecast.json) ]]; then
-            git add src/data/campgrounds_enriched.json src/data/icamping_raw.json src/data/products.json src/data/weather_forecast.json
-            git commit -m "chore(data): daily system update (weather/weekly trends)"
+          # Check if there are changes to commit
+          if [[ -n $(git status -s) ]]; then
+            git commit -m "chore(data): daily update (weather, inventory, promo)"
             git push
           else
-            # Daily trigger for Vercel (Force Rebuild)
-            echo "No data changes or daily run. Triggering daily deploy."
+            # Daily trigger for Vercel (Force Rebuild to refresh ISR/SSG if needed)
+            echo "No data changes. Triggering daily deploy."
             git commit --allow-empty -m "chore(deploy): daily release trigger"
             git push
           fi

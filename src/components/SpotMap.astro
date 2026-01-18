@@ -10,11 +10,11 @@ interface Props {
 const { lat, lng, name } = Astro.props;
 ---
 
-<div id="camp-map" data-lat={lat} data-lng={lng} data-name={name} class="z-0 w-full h-full rounded-lg"></div>
+<div id="spot-map" data-lat={lat} data-lng={lng} data-name={name} class="z-0 w-full h-full rounded-lg"></div>
 
 <style>
   /* Fix for Leaflet tiles in some environments */
-  #camp-map {
+  #spot-map {
     width: 100%;
     height: 100%;
     min-height: 300px;
@@ -40,7 +40,7 @@ const { lat, lng, name } = Astro.props;
   class CampMap extends HTMLElement {
     constructor() {
       super();
-      const mapContainer = this.querySelector('#camp-map');
+      const mapContainer = this.querySelector('#spot-map');
       if (!mapContainer) return;
 
       const lat = parseFloat(mapContainer.getAttribute('data-lat') || '23.5');
@@ -52,7 +52,7 @@ const { lat, lng, name } = Astro.props;
       
         fixLeafletIcons();
         
-        const map = L.map('camp-map').setView([lat, lng], 14);
+        const map = L.map('spot-map').setView([lat, lng], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -72,7 +72,7 @@ const { lat, lng, name } = Astro.props;
   
   // Re-write to run on load
   function initMap() {
-    const mapEl = document.getElementById('camp-map');
+    const mapEl = document.getElementById('spot-map');
     if (!mapEl) return;
     
     // Check if map is already initialized to prevent errors during hot reload or navigation
@@ -90,7 +90,7 @@ const { lat, lng, name } = Astro.props;
     const validLng = lng !== 0 ? lng : 120.9738819;
     const zoom = lat !== 0 ? 15 : 7;
 
-    const map = L.map('camp-map').setView([validLat, validLng], zoom);
+    const map = L.map('spot-map').setView([validLat, validLng], zoom);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

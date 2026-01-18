@@ -1,10 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import CampgroundCard from '../../components/CampgroundCard.astro';
-import campgrounds from '../../data/campgrounds_enriched.json';
+import SpotCard from '../../components/SpotCard.astro';
+import spots from '../../data/surf_spots.json';
 
 export async function getStaticPaths() {
-  const cities = [...new Set(campgrounds.map((camp) => camp.city))];
+  const cities = [...new Set(spots.map((s) => s.city))];
   return cities.map((city) => ({
     params: { city },
     props: { city },
@@ -12,138 +12,69 @@ export async function getStaticPaths() {
 }
 
 const { city } = Astro.props;
-const cityCamps = campgrounds.filter(camp => camp.city === city);
-// Layout.astro 會自動附加 "| Outdoor Camping World - Since 2004"，因此這裡不需要重複品牌名稱
-const title = `${city}露營區推薦與景點地圖 - 共 ${cityCamps.length} 個精選營地`;
-const description = `精選 ${city} 露營區推薦，包含高海拔、豪華露營、寵物友善等特色營地。提供完整的${city}露營地圖與詳細資訊。`;
+const citySpots = spots.filter(s => s.city === city);
 
-// 🟢 [Thin Content Defense] Neighbor City Mapping
-const neighborMap: Record<string, string> = {
-    "基隆市": "新北市", "台北市": "新北市", "新北市": "桃園市", 
-    "桃園市": "新竹縣", "新竹市": "新竹縣", "新竹縣": "苗栗縣",
-    "苗栗縣": "台中市", "台中市": "南投縣", "彰化縣": "南投縣",
-    "南投縣": "台中市", "雲林縣": "嘉義縣", "嘉義市": "嘉義縣",
-    "嘉義縣": "台南市", "台南市": "高雄市", "高雄市": "屏東縣",
-    "屏東縣": "高雄市", "宜蘭縣": "新北市", "花蓮縣": "台東縣",
-    "台東縣": "花蓮縣", "澎湖縣": "台南市", "金門縣": "高雄市", 
-    "連江縣": "基隆市"
-};
-const neighborCity = neighborMap[city];
-const neighborCamps = (cityCamps.length < 4 && neighborCity) 
-    ? campgrounds.filter(c => c.city === neighborCity).slice(0, 3) 
-    : [];
+const title = `${city}衝浪地點推薦 - 共 ${citySpots.length} 個熱門浪點`;
+const description = `精選 ${city} 衝浪點推薦，包含新手浪點、教學點。提供即時浪況與交通資訊。`;
 
-// 🟢 [SEO] Link Mesh: City -> Sub-Topics (連接 pSEO 頁面)
-// 必須與 topic/[id].astro 的生成邏輯保持一致
-const CITY_SLUG_MAP: Record<string, string> = {
-    '苗栗縣': 'miaoli', '新竹縣': 'hsinchu', '南投縣': 'nantou',
-    '宜蘭縣': 'yilan', '台中市': 'taichung', '桃園市': 'taoyuan',
-    '新北市': 'new-taipei', '嘉義縣': 'chiayi', '高雄市': 'kaohsiung',
-    '屏東縣': 'pingtung', '花蓮縣': 'hualien', '台東縣': 'taitung'
-};
-
-const FEATURE_CONFIG = [
-    { id: 'glamping', label: '豪華露營', icon: '✨', filter: (c: any) => c.features.has_glamping },
-    { id: 'high-altitude', label: '高海拔', icon: '⛰️', filter: (c: any) => c.features.high_altitude },
-    { id: 'pet-friendly', label: '寵物友善', icon: '🐾', filter: (c: any) => c.features.pet_friendly },
-    { id: 'forest', label: '森林系', icon: '🌲', filter: (c: any) => c.tags.some((t: string) => t.includes('森林') || t.includes('樹林')) },
-];
-
-// 計算該城市有哪些 pSEO 子主題是有效的 (數量 >= 3)
-const availableTopics = FEATURE_CONFIG.map(feat => {
-    const count = cityCamps.filter(feat.filter).length;
-    return {
-        ...feat,
-        count,
-        href: `/topic/${CITY_SLUG_MAP[city]}-${feat.id}`
-    };
-}).filter(t => t.count >= 3 && CITY_SLUG_MAP[city]); // 確保有對應的 slug 且數量足夠
-
-// 🟢 [SEO] City Page Schemas (CollectionPage + Breadcrumb)
-const schema = {
+// Schema.org
+const citySchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首頁", "item": Astro.site },
-        { "@type": "ListItem", "position": 2, "name": city, "item": Astro.url.href }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首頁",
+          "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": city,
+          "item": Astro.url.href
+        }
       ]
     },
     {
       "@type": "CollectionPage",
-      "name": `${city}露營區推薦`,
+      "name": title,
       "description": description,
-      "url": Astro.url.href,
-      "mainEntity": {
-        "@type": "ItemList",
-        "itemListElement": cityCamps.slice(0, 15).map((camp, index) => ({
-          "@type": "ListItem",
-          "position": index + 1,
-          "url": new URL(`/camp/${camp.name}`, Astro.site).toString(),
-          "name": camp.name
-        }))
-      }
+      "url": Astro.url.href
+    },
+    {
+      "@type": "ItemList",
+      "name": `${city}衝浪點列表`,
+      "itemListElement": citySpots.map((spot, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${Astro.site ? Astro.site.origin : ''}/spot/${spot.name}`,
+        "name": spot.name
+      }))
     }
   ]
 };
-
 ---
 
 <Layout title={title} description={description}>
-    <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(citySchema)}></script>
 
-    <div class="bg-stone-100 border-b border-stone-200">
-        <div class="container mx-auto px-4 py-3 text-sm text-stone-500">
-            <a href="/" class="hover:text-emerald-700">首頁</a> &rsaquo; 
-            <span class="text-stone-800 font-medium">{city}</span>
+    <div class="bg-indigo-50 border-b border-indigo-100 py-10 mb-8">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl font-black text-indigo-900 mb-2">{city}衝浪地圖</h1>
+            <p class="text-indigo-600 font-medium">
+                收錄 {citySpots.length} 個絕佳浪點，適合各種程度的浪人
+            </p>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-12">
-        <header class="mb-10 text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-stone-900 mb-4">{city} 露營區推薦</h1>
-            <p class="text-lg text-stone-600 max-w-2xl mx-auto mb-8">
-                收錄 {cityCamps.length} 個位於 {city} 的精選露營地，
-                適合親子旅遊、高山避暑或豪華露營體驗。
-            </p>
-
-            {/* 🟢 [SEO] pSEO Internal Links Hub */}
-            {availableTopics.length > 0 && (
-                <div class="flex flex-wrap justify-center gap-3">
-                    {availableTopics.map(topic => (
-                        <a href={topic.href} class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-emerald-200 rounded-full text-emerald-800 hover:bg-emerald-50 hover:border-emerald-300 transition shadow-sm font-medium">
-                            <span>{topic.icon}</span>
-                            <span>{city}{topic.label} ({topic.count})</span>
-                        </a>
-                    ))}
-                </div>
-            )}
-        </header>
-
-        {cityCamps.length > 0 ? (
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {cityCamps.map(camp => (
-                    <CampgroundCard camp={camp} />
-                ))}
-            </div>
-        ) : (
-            <p class="text-center text-stone-500 py-20">目前 {city} 尚無收錄營區資料。</p>
-        )}
-
-        {/* 🟢 [Thin Content Defense] Neighboring City Recommendations */}
-        {neighborCamps.length > 0 && (
-            <div class="mt-16 pt-10 border-t border-stone-200">
-                <h3 class="text-xl font-bold text-stone-700 mb-6 flex items-center gap-2">
-                    <span class="text-2xl">🛤️</span> 
-                    {cityCamps.length === 0 ? `不妨看看鄰近的 ${neighborCity}` : `鄰近的 ${neighborCity} 還有更多選擇...`}
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-90 hover:opacity-100 transition-opacity">
-                    {neighborCamps.map(camp => (
-                        <CampgroundCard camp={camp} />
-                    ))}
-                </div>
-            </div>
-        )}
+    <div class="container mx-auto px-4 pb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {citySpots.map(spot => (
+                <SpotCard spot={spot} />
+            ))}
+        </div>
     </div>
 </Layout>

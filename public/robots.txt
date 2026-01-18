@@ -1,6 +1,7 @@
 User-agent: *
-Allow: /
-# Allow /search for crawling (sort/filter), but block dynamic user search queries to save budget
-Disallow: /search?q=*
+#Allow: /
+## Allow /search for crawling (sort/filter), but block dynamic user search queries to save budget
+#Disallow: /search?q=*
+Disallow: /
 
-Sitemap: https://www.outdoorcampingworld.com/sitemap-index.xml
+#Sitemap: https://www.outdoorfun.com.tw/sitemap-index.xml

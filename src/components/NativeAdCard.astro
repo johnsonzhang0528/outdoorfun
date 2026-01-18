@@ -1,74 +1,39 @@
 ---
 // src/components/NativeAdCard.astro
+import { ads, getBadgeClasses } from '../data/adContent';
+import topCampsInventory from '../data/top_camps.json';
 
-// 1. 定義廣告資料庫 (Ad Pool)
-// 您可以隨時在這裡擴充更多廣告變體
-const ads = [
-  {
-    id: 'gear-upgrade',
-    badges: [
-      { text: '⚡ 限時優惠', color: 'amber' },
-      { text: '裝備升級', color: 'emerald' }
-    ],
-    title: '還在煩惱缺什麼裝備嗎？',
-    desc: '工欲善其事，必先利其器。看看資深露友們都在用什麼好物，讓露營體驗更舒適。',
-    image: '/gear.webp',
-    cta: '前往 momo 購物網逛逛',
-    link: 'https://www.momoshop.com.tw/category/LgrpCategory.jsp?l_code=1699900000'
-  },
-  {
-    id: 'glamping-trip',
-    badges: [
-      { text: '✨ 豪華體驗', color: 'purple' },
-      { text: '免裝備', color: 'pink' }
-    ],
-    title: '想露營又不想搭帳棚？',
-    desc: '精選全台豪華露營 Glamping！冷氣、獨立衛浴、星空電影院，輕鬆享受大自然。',
-    image: '/glamping.webp',
-    cta: '查看 Klook 優惠行程',
-    link: 'https://www.klook.com/zh-TW/search/result/?query=%E8%B1%AA%E8%8F%AF%E9%9C%B2%E7%87%9F'
-  },
-  {
-    id: 'camp-food',
-    badges: [
-      { text: '🔥 野炊美食', color: 'orange' },
-      { text: '大廚上菜', color: 'red' }
-    ],
-    title: '露營吃什麼？美味輕鬆煮',
-    desc: '戶外料理神隊友！從鑄鐵鍋到方便調理包，無需繁瑣準備，野外也能端出五星級料理。',
-    image: '/food.webp',
-    cta: '逛逛 momo 露營食材',
-    link: 'https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%9C%B2%E7%87%9F%E9%A3%9F%E6%9D%90'
-  },
-  {
-    id: 'summer-cool',
-    badges: [
-      { text: '❄️ 涼感推薦', color: 'blue' },
-      { text: '消暑必備', color: 'cyan' }
-    ],
-    title: '拒絕悶熱！夏日露營攻略',
-    desc: '移動式冷氣、大風量循環扇、保冰桶。帶對裝備，夏天露營也能涼爽舒適。',
-    image: '/summer.webp',
-    cta: '前往 momo 抗熱專區',
-    link: 'https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%9C%B2%E7%87%9F%E9%A2%A8%E6%89%87'
-  }
-];
-
-// Helper function to map color names to Tailwind classes
-function getBadgeClasses(color: string) {
-    // 這裡列舉出所有可能用到的顏色，確保 Tailwind 編譯時不會遺漏
-    const colors: Record<string, string> = {
-        amber: 'text-amber-600 bg-amber-50 border-amber-100',
-        emerald: 'text-emerald-600 bg-emerald-50 border-emerald-100',
-        purple: 'text-purple-600 bg-purple-50 border-purple-100',
-        pink: 'text-pink-600 bg-pink-50 border-pink-100',
-        orange: 'text-orange-600 bg-orange-50 border-orange-100',
-        red: 'text-red-600 bg-red-50 border-red-100',
-        blue: 'text-blue-600 bg-blue-50 border-blue-100',
-        cyan: 'text-cyan-600 bg-cyan-50 border-cyan-100',
-    };
-    return colors[color] || colors['emerald'];
+interface Props {
+    city?: string;
 }
+
+const { city } = Astro.props;
+
+// 1. 定義「純地理」鄰居關係 (Geographic Map)
+// 這只代表地理位置的替補建議，不代表資料有無
+const GEOGRAPHIC_NEIGHBORS: Record<string, string> = {
+    '基隆市': '新北市',
+    '台北市': '新北市',
+    '新北市': '桃園市',
+    '桃園市': '新竹縣',
+    '新竹市': '新竹縣',
+    '新竹縣': '苗栗縣',
+    '苗栗縣': '台中市',
+    '台中市': '南投縣',
+    '彰化縣': '南投縣',
+    '雲林縣': '嘉義縣',
+    '嘉義市': '嘉義縣',
+    '嘉義縣': '台南市',
+    '台南市': '高雄市', // 這裡定義：如果台南沒資料，去高雄
+    '高雄市': '屏東縣',
+    '屏東縣': '台東縣',
+    '宜蘭縣': '新北市', // 或是花蓮
+    '花蓮縣': '台東縣',
+    '台東縣': '屏東縣',
+    '澎湖縣': '高雄市', // 搭船去高雄
+    '金門縣': '高雄市',
+    '連江縣': '基隆市'
+};
 
 // 預先處理廣告資料，把 Badge 的 Class 算好，方便前端 JS 直接使用
 const adsWithClasses = ads.map(ad => ({
@@ -79,22 +44,76 @@ const adsWithClasses = ads.map(ad => ({
     }))
 }));
 
-// Server-side random selection (for SEO/Static pages)
-const selectedAd = ads[Math.floor(Math.random() * ads.length)];
+// Server-side Logic
+let selectedAd;
+
+if (city) {
+    // 🟢 Strategy 2: Contextual Deep Linking (情境式深度互連)
+    // 如果有傳入 city (例如: 宜蘭縣)，則優先顯示該城市的露營區推廣
+    
+    // 3. 核心邏輯：準確的資料驅動判斷 (Smart Fallback Logic)
+    let targetCity = city;
+    let isFallback = false;
+
+    // 檢查庫存：露營站真的有這個城市的資料嗎？
+    // topCampsInventory 的結構應該是 { "苗栗縣": [...], "南投縣": [...] }
+    const inventory = topCampsInventory as Record<string, any[]>;
+    const hasDirectData = city && inventory[city] && inventory[city].length > 0;
+
+    if (!hasDirectData && city) {
+        // 情況 A：使用者在「台南」，但露營站目前「沒台南資料」
+        // 動作：啟動降級，查找地理鄰居
+        const neighbor = GEOGRAPHIC_NEIGHBORS[city];
+        
+        // 雙重確認：鄰居有資料嗎？
+        if (neighbor && inventory[neighbor] && inventory[neighbor].length > 0) {
+            targetCity = neighbor;
+            isFallback = true; // 標記為降級，用於調整文案
+        } else {
+            // 情況 B：連鄰居都沒資料 (極端狀況) -> 預設顯示熱門城市 (如苗栗)
+            // 這裡可以寫死一個絕對有資料的城市
+            targetCity = '苗栗縣'; 
+            isFallback = true;
+        }
+    }
+
+    selectedAd = {
+        id: 'cross-promo-city-deep-link',
+        badges: [
+             { text: '📍 地區推薦', color: 'blue' },
+             { text: '衝浪 x 露營', color: 'orange' }
+        ],
+        // ✨ 優化 UI: 為圖片層設置專用的簡短標題 (Headline)，避免疊在圖片上的字太長
+        overlayTitle: `推薦${targetCity}露營`, // e.g. "推薦高雄市露營"
+        
+        title: isFallback ? `衝浪累了嗎？推薦${targetCity}露營！` : `衝浪累了嗎？來去${targetCity}露營吧！`,
+        desc: isFallback 
+            ? `${city}周邊推薦！精選 ${targetCity} 優質露營區，免裝備 Glamping、森林系野營，立刻預訂您的下一趟旅程。`
+            : `精選 ${targetCity} 優質露營區，免裝備 Glamping、森林系野營，立刻預訂您的下一趟旅程。`,
+        image: '/images/camping-default.jpg',
+        cta: `找 ${targetCity} 營區`,
+        link: `https://www.outdoorcampingworld.com/city/${targetCity}?utm_source=surf_site&utm_medium=native_card&utm_campaign=deep_link`
+    };
+    
+    // 計算 badge classes
+    selectedAd.badges = selectedAd.badges.map(b => ({
+        ...b,
+        classString: `text-[10px] font-bold px-2 py-0.5 rounded-full border ${getBadgeClasses(b.color)}`
+    }));
+
+} else {
+    // 預設隨機邏輯 (首頁、列表頁使用)
+    selectedAd = adsWithClasses[Math.floor(Math.random() * adsWithClasses.length)];
+}
 ---
 
 <article 
-  class="bg-white rounded-2xl shadow-sm border border-stone-100 h-full flex flex-col relative group hover:shadow-lg hover:border-emerald-200 transition-all duration-300 overflow-hidden js-native-ad"
+  class="group relative w-full rounded-2xl overflow-hidden shadow-sm border border-stone-100 bg-white flex flex-col h-full hover:shadow-md transition-all duration-300 active:scale-[0.98] js-native-ad"
   data-ads-pool={JSON.stringify(adsWithClasses)}
 >
   
-  <div class="absolute top-3 right-3 z-10">
-    <span class="bg-stone-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 tracking-wider">
-      SPONSORED
-    </span>
-  </div>
-  
-  <div class="h-48 relative overflow-hidden bg-stone-200">
+  <div class="h-40 relative overflow-hidden bg-stone-200 group-hover:shadow-inner transition-all duration-500">
+     {/* Image Layer */}
      <img 
         src={selectedAd.image} 
         alt={selectedAd.title} 
@@ -102,12 +121,34 @@ const selectedAd = ads[Math.floor(Math.random() * ads.length)];
         height="450"
         loading="lazy" 
         decoding="async"
-        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 js-ad-img"
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 js-ad-img"
      />
-     <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+     
+     {/* Overlay for Text Legibility */}
+     <div class="absolute inset-0 bg-stone-900/40 group-hover:bg-stone-900/30 transition-colors duration-300"></div>
+
+     {/* Central Content (Matching SpotCard Style) */}
+     <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center z-10">
+         <span class="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/50 pb-1 mb-1 text-white/90 drop-shadow-sm">
+             SPONSORED
+         </span>
+         
+         <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans text-2xl js-ad-title-overlay">
+             {selectedAd.overlayTitle || selectedAd.title}
+         </div>
+
+         <div class="w-6 h-1 bg-white/70 rounded-full mt-1 backdrop-blur-sm shadow-sm"></div>
+     </div>
+
+     {/* Top Right Badge (Matching SpotCard Position/Style) */}
+     <div class="absolute top-2 right-2 z-20">
+        <span class="bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded shadow-sm border border-white/10">
+          推廣
+        </span>
+     </div>
   </div>
 
-  <div class="p-6 flex-1 flex flex-col justify-between">
+  <div class="p-5 flex-1 flex flex-col justify-between">
     <div>
         <div class="flex gap-2 mb-3 js-ad-badges">
              {selectedAd.badges.map(badge => (

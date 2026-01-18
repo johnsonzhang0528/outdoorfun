@@ -1,118 +1,145 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CampgroundCard from '../components/CampgroundCard.astro';
+import SpotCard from '../components/SpotCard.astro';
 import NativeAdCard from '../components/NativeAdCard.astro';
-import campgroundsData from '../data/campgrounds_enriched.json';
+import surfSpotsData from '../data/surf_spots.json';
 
 // 1. 伺服器端預先排序 (CLS 優化)
-const campgrounds = [...campgroundsData].sort((a, b) => 
+const spots = [...surfSpotsData].sort((a, b) => 
     a.name.localeCompare(b.name, 'zh-TW')
 );
 
 // 取得唯一縣市列表
-const cities = [...new Set(campgroundsData.map(c => c.city))].sort();
+const cities = [...new Set(surfSpotsData.map(s => s.city))].sort();
 
 // 定義排序選項 (供前端渲染使用)
 const sortOptions = [
     { value: 'default', label: '預設排序 (筆畫)' },
-    { value: 'elevation-desc', label: '海拔：由高到低' },
-    { value: 'elevation-asc', label: '海拔：由低到高' },
+    { value: 'difficulty-asc', label: '適合程度：初學優先' },
+    { value: 'difficulty-desc', label: '適合程度：進階優先' },
 ];
 
-type Campground = {
+type SurfSpot = {
 	name: string;
 	city: string;
 	area: string;
-	description: string;
+    bottom_type: string;
+	difficulty: string;
+    best_swell?: string;
+    best_wind?: string;
+	features: string[];
 	tags: string[];
-    elevation: number;
-	features: {
-		has_glamping: boolean;
-		pet_friendly: boolean;
-		high_altitude: boolean;
-	};
+    description?: string;
 };
 
-// Define grouped filters
+// 2. Dynamic Filter Generation Logic
+const getRankedValues = (data: SurfSpot[], key: keyof SurfSpot, isArray = false, exclude: string[] = []) => {
+    const counts: Record<string, number> = {};
+    
+    data.forEach(item => {
+        const val = item[key];
+        if (!val) return;
+        
+        const values = isArray ? (val as string[]) : [val as string];
+        values.forEach(v => {
+            if (v && !exclude.includes(v) && v !== '待確認') {
+                 counts[v] = (counts[v] || 0) + 1;
+            }
+        });
+    });
+
+    return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1]) // Sort by frequency
+        .map(([label]) => label);
+};
+
+// Generate dynamic lists
+const topAreas = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'area', false, ['待確認']).slice(0, 12);
+const allBottomTypes = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'bottom_type', false);
+const allDifficulties = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'difficulty', false);
+const topTags = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'tags', true, ['OSM']).slice(0, 10);
+const allFeatures = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'features', true).slice(0, 10);
+
+// Define grouped filters Dynamically
 const filterGroups = [
     {
-        title: '地區與位置',
+        title: '熱門區域',
         icon: '📍',
-        items: [
-            { label: '苗栗', key: '苗栗', type: 'location' },
-            { label: '新竹', key: '新竹', type: 'location' },
-            { label: '南投', key: '南投', type: 'location' },
-            { label: '五峰', key: '五峰', type: 'location' },
-            { label: '泰安', key: '泰安', type: 'location' },
-            { label: '尖石', key: '尖石', type: 'location' },
-            { label: '阿里山', key: '阿里山', type: 'location' },
-        ]
+        items: topAreas.map(area => ({ label: area, key: area, type: 'location' }))
     },
     {
-        title: '自然景觀',
-        icon: '🌲',
-        items: [
-            { id: 'filter-high-altitude', label: '高海拔', icon: '⛰️', type: 'feature', key: 'high_altitude' }, // Kept existing feature
-            { label: '雲海', key: '雲海', type: 'tag' },
-            { label: '螢火蟲', key: '螢火蟲', type: 'tag' },
-            { label: '櫻花', key: '櫻花', type: 'tag' },
-            { label: '夜景', key: '夜景', type: 'tag' },
-            { label: '溪流', key: '溪流', type: 'tag' },
-            { label: '森林系', key: '森林系', type: 'tag' },
-            { label: '落羽松', key: '落羽松', type: 'tag' },
-        ]
+        title: '地形底質',
+        icon: '🌊',
+        items: allBottomTypes.map(type => {
+            let icon = '🌊';
+            if (type.includes('沙')) icon = '🏖️';
+            if (type.includes('礁')) icon = '🪨';
+            if (type.includes('石')) icon = '⚪';
+            return { label: type, key: type, type: 'bottom', icon };
+        })
     },
     {
-        title: '營地設施',
-        icon: '⛺',
-        items: [
-            { id: 'filter-glamping', label: '豪華露營', icon: '✨', type: 'feature', key: 'glamping' }, // Kept existing feature
-            { label: '有冰箱', key: '有冰箱/冰箱', type: 'tag' }, // Handle slight variations if needed
-            { label: '有冷凍', key: '有冷凍', type: 'tag' },
-            { label: '飲水機', key: '飲水機', type: 'tag' },
-            { label: '提供電源', key: '提供電源', type: 'tag' },
-            { label: '吹風機', key: '吹風機', type: 'tag' },
-            { label: '雨棚', key: '雨棚', type: 'tag' },
-            { label: '室內營位', key: '室內營位', type: 'tag' },
-            { label: '包區', key: '包區', type: 'tag' },
-            { label: '小包區', key: '小包區', type: 'tag' },
-            { label: '少帳包區', key: '少帳包區', type: 'tag' },
-            { label: '車露', key: '車露', type: 'tag' },
-            { label: '可停露營拖車', key: '可停露營拖車', type: 'tag' },
-            { label: '部份區域可車露', key: '部份區域可車露', type: 'tag' },
-        ]
+        title: '適合程度',
+        icon: '🏄',
+        items: allDifficulties.map(diff => {
+            let icon = '🏄';
+            if (diff === '初學者') icon = '🟢';
+            if (diff === '中級') icon = '🔵';
+            if (diff === '專家') icon = '🔴';
+            return { label: diff, key: diff, type: 'difficulty', icon };
+        })
     },
     {
-        title: '親子與活動',
-        icon: '👨‍👩‍👧‍👦',
-        items: [
-            { id: 'filter-pet', label: '寵物友善', icon: '🐾', type: 'feature', key: 'pet_friendly' }, // Kept existing feature
-            { label: '親子', key: '親子', type: 'tag' },
-            { label: '沙坑', key: '沙坑', type: 'tag' },
-            { label: '戲水池', key: '戲水池', type: 'tag' },
-            { label: '溜滑梯', key: '溜滑梯', type: 'tag' },
-            { label: '烤肉', key: '烤肉', type: 'tag' },
-        ]
+        title: '熱門標籤',
+        icon: '🔥',
+        items: topTags.map(tag => ({ label: tag, key: tag, type: 'tag' }))
     },
     {
-        title: '便利性',
-        icon: '📶',
-        items: [
-            { label: 'WIFI', key: 'WIFI', type: 'tag' },
-            { label: '3G/4G訊號', key: '3G/4G訊號', type: 'tag' },
-            { label: '裝備租借', key: '裝備租借', type: 'tag' },
-        ]
+        title: '現場設施',
+        icon: '🚿',
+        items: allFeatures.map(f => ({ label: f, key: f, type: 'feature' }))
     }
 ];
+
+// Basic Schema for Search Page
+const searchSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+     {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首頁",
+          "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "搜尋與篩選",
+          "item": Astro.url.href
+        }
+      ]
+    },
+    {
+      "@type": "SearchResultsPage",
+      "name": "全台衝浪點搜尋",
+      "description": "提供依照區域、難度、底質與設施條件篩選全台最適合您的衝浪地點。"
+    }
+  ]
+};
 ---
 
 <Layout 
-    title="全台露營區搜尋" 
+    title="全台衝浪點搜尋 | Surf Taiwan" 
     noindex={true}
 >
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(searchSchema)}></script>
+
 	<div class="bg-stone-100 py-6 md:py-12 border-b border-stone-200">
 		<div class="container mx-auto px-4">
-			<h1 class="text-2xl md:text-3xl font-bold text-stone-900 mb-4 md:mb-6 text-center">尋找理想營區</h1>
+			<h1 class="text-2xl md:text-3xl font-bold text-stone-900 mb-4 md:mb-6 text-center">尋找理想浪點</h1>
 			
 			<div class="max-w-4xl mx-auto space-y-4">
                 {/* Main Search Panel */}
@@ -124,21 +151,20 @@ const filterGroups = [
 							<input 
 								type="text" 
 								id="search-input" 
-								placeholder="輸入營區名稱、地區 (例如: 苗栗、五峰)..." 
-								class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"
+								placeholder="輸入浪點名稱、地區 (例如: 烏石港、佳樂水)..." 
+								class="w-full px-4 py-3 rounded-lg border border-stone-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
 							/>
 						</div>
 
-						{/* 🟢 [NEW] Filter & Sort Buttons (Trigger Modals) */}
+						{/* Filter & Sort Buttons */}
 						<div class="md:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4">
 							{/* City Filter Trigger */}
 							<div>
 								<label class="block text-xs font-bold text-stone-500 mb-1">區域縣市</label>
-                                {/* Hidden input to store value for JS logic */}
                                 <input type="hidden" id="filter-city" value="" />
                                 <button 
                                     id="btn-city-picker"
-                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-emerald-500 hover:ring-1 hover:ring-emerald-500 transition active:scale-[0.98]"
+                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-sky-500 hover:ring-1 hover:ring-sky-500 transition active:scale-[0.98]"
                                 >
                                     <span class="truncate">所有縣市</span>
                                     <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -148,11 +174,10 @@ const filterGroups = [
 							{/* Sort Order Trigger */}
 							<div>
 								<label class="block text-xs font-bold text-stone-500 mb-1">排序方式</label>
-                                {/* Hidden input to store value for JS logic */}
                                 <input type="hidden" id="sort-order" value="default" />
                                 <button 
                                     id="btn-sort-picker"
-                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-emerald-500 hover:ring-1 hover:ring-emerald-500 transition active:scale-[0.98]"
+                                    class="w-full px-4 py-3 rounded-lg border border-stone-300 bg-stone-50 text-left text-sm text-stone-700 flex justify-between items-center hover:border-sky-500 hover:ring-1 hover:ring-sky-500 transition active:scale-[0.98]"
                                 >
                                     <span class="truncate">預設排序</span>
                                     <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -163,7 +188,7 @@ const filterGroups = [
                     
                     {/* Status Bar */}
                     <div class="mt-4 pt-4 border-t border-stone-100 flex justify-between items-center text-xs text-stone-500">
-                        <span class="ml-auto">目前顯示 <span id="count-display" class="font-bold text-stone-800">{campgrounds.length}</span> 筆結果</span>
+                        <span class="ml-auto">目前顯示 <span id="count-display" class="font-bold text-stone-800">{spots.length}</span> 筆結果</span>
                     </div>
 				</div>
 
@@ -171,13 +196,13 @@ const filterGroups = [
                 <div class="flex gap-3 mt-4">
                     <button 
                         id="open-filter-modal"
-                        class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white border border-stone-300 px-6 py-3 rounded-lg text-stone-700 font-bold hover:border-emerald-500 hover:text-emerald-600 transition shadow-sm"
+                        class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white border border-stone-300 px-6 py-3 rounded-lg text-stone-700 font-bold hover:border-sky-500 hover:text-sky-600 transition shadow-sm"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                         </svg>
                         進階篩選
-                        <span id="active-filter-count" class="hidden bg-emerald-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">0</span>
+                        <span id="active-filter-count" class="hidden bg-sky-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">0</span>
                     </button>
 
                     <button id="quick-clear" class="hidden text-stone-400 hover:text-red-500 text-sm font-medium px-4">
@@ -188,7 +213,7 @@ const filterGroups = [
 		</div>
 	</div>
 
-    {/* 🟢 [NEW] Universal Picker Modal (Single Selection) */}
+    {/* Universal Picker Modal (Single Selection) */}
     <div id="picker-modal" class="fixed inset-0 z-[110] hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" id="picker-backdrop"></div>
         <div class="fixed inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center pointer-events-none">
@@ -202,18 +227,14 @@ const filterGroups = [
                 </div>
 
                 <div class="flex-1 overflow-y-auto p-2 bg-stone-50" id="picker-content">
-                    {/* Content will be injected dynamically or toggled */}
-                    
                     {/* 1. City Options List */}
                     <div id="options-city" class="hidden space-y-1">
                         <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value="" data-type="city">
-                            <span class="font-medium text-stone-700 group-hover:text-emerald-700">所有縣市</span>
-                            <span class="text-emerald-600 hidden check-icon">✓</span>
+                            <span class="font-medium text-stone-700 group-hover:text-sky-700">所有縣市</span>
                         </button>
                         {cities.map(city => (
                             <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value={city} data-type="city">
-                                <span class="font-medium text-stone-700 group-hover:text-emerald-700">{city}</span>
-                                <span class="text-emerald-600 hidden check-icon">✓</span>
+                                <span class="font-medium text-stone-700 group-hover:text-sky-700">{city}</span>
                             </button>
                         ))}
                     </div>
@@ -222,8 +243,7 @@ const filterGroups = [
                     <div id="options-sort" class="hidden space-y-1">
                         {sortOptions.map(opt => (
                             <button class="picker-option w-full text-left px-4 py-3 rounded-lg hover:bg-white hover:shadow-sm flex justify-between items-center group transition" data-value={opt.value} data-type="sort">
-                                <span class="font-medium text-stone-700 group-hover:text-emerald-700">{opt.label}</span>
-                                <span class="text-emerald-600 hidden check-icon">✓</span>
+                                <span class="font-medium text-stone-700 group-hover:text-sky-700">{opt.label}</span>
                             </button>
                         ))}
                     </div>
@@ -232,7 +252,7 @@ const filterGroups = [
         </div>
     </div>
 
-    {/* Original Advanced Filter Modal */}
+    {/* Advanced Filter Modal */}
     <div id="filter-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
         <div class="fixed inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center pointer-events-none">
@@ -265,8 +285,8 @@ const filterGroups = [
                                                 class="peer sr-only filter-checkbox" 
                                             />
                                             <div class="px-3 py-2 rounded-lg border border-stone-200 bg-stone-50 text-stone-600 text-sm font-medium transition-all
-                                                peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:border-emerald-600 peer-checked:shadow-md
-                                                group-hover/item:border-emerald-300">
+                                                peer-checked:bg-sky-600 peer-checked:text-white peer-checked:border-sky-600 peer-checked:shadow-md
+                                                group-hover/item:border-sky-300">
                                                 {filter.label}
                                             </div>
                                         </label>
@@ -278,8 +298,8 @@ const filterGroups = [
                 </div>
 
                 <div class="p-4 border-t border-stone-100 bg-white md:rounded-b-2xl pb-safe">
-                    <button id="apply-filters-btn" class="w-full bg-emerald-600 text-white font-bold text-lg py-3 rounded-xl shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 active:scale-[0.98] transition-transform">
-                        顯示 <span id="modal-match-count">{campgrounds.length}</span> 個營區
+                    <button id="apply-filters-btn" class="w-full bg-sky-600 text-white font-bold text-lg py-3 rounded-xl shadow-lg shadow-sky-600/30 hover:bg-sky-700 active:scale-[0.98] transition-transform">
+                        顯示 <span id="modal-match-count">{spots.length}</span> 個浪點
                     </button>
                 </div>
             </div>
@@ -287,29 +307,28 @@ const filterGroups = [
     </div>
 
 	<div class="container mx-auto px-4 py-12">
-		<div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-			{campgrounds.map((camp) => (
+		<div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 min-h-[50vh] content-start">
+			{spots.map((spot) => (
                 <div 
-                    class="camp-item opacity-100 transition-opacity duration-300"
-                    data-name={camp.name.toLowerCase()}
-                    data-city={camp.city}
-                    data-area={camp.area}
-                    data-tags={camp.tags.join(',')}
-                    data-elevation={camp.elevation}
-                    data-high-altitude={camp.features.high_altitude}
-                    data-glamping={camp.features.has_glamping}
-                    data-pet={camp.features.pet_friendly}
-                    /* 🟢 [PERFORMANCE FIX] 加入 CSS Containment */
+                    class="spot-item opacity-100 transition-opacity duration-300"
+                    data-name={spot.name.toLowerCase()}
+                    data-city={spot.city}
+                    data-area={spot.area}
+                    data-bottom={spot.bottom_type}
+                    data-difficulty={spot.difficulty}
+                    data-tags={spot.tags ? spot.tags.join(',') : ''}
+                    data-features={spot.features ? spot.features.join(',') : ''}
+                    /* CSS Containment for performance */
                     style="content-visibility: auto; contain-intrinsic-size: 1px 400px;"
                 >
-                    <CampgroundCard camp={camp as Campground} />
+                    <SpotCard spot={spot as SurfSpot} />
                 </div>
 			))}
 		</div>
 
         {/* Template for Client-side Ad Injection */}
         <template id="native-ad-template">
-            <div class="native-ad-injected h-full">
+            <div class="native-ad-injected">
                 <NativeAdCard />
             </div>
         </template>
@@ -317,7 +336,7 @@ const filterGroups = [
         {/* No Results Message */}
         <div id="no-results" class="hidden text-center py-20">
             <div class="text-6xl mb-4">🔍</div>
-            <h3 class="text-xl font-bold text-stone-800 mb-2">找不到符合條件的營區</h3>
+            <h3 class="text-xl font-bold text-stone-800 mb-2">找不到符合條件的浪點</h3>
             <p class="text-stone-500">試著減少篩選條件，或搜尋其他關鍵字</p>
         </div>
 	</div>
@@ -326,8 +345,8 @@ const filterGroups = [
 <script>
     // Define State Variables
     let searchInput: HTMLInputElement | null;
-    let filterCityInput: HTMLInputElement | null; // Changed to Hidden Input
-    let sortOrderInput: HTMLInputElement | null; // Changed to Hidden Input
+    let filterCityInput: HTMLInputElement | null;
+    let sortOrderInput: HTMLInputElement | null;
     let checkboxes: NodeListOf<HTMLInputElement>;
     let resultsGrid: HTMLElement | null;
     let noResults: HTMLElement | null;
@@ -346,7 +365,7 @@ const filterGroups = [
     let activeFilterCount: HTMLElement | null;
     let quickClearBtn: HTMLElement | null;
 
-    // 🟢 [NEW] Picker Modal Elements
+    // Picker Modal Elements
     let pickerModal: HTMLElement | null;
     let pickerPanel: HTMLElement | null;
     let pickerBackdrop: HTMLElement | null;
@@ -356,20 +375,20 @@ const filterGroups = [
     let btnSortPicker: HTMLElement | null;
     let pickerOptions: NodeListOf<HTMLElement>;
 
-    // Helper to randomize ad content on client-side
-    function randomizeAdCard(adElement: Element) {
+    // Ad Strategy
+    const AD_START_INDEX = Math.floor(Math.random() * 10);
+
+    function randomizeAdCard(adElement: Element, sequenceIndex: number) {
         const article = adElement.querySelector('.js-native-ad') as HTMLElement;
         if (!article || !article.dataset.adsPool) return;
 
         try {
-            // 1. Get the pool
             const ads = JSON.parse(article.dataset.adsPool);
-            // 2. Pick random
-            const ad = ads[Math.floor(Math.random() * ads.length)];
+            const ad = ads[sequenceIndex % ads.length];
             
-            // 3. Update DOM Elements
             const img = article.querySelector('.js-ad-img') as HTMLImageElement;
             const title = article.querySelector('.js-ad-title');
+            const titleOverlay = article.querySelector('.js-ad-title-overlay'); // New Header Title
             const desc = article.querySelector('.js-ad-desc');
             const cta = article.querySelector('.js-ad-cta');
             const link = article.querySelector('.js-ad-link') as HTMLAnchorElement;
@@ -377,14 +396,13 @@ const filterGroups = [
 
             if (img) { img.src = ad.image; img.alt = ad.title; }
             if (title) title.textContent = ad.title;
+            if (titleOverlay) titleOverlay.textContent = ad.title; // Update Header Title
             if (desc) desc.textContent = ad.desc;
             if (cta) cta.textContent = ad.cta;
             if (link) {
                 link.href = ad.link;
                 link.setAttribute('aria-label', ad.title);
             }
-
-            // 4. Update Badges (Rebuild HTML)
             if (badgesContainer && ad.badges) {
                 badgesContainer.innerHTML = ad.badges.map((b: any) => 
                     `<span class="${b.classString}">${b.text}</span>`
@@ -396,7 +414,6 @@ const filterGroups = [
         }
     }
 
-    // Helper to calculate potential matches
     function calculateMatches(simulateCheckboxes = false): number {
         if (!items) return 0;
         const term = searchInput ? searchInput.value.toLowerCase() : '';
@@ -408,23 +425,17 @@ const filterGroups = [
             const name = el.dataset.name || '';
             const city = el.dataset.city || '';
             const area = el.dataset.area || '';
+            const bottom = el.dataset.bottom || '';
+            const difficulty = el.dataset.difficulty || '';
             const tags = el.dataset.tags || '';
+            const features = el.dataset.features || '';
             
-            const isHighAlt = el.dataset.highAltitude === 'true';
-            const isGlamping = el.dataset.glamping === 'true';
-            const isPet = el.dataset.pet === 'true';
-
             let matchesSearch = term === '' || 
                                   name.includes(term) || 
                                   city.includes(term) || 
                                   area.includes(term) ||
-                                  tags.includes(term);
-            
-            if (!matchesSearch) {
-                if (term.includes('豪華') && isGlamping) matchesSearch = true;
-                if (term.includes('高海拔') && isHighAlt) matchesSearch = true;
-                if (term.includes('寵物') && isPet) matchesSearch = true;
-            }
+                                  tags.includes(term) ||
+                                  bottom.includes(term);
             
             const matchesCity = cityFilter === '' || city === cityFilter;
 
@@ -433,17 +444,19 @@ const filterGroups = [
                 const rawKey = cb.dataset.key || '';
                 const keys = rawKey.split('/');
 
-                if (type === 'feature') {
-                    if (rawKey === 'high_altitude') return isHighAlt;
-                    if (rawKey === 'glamping') return isGlamping;
-                    if (rawKey === 'pet_friendly') return isPet;
-                } else if (type === 'tag') {
+                if (type === 'bottom') { // 🌊 Filter by Bottom Type
+                    return bottom.includes(rawKey);
+                } else if (type === 'difficulty') { // 🏄 Filter by Difficulty
+                    return difficulty === rawKey;
+                } else if (type === 'feature') { // 🚿 Filter by Features
+                    return features.includes(rawKey);
+                } else if (type === 'tag') { // 🔥 Filter by Tags
                     return keys.some(k => tags.includes(k));
-                } else if (type === 'location') {
+                } else if (type === 'location') { // 📍 Filter by Location keywords
                      return keys.some(k => 
                         city.includes(k) || 
                         area.includes(k) || 
-                        tags.includes(k)
+                        name.includes(k)
                      );
                 }
                 return true;
@@ -456,34 +469,36 @@ const filterGroups = [
         return count;
     }
 
-    // Main Render Function
-    // Main Render Function
     function renderResults() {
         if (!resultsGrid || !sortOrderInput || !items) return;
 
-        // 1. 先移除舊廣告 (Write)
+        // 1. Remove old ads
         resultsGrid.querySelectorAll('.native-ad-injected').forEach(el => el.remove());
 
         const adTemplate = document.getElementById('native-ad-template') as HTMLTemplateElement;
         const order = sortOrderInput.value;
         const itemArray = Array.from(items);
 
-        // 2. 排序 (In-memory, no layout thrashing)
+        // 2. Sort Logic
         if (order === 'default') {
              itemArray.sort((a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || ''));
-        } else if (order === 'elevation-desc') {
-            itemArray.sort((a, b) => Number(b.dataset.elevation) - Number(a.dataset.elevation));
-        } else if (order === 'elevation-asc') {
-            itemArray.sort((a, b) => Number(a.dataset.elevation) - Number(b.dataset.elevation));
+        } else if (order.includes('difficulty')) {
+            const diffRank: Record<string, number> = { "初學者": 1, "中級": 2, "專家": 3 };
+            itemArray.sort((a, b) => {
+                const da = diffRank[a.dataset.difficulty || ''] || 0;
+                const db = diffRank[b.dataset.difficulty || ''] || 0;
+                return order === 'difficulty-asc' ? da - db : db - da;
+            });
         }
 
-        // 3. 準備篩選條件
+        // 3. Prepare filters
         let visibleCount = 0;
+        let adInsertionCount = 0;
         const term = searchInput ? searchInput.value.toLowerCase() : '';
         const cityFilter = filterCityInput?.value || '';
         const activeCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
 
-        // 更新篩選器 UI (Write)
+        // UpdateUI: Active Filters
         if (activeFilterCount) {
             activeFilterCount.textContent = activeCheckboxes.length.toString();
             if (activeCheckboxes.length > 0) {
@@ -498,68 +513,53 @@ const filterGroups = [
             quickClearBtn.classList.toggle('hidden', !term && !cityFilter && activeCheckboxes.length === 0);
         }
 
-        // 4. 單次遍歷渲染 (Single Pass Rendering)
-        // 🟢 關鍵優化：在同一個迴圈內完成篩選、排序與廣告插入
-        // 避免了 Read-Write-Read-Write 的惡性循環
-        
+        // 4. Render Loop
         itemArray.forEach((el) => {
             const name = el.dataset.name || '';
             const city = el.dataset.city || '';
             const area = el.dataset.area || '';
+            const bottom = el.dataset.bottom || '';
+            const difficulty = el.dataset.difficulty || '';
             const tags = el.dataset.tags || '';
-            const isHighAlt = el.dataset.highAltitude === 'true';
-            const isGlamping = el.dataset.glamping === 'true';
-            const isPet = el.dataset.pet === 'true';
+            const features = el.dataset.features || '';
 
-            // ... (匹配邏輯保持不變) ...
-            let matchesSearch = term === '' || name.includes(term) || city.includes(term) || area.includes(term) || tags.includes(term);
-            if (!matchesSearch) {
-                 if (term.includes('豪華') && isGlamping) matchesSearch = true;
-                 if (term.includes('高海拔') && isHighAlt) matchesSearch = true;
-                 if (term.includes('寵物') && isPet) matchesSearch = true;
-            }
+            let matchesSearch = term === '' || name.includes(term) || city.includes(term) || area.includes(term) || tags.includes(term) || bottom.includes(term);
             const matchesCity = cityFilter === '' || city === cityFilter;
+            
             const matchesAdvanced = activeCheckboxes.every(cb => {
                 const type = cb.dataset.type;
                 const rawKey = cb.dataset.key || '';
                 const keys = rawKey.split('/');
-                if (type === 'feature') {
-                    if (rawKey === 'high_altitude') return isHighAlt;
-                    if (rawKey === 'glamping') return isGlamping;
-                    if (rawKey === 'pet_friendly') return isPet;
-                } else if (type === 'tag') {
-                    return keys.some(k => tags.includes(k));
-                } else if (type === 'location') return keys.some(k => city.includes(k) || area.includes(k) || tags.includes(k));
+
+                if (type === 'bottom') return bottom.includes(rawKey);
+                if (type === 'difficulty') return difficulty === rawKey;
+                if (type === 'feature') return features.includes(rawKey);
+                if (type === 'tag') return keys.some(k => tags.includes(k));
+                if (type === 'location') return keys.some(k => city.includes(k) || area.includes(k) || name.includes(k));
                 return true;
             });
 
-            // 🟢 Render Logic
             if (matchesSearch && matchesCity && matchesAdvanced) {
-                el.style.display = 'block'; // Write
-                resultsGrid?.appendChild(el); // Write (Reorder/Move)
+                el.style.display = 'block';
+                resultsGrid?.appendChild(el);
                 visibleCount++;
 
-                // 🟢 立即插入廣告 (避免第二階段迴圈)
+                // Inject Ads every 6 items (Updated from 9)
                 if (visibleCount % 6 === 0 && adTemplate) {
                      const adClone = adTemplate.content.cloneNode(true) as HTMLElement;
                      const wrapper = adClone.querySelector('.native-ad-injected') as HTMLElement;
-                     
                      if (wrapper) {
-                        // 為廣告也加上效能隔離，防止廣告內容引起重排
-                        wrapper.style.contentVisibility = 'auto';
-                        wrapper.style.containIntrinsicSize = '1px 400px';
-                        randomizeAdCard(wrapper);
+                        randomizeAdCard(wrapper, AD_START_INDEX + adInsertionCount);
+                        adInsertionCount++;
                      }
-
-                     resultsGrid?.appendChild(adClone); // Write
+                     resultsGrid?.appendChild(adClone);
                 }
             } else {
-                el.style.display = 'none'; // Write
-                resultsGrid?.appendChild(el); // Write (Move hidden items to end/keep strictly sorted)
+                el.style.display = 'none';
+                resultsGrid?.appendChild(el);
             }
         });
 
-        // Update UI State (Write)
         if (countDisplay) countDisplay.textContent = visibleCount.toString();
         if (visibleCount === 0) {
             resultsGrid?.classList.add('hidden');
@@ -570,7 +570,7 @@ const filterGroups = [
         }
     }
 
-    // --- Modal Logic (Advanced Filters) ---
+    // --- Modal Logic ---
     function openModal() {
         if (!modal) return;
         modal.classList.remove('hidden');
@@ -595,14 +595,11 @@ const filterGroups = [
         if (modalMatchCount) modalMatchCount.textContent = count.toString();
     }
 
-    // --- 🟢 [NEW] Picker Logic (City & Sort) ---
+    // --- Picker Logic ---
     function openPicker(type: 'city' | 'sort') {
         if (!pickerModal) return;
-        
-        // Update Title
         if (pickerTitle) pickerTitle.textContent = type === 'city' ? '選擇縣市' : '排序方式';
         
-        // Toggle Content
         const cityList = document.getElementById('options-city');
         const sortList = document.getElementById('options-sort');
         
@@ -614,20 +611,15 @@ const filterGroups = [
             sortList?.classList.remove('hidden');
         }
 
-        // Update Active State
         const currentValue = type === 'city' ? filterCityInput?.value : sortOrderInput?.value;
         pickerOptions.forEach(opt => {
-            const checkIcon = opt.querySelector('.check-icon');
             if (opt.dataset.type === type && opt.dataset.value === currentValue) {
-                opt.classList.add('bg-emerald-50');
-                checkIcon?.classList.remove('hidden');
+                opt.classList.add('bg-stone-100');
             } else {
-                opt.classList.remove('bg-emerald-50');
-                checkIcon?.classList.add('hidden');
+                opt.classList.remove('bg-stone-100');
             }
         });
 
-        // Show Modal
         pickerModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         setTimeout(() => {
@@ -649,7 +641,6 @@ const filterGroups = [
         const value = el.dataset.value || '';
         const label = el.querySelector('span.font-medium')?.textContent || '';
 
-        // 1. Update Hidden Input & Trigger Button Text
         if (type === 'city') {
             if (filterCityInput) filterCityInput.value = value;
             if (btnCityPicker) {
@@ -663,14 +654,11 @@ const filterGroups = [
                  if (span) span.textContent = label;
             }
         }
-
-        // 2. Refresh Results & Close
         renderResults();
         closePicker();
     }
 
     function init() {
-        // Elements
         searchInput = document.getElementById('search-input') as HTMLInputElement;
         filterCityInput = document.getElementById('filter-city') as HTMLInputElement;
         sortOrderInput = document.getElementById('sort-order') as HTMLInputElement;
@@ -678,9 +666,8 @@ const filterGroups = [
         resultsGrid = document.getElementById('results-grid');
         noResults = document.getElementById('no-results');
         countDisplay = document.getElementById('count-display');
-        items = document.querySelectorAll('.camp-item');
+        items = document.querySelectorAll('.spot-item'); // Updated class selector
         
-        // Advanced Filter Modal
         modal = document.getElementById('filter-modal');
         modalPanel = document.getElementById('modal-panel');
         openModalBtn = document.getElementById('open-filter-modal');
@@ -692,7 +679,6 @@ const filterGroups = [
         activeFilterCount = document.getElementById('active-filter-count');
         quickClearBtn = document.getElementById('quick-clear');
 
-        // 🟢 [NEW] Picker Elements
         pickerModal = document.getElementById('picker-modal');
         pickerPanel = document.getElementById('picker-panel');
         pickerBackdrop = document.getElementById('picker-backdrop');
@@ -702,10 +688,8 @@ const filterGroups = [
         btnSortPicker = document.getElementById('btn-sort-picker');
         pickerOptions = document.querySelectorAll('.picker-option');
 
-        // Event Listeners (Main)
         if (searchInput) searchInput.addEventListener('input', () => { renderResults(); });
         
-        // Advanced Filter Events
         if (openModalBtn) openModalBtn.addEventListener('click', openModal);
         if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
         if (backdrop) backdrop.addEventListener('click', closeModal);
@@ -716,7 +700,6 @@ const filterGroups = [
         });
         if (applyBtn) applyBtn.addEventListener('click', () => { renderResults(); closeModal(); });
         
-        // 🟢 [NEW] Picker Events
         if (btnCityPicker) btnCityPicker.addEventListener('click', () => openPicker('city'));
         if (btnSortPicker) btnSortPicker.addEventListener('click', () => openPicker('sort'));
         if (pickerCloseBtn) pickerCloseBtn.addEventListener('click', closePicker);
@@ -725,35 +708,22 @@ const filterGroups = [
             opt.addEventListener('click', () => handlePickerSelection(opt as HTMLElement));
         });
 
-        // Quick Clear
         if (quickClearBtn) quickClearBtn.addEventListener('click', () => {
-             // 1. Reset Search Input
              if(searchInput) searchInput.value = '';
-             
-             // 2. Reset City
              if(filterCityInput) filterCityInput.value = '';
              if(btnCityPicker) { 
                  const s = btnCityPicker.querySelector('span'); 
                  if(s) s.textContent = '所有縣市'; 
              }
-
-             // 3. 🟢 [FIX] Reset Sort Order
              if(sortOrderInput) sortOrderInput.value = 'default';
              if(btnSortPicker) {
                  const s = btnSortPicker.querySelector('span');
                  if(s) s.textContent = '預設排序 (筆畫)';
              }
-             
-             // 4. Reset Checkboxes
              checkboxes.forEach(cb => cb.checked = false);
-             
-             // 5. Re-render
              renderResults();
         });
 
-        // 🟢 [PERFORMANCE FIX] 延後初始渲染，解決 "Forced Reflow"
-        // 將 renderResults 的繁重寫入操作推遲到下一個 Event Loop tick，
-        // 讓 ClientRouter (View Transitions) 先完成它的 Read 操作與轉場。
         setTimeout(() => {
             initFromURL();
         }, 0);
@@ -764,11 +734,11 @@ const filterGroups = [
          const query = params.get('q');
          const city = params.get('city');
          const tag = params.get('tag');
-         const sort = params.get('sort');
+         const bottom = params.get('bottom');
+         const diff = params.get('difficulty');
 
          if (query && searchInput) searchInput.value = query;
          
-         // 🟢 [NEW] Init City Button Text
          if (city && filterCityInput) {
              filterCityInput.value = city;
              if (btnCityPicker) {
@@ -777,32 +747,19 @@ const filterGroups = [
              }
          }
 
-         // 🟢 [NEW] Init Sort Order
-         if (sort && sortOrderInput) {
-             sortOrderInput.value = sort;
-             if (btnSortPicker) {
-                 const span = btnSortPicker.querySelector('span');
-                 // 找到對應的選項文字
-                 const targetOption = document.querySelector(`.picker-option[data-type="sort"][data-value="${sort}"] span.font-medium`);
-                 if (span && targetOption && targetOption.textContent) {
-                     span.textContent = targetOption.textContent;
-                 }
-             }
-         }
-
          if (tag) {
-             let found = false;
              checkboxes.forEach(cb => {
                  const label = cb.parentElement?.textContent || '';
-                 if (cb.dataset.key === tag || label.includes(tag)) {
-                     cb.checked = true;
-                     found = true;
-                 }
+                 if (cb.dataset.key === tag || label.includes(tag)) cb.checked = true;
              });
-             if (!found && !query && searchInput) {
-                 searchInput.value = tag;
-             }
+             if (![...checkboxes].some(c=>c.checked) && !query && searchInput) searchInput.value = tag;
          }
+
+         // Handle Difficulty/Bottom filters from URL if needed
+         if (diff) {
+            checkboxes.forEach(cb => { if (cb.dataset.type === 'difficulty' && cb.dataset.key === diff) cb.checked = true; });
+         }
+
          renderResults();
     }
 

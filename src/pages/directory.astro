@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import campgrounds from '../data/campgrounds_enriched.json';
+import surfSpots from '../data/surf_spots.json';
 
-// Define regions mapping
-const regionMap = {
+// Define regions mapping for surf spots
+const regionMap: Record<string, string> = {
   "台北市": "North", "新北市": "North", "基隆市": "North", "桃園市": "North", "新竹縣": "North", "新竹市": "North", "宜蘭縣": "North",
   "苗栗縣": "Central", "台中市": "Central", "彰化縣": "Central", "南投縣": "Central", "雲林縣": "Central",
   "嘉義縣": "South", "嘉義市": "South", "台南市": "South", "高雄市": "South", "屏東縣": "South",
@@ -11,7 +11,7 @@ const regionMap = {
   "澎湖縣": "Islands", "金門縣": "Islands", "連江縣": "Islands"
 };
 
-const regionNames = {
+const regionNames: Record<string, string> = {
   "North": "北部 (North)",
   "Central": "中部 (Central)",
   "South": "南部 (South)",
@@ -19,40 +19,40 @@ const regionNames = {
   "Islands": "離島 (Islands)"
 };
 
-// Group campgrounds
-const groupedCamps = campgrounds.reduce((acc, camp) => {
-  const city = camp.city || "Unknown";
+// Group spots
+const groupedSpots = surfSpots.reduce((acc, spot) => {
+  const city = spot.city || "Unknown";
   const region = regionMap[city] || "Other";
   
   if (!acc[region]) acc[region] = {};
   if (!acc[region][city]) acc[region][city] = [];
   
-  acc[region][city].push(camp);
+  acc[region][city].push(spot);
   return acc;
-}, {});
+}, {} as Record<string, Record<string, typeof surfSpots>>);
 
 // Sort regions order
 const regionOrder = ["North", "Central", "South", "East", "Islands", "Other"];
 
 // Page Metadata
-const pageTitle = "全台露營區索引目錄 | Outdoor Camping World";
-const description = "Outdoor Camping World 收錄的全台露營區完整列表。依照北、中、南、東部及離島地區分類，方便您快速查找心儀的露營地點。";
+const pageTitle = "全台衝浪點索引目錄 | Outdoor Fun (Surf Taiwan)";
+const description = "Outdoor Fun 收錄的全台衝浪點完整列表。依照北、中、南、東部及離島地區分類，方便您快速查找心儀的浪點。";
 ---
 
 <Layout title={pageTitle} description={description}>
   <div class="bg-stone-50 min-h-screen py-12">
     <div class="container mx-auto px-4 max-w-5xl">
       <header class="mb-12 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">全台露營區總覽</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">全台衝浪點總覽</h1>
         <p class="text-stone-600 max-w-2xl mx-auto">
-          這裡收錄了我們目前資料庫中所有的露營區資訊（共 {campgrounds.length} 筆）。
+          這裡收錄了我們目前資料庫中所有的衝浪點資訊（共 {surfSpots.length} 筆）。
           若您想尋找特定地點，可以使用 <a href="/search" class="text-emerald-600 hover:text-emerald-700 underline">搜尋功能</a>。
         </p>
       </header>
       
       <div class="space-y-12">
         {regionOrder.map(regionKey => {
-          const regionData = groupedCamps[regionKey];
+          const regionData = groupedSpots[regionKey];
           if (!regionData) return null;
 
           return (
@@ -75,14 +75,14 @@ const description = "Outdoor Camping World 收錄的全台露營區完整列表�
                        {city} <span class="text-xs text-emerald-600 font-normal ml-1">({regionData[city].length})</span>
                      </h3>
                      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
-                       {regionData[city].map(camp => (
+                       {regionData[city].map(spot => (
                          <li>
                            <a 
-                             href={`/camp/${camp.name}`}
+                             href={`/spot/${spot.name}`}
                              class="text-stone-600 hover:text-emerald-700 text-sm flex items-center group transition-colors"
                            >
                              <span class="w-1.5 h-1.5 rounded-full bg-stone-300 group-hover:bg-emerald-500 mr-2 transition-colors"></span>
-                             <span class="truncate">{camp.name}</span>
+                             <span class="truncate">{spot.name}</span>
                            </a>
                          </li>
                        ))}

@@ -8,38 +8,32 @@ This project is an **Astro v5 Static Site (SSG)** currently functioning as a Cam
 
 ## 📂 Key Directories & Files
 - `src/data/`: The flat-file database.
-  - `campgrounds_enriched.json`: Main entity source.
-  - `weather_forecast.json`: Generated weather data.
-- `src/pages/camp/[name].astro`: The main template for programmatic pages.
-- `py/`: Functionality for Data ETL (Extract, Transform, Load).
-  - `fetch_weather.py`: Fetches Open-Meteo API data.
-  - `scrape_icamping.py`: (Legacy) Scraper for camping data.
-- `專案規劃書.md`: **CRITICAL** reference for migration logic and target architecture.
+  - `surf_spots.json`: **STATIC DATABASE** (Do not auto-fetch/update spots anymore).
+  - `sea_conditions.json`: Volatile weather data (Updated frequently).
+- `src/pages/spot/[name].astro`: The main template for programmatic pages.
+- `py/`: Functionality for Data ETL.
+  - `fetch_sea_conditions.py`: **The ONLY active script**. Fetches Open-Meteo API data for existing spots.
+  - `archive/`: Archived scripts for spot discovery/cleaning (no longer in use).
+- `專案規劃書.md`: Reference for migration logic.
 
 ## 🛠 Tech Stack & Conventions
 - **Framework**: Astro 5.x (SSG mode).
 - **Styling**: Tailwind CSS (version 3.4).
 - **Navigation**: `ClientRouter` (View Transitions) enabled in `Layout.astro`.
-- **Python**: Used for build-time data fetching.
+- **Python**: Used for build-time weather fetching.
 
 ## 🚀 Critical Workflows
-1. **Data Refresh**:
-   - Run `python py/fetch_weather.py` (or `npm run fetch-weather`) to update `src/data/weather_forecast.json`.
-   - This must be done *before* `npm run build` to ensure fresh data.
+1. **Data Refresh (Weather Only)**:
+   - Run `npm run fetch-weather` (which calls `python py/fetch_sea_conditions.py`) to update `sea_conditions.json`.
+   - **Note**: This project NO LONGER fetches new spots from OSM. `src/data/surf_spots.json` is a frozen asset.
+   - This must be done *before* `npm run build` to ensure fresh wave/wind data.
 2. **Development**:
    - `npm run dev` starts the Astro server.
-   - Note: Python scripts are *not* automatically run during dev; you must run them manually if data needs updating.
-3. **Data Enrichment Pipeline**:
-   - `python py/update_pipeline.py` uses AI (Gemini) to generate SEO descriptions from raw data.
-   - Flow: `icamping_raw.json` -> `update_pipeline.py` -> `campgrounds_enriched.json`.
-4. **Migration Tasks**:
-   - When asked to implement "Surf" features, refer strictly to `專案規劃書.md` for the field mappings (e.g., `elevation` -> `tide`, `gear checklist` logic changes).
+   - Run `npm run fetch-weather` manually if you need fresh forecast data during dev.
 
 ## 💡 Code Patterns
-- **pSEO Pattern**: Pages like `[name].astro` use `getStaticPaths` to map over the main JSON array.
-- **Data Joining**: Join weather data to main entity data in the page frontmatter: `const campWeather = weatherData[camp.name] || [];`.
-- **Component Design**: Components (like `WeatherWidget`) are presentation-only; logic for data retrieval happens in the parent Page.
-- **Performance**: `inlineStylesheets: 'always'` is configured in `astro.config.mjs`. Do not change this without reason.
+- **pSEO Pattern**: Pages like `[name].astro` map over the static `surf_spots.json`.
+- **Data Joining**: Join `sea_conditions.json` (dynamic) to `surf_spots.json` (static) by name.
 
 ## 🛑 Constraints & Rules
 - **Do NOT** modify `campgrounds_enriched.json` manually; it is a generated/scraped file.

@@ -15,17 +15,17 @@ noindex?: boolean;
 
 const { 
     title, 
-    description = "Outdoor Camping World 台灣站 (Since 2004) - 您的終極露營指南。收錄全台 300+ 熱門營區地圖、豪華露營推薦，以及專業的露營裝備導購評測。",
+    description = "Surf Taiwan - 全台衝浪情報誌。收錄全台熱門浪點資訊、即時浪況預報、潮汐表，以及專業的衝浪裝備導購建議。",
     noindex = false,
     preloadImage,
     omitSuffix = false,
     image
 } = Astro.props;
 
-const pageTitle = omitSuffix ? title : `${title} | Outdoor Camping World - Since 2004`;
+const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(image || '/social-card.webp', Astro.url);
+const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 ---
 
 <!doctype html>
@@ -71,7 +71,7 @@ const socialImageURL = new URL(image || '/social-card.webp', Astro.url);
             (function() {
                 // 防止重複載入的旗標
                 let gtmLoaded = false;
-                const gtmId = 'G-CS5334JZT3';
+                const gtmId = '';
 
                 function loadGTM() {
                     if (gtmLoaded) return;
@@ -146,28 +146,28 @@ const socialImageURL = new URL(image || '/social-card.webp', Astro.url);
 <div>
 <h3 class="text-white font-bold text-lg mb-4">關於本站</h3>
 <p class="text-sm leading-relaxed">
-Outdoor Camping World 台灣站 (Since 2004) 致力於提供最透明、最準確的露營區資訊。
-結合 AI 技術，為您分析海拔氣候與設施特色。
+Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊與衝浪點地圖。
+結合氣象 API 技術，為您分析每日浪況風向與潮汐。
 </p>
 </div>
 <div>
 <h3 class="text-white font-bold text-lg mb-4">熱門連結</h3>
 <ul class="space-y-2 text-sm">
-							<li><a href="/topic/high-altitude" class="hover:text-white transition">高海拔避暑</a></li>
-							<li><a href="/topic/glamping" class="hover:text-white transition">豪華露營</a></li>
-                            <li><a href="/directory" class="hover:text-white transition">全台營區索引</a></li>
+							<li><a href="/topic/advanced" class="hover:text-white transition">進階浪點</a></li>
+							<li><a href="/topic/beginner" class="hover:text-white transition">新手體驗</a></li>
+                            <li><a href="/directory" class="hover:text-white transition">全台浪點索引</a></li>
 							
 							<li class="pt-2 border-t border-stone-800 mt-2 text-xs text-stone-400 font-mono">地區推薦</li>
-							<li><a href="/city/苗栗縣" class="hover:text-white transition">苗栗露營</a></li>
-							<li><a href="/city/南投縣" class="hover:text-white transition">南投露營</a></li>
-<li><a href="/city/新竹縣" class="hover:text-white transition">新竹露營</a></li>
-<li><a href="/city/宜蘭縣" class="hover:text-white transition">宜蘭露營</a></li>
+							<li><a href="/city/宜蘭縣" class="hover:text-white transition">宜蘭衝浪</a></li>
+							<li><a href="/city/台東縣" class="hover:text-white transition">台東衝浪</a></li>
+<li><a href="/city/屏東縣" class="hover:text-white transition">墾丁衝浪</a></li>
+<li><a href="/city/新北市" class="hover:text-white transition">北海岸衝浪</a></li>
 </ul>
 </div>
 <div>
 <h3 class="text-white font-bold text-lg mb-4">免責聲明</h3>
 <p class="text-xs leading-relaxed">
-本站資訊由 AI 輔助整理，實際狀況請以營區官方公告為準。
+本站浪況資訊由氣象 API 輔助整理，實際海象請以現場狀況與安全為準。
 部分連結可能包含合作推廣內容。
 </p>
 </div>
@@ -176,7 +176,7 @@ Outdoor Camping World 台灣站 (Since 2004) 致力於提供最透明、最準�
 <p class="mb-2">
 聯盟行銷聲明：本站部分內容包含推廣連結。當您透過這些連結購買商品時，我們可能會獲得微薄的佣金，這不會增加您的購買成本，但能支持我們持續創作優質內容。
 </p>
-&copy; 2004-{new Date().getFullYear()} Outdoor Camping World. All rights reserved.
+&copy; 2005-{new Date().getFullYear()} OutdoorFun. All rights reserved.
 </div>
 </div>
 </footer>
@@ -191,13 +191,13 @@ Outdoor Camping World 台灣站 (Since 2004) 致力於提供最透明、最準�
 <span class="text-xl">🔍</span>
 <span class="text-[10px] font-medium">搜尋</span>
 </a>
-<a href="/topic/glamping" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
-<span class="text-xl">✨</span>
-<span class="text-[10px] font-medium">豪華</span>
+<a href="/topic/beginner" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">🔰</span>
+<span class="text-[10px] font-medium">新手</span>
 </a>
-<a href="/topic/high-altitude" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
-<span class="text-xl">⛰️</span>
-<span class="text-[10px] font-medium">高山</span>
+<a href="/topic/advanced" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<span class="text-xl">🌊</span>
+<span class="text-[10px] font-medium">進階</span>
 </a>
 </div>
 </nav>

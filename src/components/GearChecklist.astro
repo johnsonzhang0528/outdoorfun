@@ -1,153 +1,137 @@
 ---
 interface Props {
-  tags: string[];
-  elevation: number;
+  spot?: {
+    difficulty: string;
+    bottom_type: string;
+    tags?: string[];
+  };
+  // Fallback props
+  tags?: string[];
+  elevation?: number;
+  temperature?: number;
+  isRaining?: boolean;
+  tag?: string; 
 }
 
 import productData from '../data/products.json';
 
-const { tags, elevation } = Astro.props;
+const { spot, tags, elevation, tag } = Astro.props;
+
+// Normalizing Spot Data (Handling diverse inputs)
+const spotTags = spot?.tags || tags || [];
+const difficulty = spot?.difficulty || '一般';
+const bottomType = spot?.bottom_type || '';
+const currentMonth = new Date().getMonth() + 1; // 1-12
 
 // Affiliate Config
-const ICHANNELS_PREFIX = "https://product.mchannles.com/redirect_wa.php?k=3F8Gh&tourl=";
+const ICHANNELS_PREFIX = ""; 
 
-// 1. 定義情境策略 (Marketing Hooks)
+// 1. 定義衝浪情境策略 (Surfing Hooks)
 const scenarios = [
   {
-    id: 'glamping',
-    check: () => tags.some(t => ['glamping', 'luxury', '豪華露營', '免搭帳', '露營車'].includes(t)),
-    icon: '🥂',
-    title: '豪華露營的儀式感升級術',
-    desc: '免搭帳已經很輕鬆，帶上這些「氣氛小物」讓照片質感瞬間拉滿！',
-    targetTags: ['glamping', 'vibe', 'cooking', 'play']
-  },
-  {
-    id: 'high_altitude_cold',
-    check: () => elevation > 1000,
+    id: 'winter_surf',
+    // 邏輯：11月~3月，或是 tags 包含 '冷水'
+    check: () => [11, 12, 1, 2, 3].includes(currentMonth) || spotTags.includes('冷水'),
     icon: '🥶',
-    title: '高山露營：拒絕半夜冷醒！',
-    desc: '高海拔溫差極大，入夜體感恐低於10度。這些「保暖神器」資深露友都推薦。',
-    targetTags: ['high_altitude', 'sleep', 'heating', 'cooking']
+    title: '冬季衝浪：保暖是續航關鍵',
+    desc: '東北季風浪況雖好，但水溫驟降。不想衝半小時就發抖上岸，這些「禦寒裝備」一定要帶！別忘了基礎安全裝備與硬體喔！',
+    targetTags: ['wetsuit', 'warmth', 'cooking', 'surf_hardware', 'safety', 'beginner'] 
   },
   {
-    id: 'pet_friendly',
-    check: () => tags.some(t => ['pet', 'pet_friendly', '寵物', '寵物友善', '可帶貓狗'].includes(t)),
-    icon: '🐾',
-    title: '帶著毛孩去露營',
-    desc: '寵物友善營區必備！讓毛小孩也能舒適享受戶外生活，不便溺不擾鄰。',
-    targetTags: ['pet_friendly', 'general', 'clean']
+    id: 'reef_safety',
+    // 邏輯：地形包含 '礁' 或 '石'
+    check: () => bottomType.includes('礁') || bottomType.includes('石'),
+    icon: '🪨',
+    title: '礁岩區安全對策',
+    desc: '此處海底為礁岩地形，容易割傷腳底。強烈建議穿著防滑鞋 (Booties) 並攜帶急救包；此外，保護裝備越齊全越好。',
+    targetTags: ['safety', 'surf_hardware', 'wetsuit', 'beginner', 'sun_protection'] 
   },
   {
-    id: 'summer_forest',
-    check: () => tags.some(t => ['forest', 'stream', 'river', '森林', '溪流', '戲水'].includes(t)) || elevation < 800,
-    icon: '🦟',
-    title: '防蚊抗暑大作戰',
-    desc: '低海拔營區蚊蟲較多，且夏季悶熱。沒帶這幾樣，晚上真的很難睡！',
-    targetTags: ['summer', 'play', 'cooling', 'general']
+    id: 'summer_beach',
+    // 邏輯：5月~9月 且是 沙灘
+    check: () => [5, 6, 7, 8, 9].includes(currentMonth) && bottomType.includes('沙'),
+    icon: '☀️',
+    title: '夏日沙灘防曬大作戰',
+    desc: '夏季紫外線指數極高！除了衝浪，在岸上休息時的遮陽與補水裝備也不能少。',
+    targetTags: ['sun_protection', 'beach_lifestyle', 'play', 'beginner', 'surf_hardware', 'safety']
   },
   {
-    id: 'general_beginner',
+    id: 'beginner_pack',
+    // 邏輯：難度為 初學者
+    check: () => difficulty === '初學者' || spotTags.includes('新手'),
+    icon: '🐣',
+    title: '新手衝浪：第一道浪裝備',
+    desc: '第一次下水怕磨傷？準備好防磨衣與防水袋，讓你的衝浪初體驗更完美。安全與基礎硬體也是必備的。',
+    targetTags: ['beginner', 'sun_protection', 'safety', 'wetsuit', 'surf_hardware', 'beach_lifestyle']
+  },
+  {
+    id: 'general_surf',
     check: () => true, // Fallback
-    icon: '🎒',
-    title: '新手露營：裝備檢查表',
-    desc: '第一次露營怕手忙腳亂？工欲善其事，必先利其器，這些裝備帶齊了嗎？',
-    targetTags: ['general', 'sleep', 'furniture', 'cooking']
+    icon: '🏄',
+    title: '浪人必備：裝備檢查表',
+    desc: '剛好的浪況，剛好的心情。下水前檢查一下，蠟塊、腳繩、備用舵都帶齊了嗎？',
+    targetTags: ['surf_hardware', 'wetsuit', 'beach_lifestyle']
   }
 ];
-// 2. 選擇最佳情境
-const activeScenario = scenarios.find(s => s.check());
+
+// 2. 選擇最佳情境 (優先級：冬季 > 礁岩 > 夏季 > 新手 > 通用)
+const activeScenario = scenarios.find(s => s.check()) || scenarios[scenarios.length - 1];
 
 // 3. 智慧選品演算法
-const recommendedCategories = productData
-  .filter(cat => cat.id !== 'booking-always' && cat.tags.some(t => activeScenario.targetTags.includes(t)))
+const recommendedCategories = (productData as any[])
+  .filter(cat => cat.id !== 'booking-always' && (cat.tags || []).some((t: string) => activeScenario.targetTags.includes(t)))
   .map(cat => {
-    // 計算關聯分數
-    const score = cat.tags.filter(t => activeScenario.targetTags.includes(t)).length;
-    
-    // Affiliate Link Wrapping
-    const wrappedItems = cat.items.map(item => ({
+    const score = (cat.tags || []).filter((t: string) => activeScenario.targetTags.includes(t)).length;
+    const wrappedItems = (cat.items || []).map((item: any) => ({
         ...item,
         link: ICHANNELS_PREFIX ? `${ICHANNELS_PREFIX}${encodeURIComponent(item.link)}` : item.link
     }));
-
     return { ...cat, items: wrappedItems, matchScore: score };
   })
   .sort((a, b) => b.matchScore - a.matchScore)
   .slice(0, 3);
-
-// Fallback
-if (recommendedCategories.length === 0) {
-    const fallbacks = productData
-        .filter(cat => cat.tags.includes('general') || cat.tags.includes('sleep'))
-        .slice(0, 3)
-        .map(cat => ({
-            ...cat,
-            items: cat.items.map(item => ({
-                ...item,
-                link: ICHANNELS_PREFIX ? `${ICHANNELS_PREFIX}${encodeURIComponent(item.link)}` : item.link
-            }))
-        }));
-    recommendedCategories.push(...fallbacks);
-}
 ---
 
-<aside class="bg-gradient-to-br from-stone-50 to-white border border-stone-200 rounded-xl p-6 my-8 shadow-sm relative overflow-hidden ring-1 ring-emerald-900/5">
-    <!-- Decorator -->
+<aside class="bg-gradient-to-br from-sky-50 to-white border border-sky-100 rounded-xl p-6 my-8 shadow-sm relative overflow-hidden">
     <div class="absolute -right-6 -top-6 text-9xl opacity-5 select-none pointer-events-none grayscale">
         {activeScenario.icon}
     </div>
 
     <header class="mb-6 relative z-10">
-        <h3 class="text-xl md:text-2xl font-bold text-stone-800 flex items-center gap-3 mb-2">
-            <span class="text-3xl shadow-sm bg-white rounded-full w-12 h-12 flex items-center justify-center border border-stone-100">{activeScenario.icon}</span>
+        <h3 class="text-xl md:text-2xl font-bold text-sky-900 flex items-center gap-3 mb-2">
+            <span class="text-3xl shadow-sm bg-white rounded-full w-12 h-12 flex items-center justify-center border border-sky-100">{activeScenario.icon}</span>
             {activeScenario.title}
         </h3>
-        <p class="text-stone-600 text-sm md:text-base pl-[60px] leading-relaxed">
+        <p class="text-slate-600 text-sm md:text-base pl-[60px] leading-relaxed">
             {activeScenario.desc}
         </p>
     </header>
-
+    
     <div class="space-y-4 relative z-10">
-        <div class="flex items-center gap-2 mb-2 pb-2 border-b border-stone-100 mx-1">
-            <span class="text-xs font-bold bg-stone-800 text-amber-400 px-2 py-0.5 rounded uppercase tracking-wider">Editor's Gear Pick</span>
-            <span class="text-xs text-stone-500 font-medium">裝備評測推薦</span>
-        </div>
-        {recommendedCategories.map(cat => (
-            <div class="group bg-white rounded-lg border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-                <div class="bg-stone-50/50 px-4 py-2 border-b border-stone-100 flex justify-between items-center">
-                    <h4 class="font-bold text-stone-700 text-sm flex items-center gap-2">
-                        {cat.title}
+        {recommendedCategories.length > 0 ? recommendedCategories.map((cat: any) => (
+            <div class="group bg-white rounded-lg border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                <div class="bg-sky-50/50 px-4 py-2 border-b border-sky-100 flex justify-between items-center">
+                    <h4 class="font-bold text-slate-700 text-sm flex items-center gap-2">
+                       {cat.title}
                     </h4>
-                    {/* 🟢 [FIX] 對比度優化: text-stone-400 -> text-stone-500 */}
-                    <span class="text-[10px] text-stone-500 font-mono tracking-wider uppercase">Hot Picks</span>
                 </div>
-                
                 <div class="p-3 grid gap-2">
-                    {cat.items.slice(0, 3).map((item, idx) => (
-                        <a 
-                            href={item.link} 
-                            target="_blank" 
-                            rel="nofollow noopener noreferrer"
-                            class="flex items-center justify-between p-2 rounded-md hover:bg-emerald-50/50 transition-colors group/item"
-                        >
+                    {cat.items.slice(0, 3).map((item: any, idx: number) => (
+                        <a href={item.link} target="_blank" class="flex items-center justify-between p-2 rounded-md hover:bg-sky-50 transition-colors group/item relative z-20">
                             <div class="flex-1 min-w-0 pr-3">
                                 <div class="flex items-start gap-2 mb-0.5">
-                                    {/* 🟢 [FIX] 最終對比度修正: bg-amber-600 -> bg-amber-700 */}
-                                    {/* 確保 No.1 徽章在白字下清晰可讀 */}
-                                    <span class={`text-xs font-bold px-1.5 py-0.5 rounded text-white shrink-0 mt-0.5 ${idx === 0 ? 'bg-amber-700' : 'bg-stone-600'}`}>
+                                    <span class={`text-xs font-bold px-1.5 py-0.5 rounded text-white shrink-0 mt-0.5 ${idx === 0 ? 'bg-blue-600' : 'bg-slate-500'}`}>
                                         {idx === 0 ? 'No.1' : (idx + 1)}
                                     </span>
-                                    <span class="text-stone-700 font-medium text-sm line-clamp-2 group-hover/item:text-emerald-700 transition-colors leading-snug">
+                                    <span class="text-slate-700 font-medium text-sm line-clamp-2 group-hover/item:text-blue-600 transition-colors">
                                         {item.name}
                                     </span>
                                 </div>
-                                <p class="text-xs text-stone-500 line-clamp-1 pl-8">{item.desc}</p>
+                                <p class="text-xs text-slate-400 line-clamp-1 pl-8">{item.desc}</p>
                             </div>
-                            
                             <div class="flex flex-col items-end gap-1 min-w-[80px] shrink-0">
-                                <span class="text-sm font-bold text-rose-600 font-mono text-right whitespace-nowrap">{item.price}</span>
-                                {/* 🟢 [FIX] 對比度優化: text-emerald-600 -> text-emerald-700 */}
-                                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-all whitespace-nowrap">
+                                <span class="text-sm font-bold text-rose-500 font-mono">{item.price}</span>
+                                <span class="text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100 group-hover/item:bg-blue-600 group-hover/item:text-white transition-all">
                                     {item.cta || '查看'} &rarr;
                                 </span>
                             </div>
@@ -155,11 +139,14 @@ if (recommendedCategories.length === 0) {
                     ))}
                 </div>
             </div>
-        ))}
+        )) : (
+            <div class="text-center text-slate-400 text-sm py-4">
+               目前沒有相關裝備推薦
+            </div>
+        )}
     </div>
-  
-    <div class="mt-5 text-center flex items-center justify-center gap-2 text-xs text-stone-400">
-         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-         <span>價格與庫存以 momo 購物網即時資訊為準 • 為您精選最優質的露營裝備</span>
+    
+    <div class="mt-4 text-[10px] text-slate-400 text-center">
+        * 推薦商品由編輯嚴選，購買可能產生微薄分潤支持網站營運
     </div>
 </aside>

@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "fetch-weather": "python py/fetch_weather.py",
+    "fetch-weather": "python py/fetch_sea_conditions.py",
     "preview": "astro preview",
     "astro": "astro"
   },

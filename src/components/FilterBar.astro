@@ -1,54 +1,52 @@
 ---
-import campgrounds from '../data/campgrounds_enriched.json';
+import spots from '../data/surf_spots.json';
 
-// 1. 定義固定篩選項目 (對應 search.astro 的功能或特殊查詢)
+// 1. 定義固定篩選項目 (衝浪專屬)
 const fixedFilters = [
-  { label: '全部', value: 'all', icon: '⛺' },
-  { label: '高海拔', value: 'high-altitude', icon: '⛰️' },
-  { label: '豪華露營', value: 'glamping', icon: '✨' },
-  { label: '寵物友善', value: 'pet-friendly', icon: '🐾' },
+  { label: '全部', value: 'all', icon: '🏄' },
+  { label: '初學者', value: 'beginner', icon: '🐣' }, // 對應 difficulty
+  { label: '沙灘', value: 'sand', icon: '🏖️' },      // 對應 bottom_type
+  { label: '有淋浴', value: 'shower', icon: '🚿' },   // 對應 features
 ];
 
 // 2. 動態統計標籤出現次數
 const tagCounts: Record<string, number> = {};
-campgrounds.forEach(camp => {
-    camp.tags.forEach(tag => {
-        if (tag) {
-            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-        }
+spots.forEach(spot => {
+    // 衝浪資料可能有 tags, features, difficulty 混合，這裡範例只統計 tags
+    (spot.tags || []).forEach(tag => {
+        if (tag) tagCounts[tag] = (tagCounts[tag] || 0) + 1;
     });
 });
 
 // 移除已經在固定篩選中的標籤 (避免重複)
 fixedFilters.forEach(f => delete tagCounts[f.label]);
 
-// 3. 定義標籤對應的圖示
+// 3. 定義衝浪專屬圖示對照表
 const iconMap: Record<string, string> = {
-    '森林系': '🌲',
-    '溪流': '💧',
-    '雲海': '☁️',
-    '螢火蟲': '✨',
-    '櫻花': '🌸',
-    '親子': '👨‍👩‍👧‍👦',
-    '溫泉': '♨️',
-    '海景': '🌊',
-    '夜景': '🌃',
-    '雨棚': '🏠',
-    '小包區': '🏕️',
-    '釣魚': '🎣',
-    '登山': '🥾',
-    '落羽松': '🍂',
-    '秘境': '🤫',
-    '戲水': '🔫',
-    '少帳包區': '⛺',
-    '大草皮': '⛳'
+    '左跑浪': '⬅️',
+    '右跑浪': '➡️',
+    '定點起浪': '📍',
+    '河口': '🌊',
+    '珊瑚礁': '🪨',
+    'SUP': '🛶',
+    '日出': '🌅',
+    '夕陽': '🌇',
+    '好停車': '🅿️',
+    '人少': '🤫',
+    '比賽場地': '🏆',
+    '短板': '🏄‍♂️',
+    '長板': '🏄‍♀️',
+    '教學': '🏫',
+    '租板': '🛹',
+    '東北季風': '🌬️',
+    '颱風浪': '🌀'
 };
 const defaultIcon = '🏷️';
 
-// 4. 选择前 5 名熱門標籤 (Reduced from 15)
+// 4. 选择前 10 名熱門標籤
 const sortedTags = Object.entries(tagCounts)
     .sort(([, a], [, b]) => b - a)
-    .slice(0, 5)
+    .slice(0, 10)
     .map(([tag]) => ({
         label: tag,
         value: tag,

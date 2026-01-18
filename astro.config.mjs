@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.outdoorcampingworld.com',
+  site: 'https://www.outdoorfun.com.tw',
   integrations: [tailwind(), sitemap()],
   
   // 🟢 [NEW] 加入這段設定

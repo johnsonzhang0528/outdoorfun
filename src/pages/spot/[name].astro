@@ -1,0 +1,364 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SpotMap from '../../components/SpotMap.astro';
+import GearChecklist from '../../components/GearChecklist.astro';
+import BaseShareButtons from '../../components/ShareButtons.astro';
+import WeatherWidget from '../../components/WeatherWidget.astro';
+import SpotCard from '../../components/SpotCard.astro';
+import NativeAdCard from '../../components/NativeAdCard.astro';
+import spots from '../../data/surf_spots.json';
+import marineData from '../../data/sea_conditions.json';
+
+export async function getStaticPaths() {
+  return spots.map((spot) => ({
+    params: { name: spot.name },
+    props: { spot },
+  }));
+}
+
+const { spot } = Astro.props;
+const spotMarine = marineData[spot.name] || {};
+// Fallback logic for weather data structure
+const hourlyData = spotMarine.hourly || {};
+
+// Release Date Logic
+const shouldIndex = true; 
+const publishedTime = spot.release_date ? new Date(spot.release_date).toISOString() : new Date().toISOString();
+const modifiedTime = new Date().toISOString();
+
+// Difficulty Helpers
+const isBeginner = spot.difficulty === "初學者";
+const isExpert = spot.difficulty === "專家";
+
+// Wave Condition Badge Logic
+let waveBadge = null;
+if (spotMarine.hourly && spotMarine.hourly.wave_height && spotMarine.hourly.wave_height.length >= 24) {
+    // 取今日 (前24小時) 的浪高範圍
+    const todayWaves = spotMarine.hourly.wave_height.slice(0, 24);
+    const maxWave = Math.max(...todayWaves).toFixed(1);
+    const minWave = Math.min(...todayWaves).toFixed(1);
+    
+    // 簡單判斷：如果差異不大顯示單一數值，否則顯示範圍
+    if (maxWave === minWave) {
+        waveBadge = `🌊 浪高 ${maxWave}m`;
+    } else {
+        waveBadge = `🌊 浪高 ${minWave}-${maxWave}m`;
+    }
+} else if (spot.best_swell) {
+    // Fallback: 如果沒有即時數據，顯示最佳浪向
+    waveBadge = `💨 建議浪向: ${spot.best_swell}`;
+}
+
+// 🌊 Features Configuration
+const FEATURES_MAPPING = [
+    { key: "shower", keywords: ["淋浴"], icon: "🚿", label: "衝浪淋浴" },
+    { key: "shop", keywords: ["衝浪店", "租板"], icon: "🏄", label: "衝浪店/租板" },
+    { key: "parking", keywords: ["停車"], icon: "🅿️", label: "停車場" },
+    { key: "toilet", keywords: ["廁所", "公廁"], icon: "🚻", label: "公廁" },
+    { key: "food", keywords: ["食物", "餐廳", "酒吧", "便利商店"], icon: "🍔", label: "餐飲服務" },
+];
+
+const getFeatures = () => {
+    const activeFeatures = [];
+    const searchContext = (spot.description + (spot.features || []).join(' ') + (spot.tags || []).join(' ')).toLowerCase();
+
+    FEATURES_MAPPING.forEach(fac => {
+        if (fac.keywords.some(k => searchContext.includes(k.toLowerCase()))) {
+            activeFeatures.push(fac);
+        }
+    });
+    
+    // Bottom Type
+    if (spot.bottom_type) {
+        const icon = spot.bottom_type.includes("沙") ? "🏖️" : "🪨";
+        activeFeatures.push({ icon, label: spot.bottom_type });
+    }
+
+    return [...new Map(activeFeatures.map(item => [item.label, item])).values()];
+};
+
+const spotFeatures = getFeatures();
+
+// Breadcrumb Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首頁",
+      "item": Astro.site.origin
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": spot.city,
+      "item": `${Astro.site.origin}/city/${spot.city}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": spot.name,
+      "item": Astro.url.href
+    }
+  ]
+};
+
+// FAQ Schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": []
+};
+
+spotFeatures.forEach(fac => {
+    faqSchema.mainEntity.push({
+        "@type": "Question",
+        "name": `請問${spot.name}有${fac.label.replace('服務', '')}嗎？`,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `有的，${spot.name}周邊或現場有${fac.label}。`
+        }
+    });
+});
+
+faqSchema.mainEntity.push({
+    "@type": "Question",
+    "name": `請問${spot.name}適合新手嗎？`,
+    "acceptedAnswer": {
+        "@type": "Answer",
+        "text": `${spot.difficulty === '初學者' ? '非常適合！這裡是知名的新手浪點。' : `這裡主要適合${spot.difficulty}，新手建議找教練陪同。`}`
+    }
+});
+
+// SEO Title
+const currentYear = new Date().getFullYear();
+const seoTitleFeatures = [
+    spot.difficulty,
+    spot.bottom_type,
+    spot.best_swell ? `最佳浪向${spot.best_swell}` : null
+].filter(Boolean).join('、');
+
+const seoTitle = `${spot.name}衝浪點 - ${spot.city}${spot.area} | ${seoTitleFeatures} | ${currentYear}浪況預報`;
+
+const richDescription = `【${spot.name}】是位於${spot.city}的${spot.difficulty}衝浪點。${spot.description} 提供${seoTitleFeatures}等完整資訊，查看即時浪況與潮汐預報。`;
+
+// Schema.org
+const spotSchema = {
+  "@context": "https://schema.org",
+  "@type": ["Beach", "SportsActivityLocation"],
+  "name": spot.name,
+  "description": richDescription,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": spot.area,
+    "addressRegion": spot.city,
+    "streetAddress": spot.address
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": spot.lat,
+    "longitude": spot.lng
+  },
+  "url": Astro.url.href,
+  "image": "/social-card.webp" // Default fallback
+};
+
+// 🟢 [SEO] Internal Linking: Nearby Spots (Haversine Distance)
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1); 
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon / 2) * Math.sin(dLon / 2); 
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+  const d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180);
+}
+
+// Calculate distance for all spots (excluding current)
+const relatedSpots = spots
+    .filter(s => s.name !== spot.name && s.lat && s.lng)
+    .map(s => ({
+        ...s,
+        distance: getDistance(spot.lat, spot.lng, s.lat, s.lng)
+    }))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, 4); // Take top 4 closest
+---
+
+<Layout 
+  title={seoTitle} 
+  description={richDescription}
+  noindex={!shouldIndex}
+  omitSuffix={true}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(spotSchema)} />
+
+    {/* Breadcrumbs - Mobile First Design */}
+    <div class="bg-stone-100 border-b border-stone-200">
+        <div class="container mx-auto px-4 py-3 text-sm text-stone-500">
+            <a href="/" class="hover:text-emerald-700">首頁</a> &rsaquo; 
+            <a href={`/city/${spot.city}`} class="hover:text-emerald-700 mx-1">{spot.city}</a> 
+            {spot.area && spot.area !== '待確認' && (
+                <> &rsaquo; <span class="mx-1">{spot.area}</span> </>
+            )}
+            &rsaquo; <span class="text-stone-800 font-medium">{spot.name}</span>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 md:py-12 pb-24 md:pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            
+            {/* Main Content (Left Column) */}
+            <div class="lg:col-span-2">
+                <header class="mb-6 md:mb-8">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                         <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">{spot.difficulty}</span>
+                         <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">{spot.bottom_type}</span>
+                         {waveBadge && (
+                             <span class="bg-sky-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm animate-pulse">
+                                {waveBadge}
+                             </span>
+                         )}
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-stone-900 mb-2">{spot.name}</h1>
+                    <div class="flex items-center text-stone-600 text-sm md:text-base gap-4">
+                        <span class="flex items-center gap-1"><span class="text-xl">📍</span> {spot.address}</span>
+                    </div>
+
+                    <BaseShareButtons title={seoTitle} />
+                </header>
+
+                {/* Map Component */}
+                <div class="bg-stone-200 rounded-2xl h-64 md:h-96 w-full mb-8 relative border border-stone-300 overflow-hidden shadow-inner group z-0">
+                   <SpotMap lat={spot.lat} lng={spot.lng} name={spot.name} zoom={14} />
+                   <a href={`https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg text-sm font-bold text-emerald-700 hover:bg-emerald-50 transition flex items-center gap-2 z-[400] active:scale-95 border border-emerald-100">
+                        <span>🧭</span> Google 導航
+                   </a>
+                </div>
+
+                {/* Weather Widget */}
+                <div class="mb-8">
+                     <WeatherWidget 
+                        spotName={spot.name} 
+                        marineData={spotMarine}
+                    />
+                </div>
+
+                {/* Description */}
+                <article class="prose prose-stone prose-lg md:prose-xl max-w-none mb-12 prose-headings:font-bold prose-p:text-stone-700 prose-a:text-emerald-600">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-4 border-l-4 border-emerald-500 pl-4">浪點介紹</h2>
+                    <p class="text-lg md:text-xl leading-relaxed text-stone-700 tracking-wide text-justify">{spot.description}</p>
+                    
+                    <div class="mt-8 flex flex-wrap gap-2 not-prose">
+                        {(spot.tags || []).map(tag => (
+                            <span class="bg-stone-100 text-stone-600 px-3 py-1.5 rounded-full text-base border border-stone-200">
+                                #{tag}
+                            </span>
+                        ))}
+                    </div>
+
+                    {/* Functions / Features */}
+                    {spotFeatures.length > 0 && (
+                        <div class="mt-10 p-6 bg-stone-50 rounded-2xl border border-stone-200">
+                            <h3 class="text-xl font-bold text-stone-800 mb-4 flex items-center gap-2">
+                                <span>🏄</span> 浪點特色與設施
+                            </h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                {spotFeatures.map(fac => (
+                                    <div class="flex items-center gap-2 text-stone-700 bg-white px-3 py-2 rounded-lg border border-stone-100 shadow-sm">
+                                        <span class="text-lg">{fac.icon}</span>
+                                        <span class="font-medium">{fac.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </article>
+
+                {/* Info Cards */}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                    <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                        <h3 class="font-bold text-emerald-800 mb-4 flex items-center gap-2">
+                            <span>🌊</span> 最佳條件
+                        </h3>
+                        <p class="text-emerald-900 font-medium text-lg mb-2">浪向: {spot.best_swell || "不限"}</p>
+                        <p class="text-emerald-900 font-medium text-lg">風向: {spot.best_wind || "不限"}</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                        <h3 class="font-bold text-blue-800 mb-4 flex items-center gap-2">
+                            <span>ℹ️</span> 地理資訊
+                        </h3>
+                        <div class="flex justify-between items-center border-b border-blue-200 pb-2 mb-2">
+                            <span class="text-blue-700">地形</span>
+                            <span class="font-bold text-blue-900">{spot.bottom_type}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-700">區域</span>
+                            <span class="font-bold text-blue-900">
+                                {spot.city}{spot.area && spot.area !== '待確認' ? ` ${spot.area}` : ''}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Gear Checklist */}
+                <div class="border-t border-stone-200 pt-10">
+                     <GearChecklist spot={spot} />
+                </div>
+            </div>
+
+            {/* Sidebar (Right Column) */}
+             <aside class="space-y-6 lg:col-span-1">
+                {/* Native Ad (Strategy 2: Contextual Deep Linking) */}
+                {/* Wrap in div to prevent h-full from stretching to sidebar height */}
+                <div>
+                    <NativeAdCard city={spot.city} />
+                </div>
+
+                {/* Nearby Spots */}
+                {relatedSpots.length > 0 && (
+                    <div class="sticky top-24">
+                        <h3 class="text-xl font-bold text-stone-800 mb-4 flex items-center gap-2">
+                           <span>📍</span> 推薦其他浪點
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4">
+                             {relatedSpots.map(related => (
+                                 <SpotCard spot={related} />
+                             ))}
+                        </div>
+                    </div>
+                )}
+            </aside>
+
+        </div>
+    </div>
+
+    {/* Sticky Bottom Bar for Mobile */}
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 p-4 pb-safe z-50 md:hidden shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div class="grid grid-cols-5 gap-4 items-center h-12">
+            <div class="col-span-2 text-xs text-stone-500">
+                <p>浪點難度</p>
+                <p class={`text-lg font-bold ${isBeginner ? 'text-green-600' : 'text-red-600'}`}>{spot.difficulty}</p>
+            </div>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`} 
+               target="_blank"
+               class="col-span-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg h-full flex items-center justify-center shadow-md active:scale-95 transition-transform">
+                前往導航
+            </a>
+        </div>
+    </div>
+</Layout>

@@ -30,7 +30,7 @@ const messengerShareUrl = `fb-messenger://share/?link=${encodedUrl}`;
       <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
       <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
     </svg>
-    分享營區
+    分享浪點
   </button>
 </div>
 
@@ -129,7 +129,7 @@ const messengerShareUrl = `fb-messenger://share/?link=${encodedUrl}`;
         try {
             await navigator.share({
                 title: document.title,
-                text: '快來看看這個超棒的營區！',
+                text: '快來看看這個超棒的浪點！',
                 url: window.location.href
             });
         } catch (err) {
