@@ -1,1 +1,384 @@
-{}
+{
+  "苗栗縣": [
+    {
+      "name": "逢雲露營區",
+      "desc": "泰安鄉最高海拔的營地之一，逢雲露營區擁有傲人的 1200 公尺高度。這裡的雲海景觀壯闊震撼，彷彿漫步雲端。除了草皮...",
+      "link": "https://www.outdoorcampingworld.com/camp/逢雲露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "便利",
+        "吹風機",
+        "大草皮"
+      ],
+      "score": 80
+    },
+    {
+      "name": "按個讚露營區",
+      "desc": "正如其名，這是一個讓露友忍不住按讚的優質營區。位於苗栗泰安高海拔區域，擁有遼闊的視野與清新的空氣。提供小包區服務，...",
+      "link": "https://www.outdoorcampingworld.com/camp/按個讚露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "包區",
+        "寵物友善",
+        "寵物同行"
+      ],
+      "score": 60
+    },
+    {
+      "name": "ㄠ嶩民宿露營區",
+      "desc": "結合民宿與露營的複合式莊園，ㄠ嶩提供多元的住宿體驗。位於中高海拔，視野開闊，雲海季時美不勝收。營主熱情提供的導覽解...",
+      "link": "https://www.outdoorcampingworld.com/camp/ㄠ嶩民宿露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "ㄧ帳包區",
+        "吹風機",
+        "寵物同行"
+      ],
+      "score": 60
+    }
+  ],
+  "新竹縣": [
+    {
+      "name": "阿貴營地",
+      "desc": "位於海拔 1200 公尺的新竹五峰，阿貴營地擁有令人屏息的雲海大景。營區提供室內營位選擇，讓新手也能輕鬆體驗高山露...",
+      "link": "https://www.outdoorcampingworld.com/camp/阿貴營地",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "在地美味",
+        "室內營位"
+      ],
+      "score": 80
+    },
+    {
+      "name": "巴棍民宿露營區",
+      "desc": "新竹五峰老字號的高海拔營地，巴棍民宿擁有豐富的營運經驗。海拔 1240 公尺讓這裡夏季如秋，是絕佳避暑勝地。提供民...",
+      "link": "https://www.outdoorcampingworld.com/camp/巴棍民宿露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "可租裝備",
+        "夜間照明",
+        "室內營位"
+      ],
+      "score": 80
+    },
+    {
+      "name": "巴斯瓜藍露營區",
+      "desc": "隱身杉林間的高海拔秘境，巴斯瓜藍擁有得天獨厚的自然環境。早晨被鳥鳴喚醒，午後享受森林芬多精。營區規劃了室內營位，適...",
+      "link": "https://www.outdoorcampingworld.com/camp/巴斯瓜藍露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "室內營位",
+        "小包區"
+      ],
+      "score": 80
+    }
+  ],
+  "南投縣": [
+    {
+      "name": "清翠露營區",
+      "desc": "挑戰海拔 1580 公尺的高山露營！清翠露營區位於清境農場周邊，擁有絕佳的避暑優勢。這裡的雲海如波濤般壯闊，森林環...",
+      "link": "https://www.outdoorcampingworld.com/camp/清翠露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "ㄧ帳包區",
+        "一帳包區",
+        "南投森林"
+      ],
+      "score": 60
+    },
+    {
+      "name": "非比露營區",
+      "desc": "位於南投仁愛鄉的高海拔避暑營地，海拔 1300 公尺讓這裡夏季涼爽無比。非比露營區擁有壯闊的雲海與櫻花美景。提供冰...",
+      "link": "https://www.outdoorcampingworld.com/camp/非比露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "仁愛",
+        "南投賞櫻",
+        "南投雲海"
+      ],
+      "score": 60
+    },
+    {
+      "name": "日出藏雲",
+      "desc": "名符其實的雲端營地，位於武界部落周邊的高海拔區域。這裡的日出與雲海景色堪稱一絕，彷彿置身仙境。提供雨棚與烤肉區，設...",
+      "link": "https://www.outdoorcampingworld.com/camp/日出藏雲",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "南投賞櫻",
+        "南投雨棚",
+        "南投雲海"
+      ],
+      "score": 60
+    }
+  ],
+  "嘉義縣": [
+    {
+      "name": "阿里山 迷糊露營區",
+      "desc": "位於阿里山風景區內，鄰近著名的迷糊步道。這裡海拔高達 1300 公尺，夏季涼爽宜人，是絕佳的避暑勝地。營區生態豐富...",
+      "link": "https://www.outdoorcampingworld.com/camp/阿里山 迷糊露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "3G/4G訊號",
+        "一帳包區",
+        "吹風機"
+      ],
+      "score": 60
+    },
+    {
+      "name": "草地兄弟",
+      "desc": "嘉義番路鄉的親子遊樂園，草地兄弟擁有超長滑草場與豐富的遊樂器材，保證讓孩子玩得盡興。營區提供室內營位與大草皮，適合...",
+      "link": "https://www.outdoorcampingworld.com/camp/草地兄弟",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "嘉義",
+        "大草皮"
+      ],
+      "score": 60
+    },
+    {
+      "name": "汪爸露營區",
+      "desc": "阿里山公路旁的優質中繼站，汪爸露營區海拔 1100 公尺，氣候舒適。營區內櫻花林立，春季是熱門賞花點。晚間常有雲海...",
+      "link": "https://www.outdoorcampingworld.com/camp/汪爸露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "夜間照明",
+        "寵物同行",
+        "提供電源"
+      ],
+      "score": 60
+    }
+  ],
+  "桃園市": [
+    {
+      "name": "桃子菇菇休閒農莊",
+      "desc": "位於拉拉山高海拔區域，海拔 1500 公尺夏季涼爽無比。營區結合了水蜜桃果園與椴木香菇種植，提供採果與農事體驗。擁...",
+      "link": "https://www.outdoorcampingworld.com/camp/桃子菇菇休閒農莊",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "大營位",
+        "室內營位",
+        "小包區"
+      ],
+      "score": 80
+    },
+    {
+      "name": "北戶露營區",
+      "desc": "挑戰高海拔露營的極致！位於桃園復興海拔 1400 公尺處，北戶露營區擁有傲視群山的遼闊視野。這裡氣溫涼爽，夏季甚至...",
+      "link": "https://www.outdoorcampingworld.com/camp/北戶露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "ㄧ帳包區",
+        "包區專用衛浴",
+        "吹風機"
+      ],
+      "score": 60
+    },
+    {
+      "name": "古渡園地",
+      "desc": "挑戰北台灣高海拔露營！古渡園地位於海拔 1400 公尺的深山中，氣溫涼爽，是夏季避暑勝地。這裡的櫻花季非常壯觀，雲...",
+      "link": "https://www.outdoorcampingworld.com/camp/古渡園地",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "寧靜",
+        "寵物同行",
+        "提供電源"
+      ],
+      "score": 60
+    }
+  ],
+  "台東縣": [
+    {
+      "name": "巴歌浪藝術園區",
+      "desc": "擁抱太平洋的絕美海景營地！巴歌浪藝術園區位於台東長濱，走出帳篷就是蔚藍大海。這裡充滿濃厚的原住民藝術氣息，提供特色...",
+      "link": "https://www.outdoorcampingworld.com/camp/巴歌浪藝術園區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "寵物同行",
+        "提供電源"
+      ],
+      "score": 25
+    }
+  ],
+  "台中市": [
+    {
+      "name": "家霖農場",
+      "desc": "位於台中和平區的高海拔農場營地，家霖農場以在地美味餐飲與農產著稱。海拔 1050 公尺氣候涼爽。提供室內營位與民宿...",
+      "link": "https://www.outdoorcampingworld.com/camp/家霖農場",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "台中",
+        "台中室內營位",
+        "台中賞櫻"
+      ],
+      "score": 80
+    },
+    {
+      "name": "谷關365露營區",
+      "desc": "位於台中谷關風景區周邊，露營之餘還能享受著名的谷關溫泉。營區內設有雨棚與室內營位，適合全家大小。周邊景點豐富，包含...",
+      "link": "https://www.outdoorcampingworld.com/camp/谷關365露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "台中",
+        "台中室內營位",
+        "台中溪流"
+      ],
+      "score": 60
+    },
+    {
+      "name": "照哥的家",
+      "desc": "位於大雪山林道周邊的優質營地，海拔 1120 公尺，是夏季避暑的絕佳選擇。照哥的家提供導覽解說與手作活動，讓露營充...",
+      "link": "https://www.outdoorcampingworld.com/camp/照哥的家",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "台中",
+        "台中賞櫻",
+        "台中雲海"
+      ],
+      "score": 60
+    }
+  ],
+  "高雄市": [
+    {
+      "name": "愛莉絲森林露營區",
+      "desc": "彷彿走進童話故事般的森林秘境，愛莉絲森林位於高雄桃源高海拔山區。這裡保留了原始森林風貌，空氣中充滿芬多精。海拔 1...",
+      "link": "https://www.outdoorcampingworld.com/camp/愛莉絲森林露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "一帳包區",
+        "南部高海拔",
+        "吹風機"
+      ],
+      "score": 80
+    },
+    {
+      "name": "晨月緣露營區",
+      "desc": "高雄少見的高海拔營地，位於桃源區深山，海拔達 1300 公尺。這裡視野極佳，可俯瞰壯麗山景與雲海。提供在地美味餐飲...",
+      "link": "https://www.outdoorcampingworld.com/camp/晨月緣露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "3G/4G訊號微弱",
+        "ㄧ帳包區",
+        "包區專用衛浴"
+      ],
+      "score": 60
+    },
+    {
+      "name": "大學林",
+      "desc": "高雄桃源區的高山秘境，海拔 1300 公尺讓這裡即使在南部炎夏也享有涼爽氣溫。擁有遼闊的大草皮與櫻花林，夜晚的星空...",
+      "link": "https://www.outdoorcampingworld.com/camp/大學林",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "南部露營",
+        "夜景",
+        "大草皮"
+      ],
+      "score": 60
+    }
+  ],
+  "宜蘭縣": [
+    {
+      "name": "鵲子山露營區",
+      "desc": "位於宜蘭頭城，背山面海的地理位置讓這裡擁有獨特的微氣候。營區內有大草皮與溪流經過，是孩子們放電的好地方。鄰近礁溪溫...",
+      "link": "https://www.outdoorcampingworld.com/camp/鵲子山露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "大草皮",
+        "宜蘭"
+      ],
+      "score": 25
+    },
+    {
+      "name": "舊寮之心",
+      "desc": "位於宜蘭冬山河上游的低海拔營地，舊寮之心擁有豐富的自然湧泉，戲水池水質清澈冰涼。鄰近仁山植物園與新寮瀑布步道，旅遊...",
+      "link": "https://www.outdoorcampingworld.com/camp/舊寮之心",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "便利",
+        "冬山",
+        "宜蘭戲水池"
+      ],
+      "score": 25
+    },
+    {
+      "name": "山谷星空露營區",
+      "desc": "位於宜蘭三星蔥的故鄉，山谷星空擁有開闊的蘭陽平原視野。營區設施包含戲水池與雨棚，非常適合親子家庭。夜晚光害少，星空...",
+      "link": "https://www.outdoorcampingworld.com/camp/山谷星空露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "一帳包區",
+        "三星",
+        "吹風機"
+      ],
+      "score": 25
+    }
+  ],
+  "新北市": [
+    {
+      "name": "大羅蘭",
+      "desc": "深入烏來福山部落的秘境營地，大羅蘭緊鄰清澈見底的大羅蘭溪。這裡是溯溪與玩水的天堂，生態保育極佳，隨處可見苦花魚與蝴...",
+      "link": "https://www.outdoorcampingworld.com/camp/大羅蘭",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "寵物同行",
+        "提供電源"
+      ],
+      "score": 25
+    },
+    {
+      "name": "福山達卡露營區",
+      "desc": "深入烏來深處的福山達卡，是一個被溪流環抱的森林系營地。這裡的溪水清澈冰涼，是夏天溯溪玩水的秘境。營區保留了大量樹蔭...",
+      "link": "https://www.outdoorcampingworld.com/camp/福山達卡露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "小包區",
+        "提供電源"
+      ],
+      "score": 25
+    },
+    {
+      "name": "十分自然露營區",
+      "desc": "鄰近著名的十分瀑布與平溪老街，十分自然露營區地理位置絕佳。營區內有溪流流過，生態豐富。適合白天遊覽十分寮風景區、放...",
+      "link": "https://www.outdoorcampingworld.com/camp/十分自然露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "一帳包區",
+        "便利",
+        "十分瀑布"
+      ],
+      "score": 25
+    }
+  ],
+  "花蓮縣": [
+    {
+      "name": "眺浪營地",
+      "desc": "花蓮東海岸的第一排海景營地！眺浪營地讓您在帳篷內就能聽見太平洋的浪濤聲。走出營帳就是沙灘，可盡情玩水踏浪。提供在地...",
+      "link": "https://www.outdoorcampingworld.com/camp/眺浪營地",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "在地美味",
+        "室內營位"
+      ],
+      "score": 45
+    },
+    {
+      "name": "佐倉高地",
+      "desc": "花蓮市近郊的百萬夜景營地！佐倉高地背倚中央山脈，面向太平洋，可俯瞰整個花蓮市區與海岸線。鄰近佐倉步道，適合喜歡健行...",
+      "link": "https://www.outdoorcampingworld.com/camp/佐倉高地",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "吹風機",
+        "夜景",
+        "提供電源"
+      ],
+      "score": 25
+    }
+  ]
+}
