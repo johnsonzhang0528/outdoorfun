@@ -1,0 +1,16 @@
+{
+  "name": "Surf Taiwan 衝浪地圖",
+  "short_name": "Surf Taiwan",
+  "description": "全台衝浪浪況預報與地圖",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#059669",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

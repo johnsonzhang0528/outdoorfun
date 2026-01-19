@@ -2,6 +2,7 @@
 // src/layouts/Layout.astro
 
 import MobileHeader from '../components/MobileHeader.astro';
+import BackToTop from '../components/BackToTop.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -28,6 +29,8 @@ const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) => currentPath === path || (path !== '/' && currentPath.includes(path));
 ---
 
 <!doctype html>
@@ -38,7 +41,14 @@ const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<title>{pageTitle}</title>
+		<!-- PWA Meta Tags -->
+		<link rel="manifest" href="/manifest.json">
+		<meta name="theme-color" content="#0ea5e9">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Surf Taiwan">
+
+		<title>{title}</title>
 <meta name="title" content={pageTitle} />
 <meta name="description" content={description} />
 
@@ -136,9 +146,12 @@ const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 <slot name="head" />
 	</head>
 <body class="bg-stone-50 min-h-screen text-stone-800 font-sans flex flex-col pb-16 md:pb-0">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] bg-emerald-600 text-white px-4 py-2 rounded shadow-lg font-bold">
+        跳至主要內容
+    </a>
 <MobileHeader />
 
-<main class="flex-grow">
+<main id="main-content" class="flex-grow scroll-mt-20">
 <slot />
 </main>
 
@@ -186,25 +199,27 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 {!hideBottomNav && (
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe">
 <div class="grid grid-cols-4 h-16">
-<a href="/" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
 <span class="text-xl">🏠</span>
 <span class="text-[10px] font-medium">首頁</span>
 </a>
-<a href="/search" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/search" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/search') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
 <span class="text-xl">🔍</span>
 <span class="text-[10px] font-medium">搜尋</span>
 </a>
-<a href="/topic/all-beginner" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/topic/all-beginner') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
 <span class="text-xl">🔰</span>
 <span class="text-[10px] font-medium">新手</span>
 </a>
-<a href="/topic/all-advanced" class="flex flex-col items-center justify-center text-stone-500 hover:text-emerald-700 active:text-emerald-700 transition-colors gap-1">
+<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/topic/all-advanced') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
 <span class="text-xl">🌊</span>
 <span class="text-[10px] font-medium">進階</span>
 </a>
 </div>
 </nav>
 )}
+
+<BackToTop />
 
         <script is:inline src="https://www.conn.tw/track/script/oeya_member_url.js" defer></script>
 
@@ -250,5 +265,119 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
             document.addEventListener('astro:page-load', startObserver);
             document.addEventListener('DOMContentLoaded', startObserver);
         </script>
+
+<style>
+	/* Global Styles */
+	:root {
+		--color-primary: #0ea5e9;
+		--color-secondary: #64748b;
+		--color-accent: #f97316;
+		--color-background: #f8fafc;
+		--color-surface: #ffffff;
+		--color-error: #ef4444;
+		--color-on-primary: #ffffff;
+		--color-on-secondary: #ffffff;
+		--color-on-accent: #ffffff;
+		--color-on-background: #111827;
+		--color-on-surface: #111827;
+		--color-on-error: #ffffff;
+	}
+
+	@font-face {
+		font-family: 'Noto Sans TC';
+		font-weight: 400;
+		font-style: normal;
+		src: url('/fonts/NotoSansTC-Regular.woff2') format('woff2'),
+			 url('/fonts/NotoSansTC-Regular.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Noto Sans TC';
+		font-weight: 700;
+		font-style: bold;
+		src: url('/fonts/NotoSansTC-Bold.woff2') format('woff2'),
+			 url('/fonts/NotoSansTC-Bold.woff') format('woff');
+	}
+
+	/* Base Styles */
+	body {
+		font-family: 'Noto Sans TC', sans-serif;
+		line-height: 1.6;
+		background-color: var(--color-background);
+		color: var(--color-on-background);
+		margin: 0;
+		padding: 0;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0;
+		padding: 0;
+		color: var(--color-on-surface);
+	}
+
+	a {
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1rem;
+	}
+
+	/* Layout Styles */
+	.flex {
+		display: flex;
+	}
+
+	.grid {
+		display: grid;
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	/* Print Styles */
+	@media print {
+		nav, footer, .js-feature-card, .share-buttons, #back-to-top, .no-print {
+			display: none !important;
+		}
+		
+		* {
+			-webkit-print-color-adjust: exact !important;
+			print-color-adjust: exact !important;
+		}
+
+		body, main {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			background: white;
+			color: black;
+		}
+
+		/* Show URL after links */
+		a[href^="http"]:after {
+			content: " (" attr(href) ")";
+			font-size: 0.8em;
+			color: #666;
+		}
+		
+		/* Clean up cards */
+		.spot-card {
+			break-inside: avoid;
+			border: 1px solid #ddd;
+			box-shadow: none;
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+	}
+</style>
 </body>
 </html>

@@ -92,7 +92,7 @@ if (city) {
             : `精選 ${targetCity} 優質露營區，免裝備 Glamping、森林系野營，立刻預訂您的下一趟旅程。`,
         image: '/images/camping-default.jpg',
         cta: `找 ${targetCity} 營區`,
-        link: `https://www.outdoorcampingworld.com/city/${targetCity}?utm_source=surf_site&utm_medium=native_card&utm_campaign=deep_link`
+        link: `https://www.outdoorcampingworld.com/city/${targetCity}?utm_source=surf_site&utm_medium=content_grid&utm_campaign=deep_link`
     };
     
     // 計算 badge classes
@@ -108,20 +108,21 @@ if (city) {
 ---
 
 <article 
-  class="group relative w-full rounded-2xl overflow-hidden shadow-sm border border-stone-100 bg-white flex flex-col h-full hover:shadow-md transition-all duration-300 active:scale-[0.98] js-native-ad"
-  data-ads-pool={JSON.stringify(adsWithClasses)}
+  class="group relative w-full rounded-2xl overflow-hidden shadow-sm border border-stone-100 bg-white flex flex-col h-full hover:shadow-md transition-all duration-300 active:scale-[0.98] js-feature-card"
+  data-items-pool={JSON.stringify(adsWithClasses)}
 >
   
-  <div class="h-40 relative overflow-hidden bg-stone-200 group-hover:shadow-inner transition-all duration-500">
+  <div class="h-40 relative overflow-hidden bg-stone-200 animate-pulse group-hover:shadow-inner transition-all duration-500">
      {/* Image Layer */}
      <img 
-        src={selectedAd.image} 
+        src={selectedAd.image.replace('/ads/', '/featured/')}
         alt={selectedAd.title} 
         width="800"
         height="450"
         loading="lazy" 
         decoding="async"
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 js-ad-img"
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 js-feature-img"
+        onload="this.parentElement.classList.remove('animate-pulse')"
      />
      
      {/* Overlay for Text Legibility */}
@@ -130,10 +131,10 @@ if (city) {
      {/* Central Content (Matching SpotCard Style) */}
      <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center z-10">
          <span class="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/50 pb-1 mb-1 text-white/90 drop-shadow-sm">
-             SPONSORED
+             FEATURED
          </span>
          
-         <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans text-2xl js-ad-title-overlay">
+         <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans text-2xl js-feature-title-overlay">
              {selectedAd.overlayTitle || selectedAd.title}
          </div>
 
@@ -143,14 +144,14 @@ if (city) {
      {/* Top Right Badge (Matching SpotCard Position/Style) */}
      <div class="absolute top-2 right-2 z-20">
         <span class="bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded shadow-sm border border-white/10">
-          推廣
+          推薦
         </span>
      </div>
   </div>
 
   <div class="p-5 flex-1 flex flex-col justify-between">
     <div>
-        <div class="flex gap-2 mb-3 js-ad-badges">
+        <div class="flex gap-2 mb-3 js-feature-badges">
              {selectedAd.badges.map(badge => (
                 <span class={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${getBadgeClasses(badge.color)}`}>
                     {badge.text}
@@ -158,20 +159,20 @@ if (city) {
              ))}
         </div>
 
-        <h3 class="font-bold text-xl text-stone-800 mb-2 group-hover:text-emerald-700 transition-colors js-ad-title">
+        <h3 class="font-bold text-xl text-stone-800 mb-2 group-hover:text-emerald-700 transition-colors js-feature-title">
             {selectedAd.title}
         </h3>
-        <p class="text-stone-600 text-sm line-clamp-2 mb-4 leading-relaxed js-ad-desc">
+        <p class="text-stone-600 text-sm line-clamp-2 mb-4 leading-relaxed js-feature-desc">
             {selectedAd.desc}
         </p>
     </div>
     
     <div class="mt-auto">
-        <span class="w-full block text-center bg-stone-100 group-hover:bg-emerald-600 group-hover:text-white text-stone-600 text-sm font-bold py-2.5 rounded-lg transition-colors duration-300 js-ad-cta">
+        <span class="w-full block text-center bg-stone-100 group-hover:bg-emerald-600 group-hover:text-white text-stone-600 text-sm font-bold py-2.5 rounded-lg transition-colors duration-300 js-feature-cta">
             {selectedAd.cta}
         </span>
     </div>
   </div>
 
-  <a href={selectedAd.link} target="_blank" rel="nofollow sponsored" class="absolute inset-0 z-0 js-ad-link" aria-label={selectedAd.title}></a>
+  <a href={selectedAd.link} target="_blank" rel="noopener" class="absolute inset-0 z-0 js-feature-link" aria-label={selectedAd.title}></a>
 </article>
