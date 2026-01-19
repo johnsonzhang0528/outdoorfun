@@ -27,7 +27,7 @@ const {
 
 const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surftaiwan.tw');
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 const currentPath = Astro.url.pathname;
 const isActive = (path: string) => currentPath === path || (path !== '/' && currentPath.includes(path));
@@ -73,11 +73,11 @@ const isActive = (path: string) => currentPath === path || (path !== '/' && curr
         )}
 
 {noindex ? (
-<meta name="robots" content="noindex, nofollow" />
+<meta name="robots" content="noindex, follow" />
 ) : (
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 )}
-{!noindex && <link rel="canonical" href={canonicalURL} />}
+{!noindex && <link rel="canonical" href={canonicalURL.href} />}
 
 		<script is:inline>
             (function() {

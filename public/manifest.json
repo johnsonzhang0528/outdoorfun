@@ -1,6 +1,6 @@
 {
-  "name": "Surf Taiwan 衝浪地圖",
-  "short_name": "Surf Taiwan",
+  "name": "Outdoor Fun 衝浪地圖",
+  "short_name": "Outdoor Fun",
   "description": "全台衝浪浪況預報與地圖",
   "start_url": "/",
   "display": "standalone",
