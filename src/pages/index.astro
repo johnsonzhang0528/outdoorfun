@@ -39,12 +39,12 @@ const homeSchema = {
     {
       "@type": "WebSite",
       "name": "Surf Taiwan - 全台衝浪情報誌",
-      "url": Astro.site,
+      "url": Astro.site?.origin,
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": `${Astro.site}search?q={search_term_string}`
+          "urlTemplate": `${Astro.site?.origin}/search?q={search_term_string}`
         },
         "query-input": "required name=search_term_string"
       }
