@@ -30,7 +30,12 @@ const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surftaiwan.tw');
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 const currentPath = Astro.url.pathname;
-const isActive = (path: string) => currentPath === path || (path !== '/' && currentPath.includes(path));
+const isActive = (path: string) => {
+    const normalize = (p: string) => p.endsWith('/') && p.length > 1 ? p.slice(0, -1) : p;
+    const current = normalize(currentPath);
+    const target = normalize(path);
+    return current === target || (target !== '/' && current.startsWith(target + '/'));
+};
 ---
 
 <!doctype html>
@@ -197,23 +202,27 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 </footer>
 
 {!hideBottomNav && (
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe">
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
 <div class="grid grid-cols-4 h-16">
-<a href="/" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
-<span class="text-xl">🏠</span>
-<span class="text-[10px] font-medium">首頁</span>
+{/* Home */}
+<a href="/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+<span class="text-[11px]">首頁</span>
 </a>
-<a href="/search" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/search') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
-<span class="text-xl">🔍</span>
-<span class="text-[10px] font-medium">搜尋</span>
+{/* Search */}
+<a href="/search" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/search') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+<span class="text-[11px]">搜尋</span>
 </a>
-<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/topic/all-beginner') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
-<span class="text-xl">🔰</span>
-<span class="text-[10px] font-medium">新手</span>
+{/* Beginner */}
+<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-beginner') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+<span class="text-[11px]">新手</span>
 </a>
-<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-colors gap-1 ${isActive('/topic/all-advanced') ? 'text-emerald-700 font-bold' : 'text-stone-500 hover:text-emerald-700 active:text-emerald-700'}`}>
-<span class="text-xl">🌊</span>
-<span class="text-[10px] font-medium">進階</span>
+{/* Advanced */}
+<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-advanced') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+<span class="text-[11px]">進階</span>
 </a>
 </div>
 </nav>
