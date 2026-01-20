@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import SpotCard from '../components/SpotCard.astro';
 import NativeAdCard from '../components/NativeAdCard.astro';
 import spots from '../data/surf_spots.json';
+import { Image } from 'astro:assets';
+import heroBg from '../assets/hero-bg-surf.jpg';
 
 // Simple types for the dataset
 type Spot = {
@@ -79,12 +81,15 @@ const homeSchema = {
     
     <div class="relative bg-slate-900 -mt-[64px] pt-[64px]">
         <div class="absolute inset-0 overflow-hidden">
-            <img 
-                src="/images/hero-bg-surf.jpg" 
-                alt="Surf Background" 
-                class="w-full h-full object-cover opacity-60 mix-blend-overlay"
-                fetchpriority="high"
+            <Image 
+                src={heroBg} 
+                alt="Surf Taiwan 衝浪地圖"
+                class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay z-0"
+                width={1920}
+                height={1080}
                 loading="eager"
+                fetchpriority="high"
+                quality={80}
             />
             <div class="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-transparent to-stone-50/10"></div>
         </div>

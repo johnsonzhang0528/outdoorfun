@@ -46,6 +46,12 @@ const isActive = (path: string) => {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
+    <!-- 🟢 [Performance] Preconnects -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://maps.googleapis.com">
+    <link rel="preconnect" href="https://www.outdoorcampingworld.com">
+
 		<!-- PWA Meta Tags -->
 		<link rel="manifest" href="/manifest.json">
 		<meta name="theme-color" content="#0ea5e9">
@@ -296,6 +302,7 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 		font-family: 'Noto Sans TC';
 		font-weight: 400;
 		font-style: normal;
+		font-display: swap; /* 🟢 [Performance] Avoid invisible text during load */
 		src: url('/fonts/NotoSansTC-Regular.woff2') format('woff2'),
 			 url('/fonts/NotoSansTC-Regular.woff') format('woff');
 	}
@@ -304,6 +311,7 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 		font-family: 'Noto Sans TC';
 		font-weight: 700;
 		font-style: bold;
+		font-display: swap; /* 🟢 [Performance] Avoid invisible text during load */
 		src: url('/fonts/NotoSansTC-Bold.woff2') format('woff2'),
 			 url('/fonts/NotoSansTC-Bold.woff') format('woff');
 	}
