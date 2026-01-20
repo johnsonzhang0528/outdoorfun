@@ -171,27 +171,27 @@ const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
 				</span>
 			</div>
             
-            <div class="absolute bottom-2 left-2 text-white/80 text-xs font-bold drop-shadow-md z-20">
+            <div class="absolute bottom-2 left-2 text-white text-xs font-bold drop-shadow-md z-20">
                 🌊 {spot.bottom_type}
             </div>
 		</div>
 		
 		<div class="p-5 flex-grow flex flex-col">
 			<div class="flex justify-between items-start mb-2">
-				<h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-700 transition-colors">
+				<h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-800 transition-colors">
 					{spot.name}
 				</h2>
-				<span class="text-xs font-semibold bg-stone-100 text-stone-600 px-2 py-1 rounded-full">
+				<span class="text-xs font-semibold bg-stone-100 text-stone-700 px-2 py-1 rounded-full">
 					{spot.city}
 				</span>
 			</div>
 
-			<p class="text-stone-500 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">
+			<p class="text-stone-600 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">
 				{spot.description}
 			</p>
 
             {/* Quick Stats */}
-            <div class="flex items-center gap-3 text-xs text-stone-400 border-t border-stone-100 pt-3">
+            <div class="flex items-center gap-3 text-xs text-stone-600 border-t border-stone-100 pt-3">
                 {spot.best_swell && (
                     <span>最佳浪向: {spot.best_swell}</span>
                 )}

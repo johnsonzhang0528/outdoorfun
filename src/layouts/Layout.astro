@@ -166,19 +166,19 @@ const isActive = (path: string) => {
 <slot />
 </main>
 
-<footer class="bg-stone-900 text-stone-300 py-8 md:py-12 mt-12 md:mt-20">
+<footer class="bg-stone-900 text-stone-200 py-8 md:py-12 mt-12 md:mt-20">
 <div class="container mx-auto px-4">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <div>
 <h3 class="text-white font-bold text-lg mb-4">關於本站</h3>
-<p class="text-sm leading-relaxed">
+<p class="text-sm leading-relaxed text-stone-300">
 Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊與衝浪點地圖。
 結合氣象 API 技術，為您分析每日浪況風向與潮汐。
 </p>
 </div>
 <div>
 <h3 class="text-white font-bold text-lg mb-4">熱門連結</h3>
-<ul class="space-y-2 text-sm">
+<ul class="space-y-2 text-sm text-stone-300">
 							<li><a href="/topic/all-advanced" class="hover:text-white transition">進階浪點</a></li>
 							<li><a href="/topic/all-beginner" class="hover:text-white transition">新手體驗</a></li>
                             <li><a href="/directory" class="hover:text-white transition">全台浪點索引</a></li>
@@ -192,14 +192,14 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 </div>
 <div>
 <h3 class="text-white font-bold text-lg mb-4">免責聲明</h3>
-<p class="text-xs leading-relaxed">
+<p class="text-xs leading-relaxed text-stone-400">
 本站浪況資訊由氣象 API 輔助整理，實際海象請以現場狀況與安全為準。
 部分連結可能包含合作推廣內容。
 </p>
 </div>
 </div>
 <div class="border-t border-stone-800 mt-8 pt-8 text-center text-xs text-stone-400">
-<p class="mb-2">
+<p class="mb-2 text-stone-400">
 聯盟行銷聲明：本站部分內容包含推廣連結。當您透過這些連結購買商品時，我們可能會獲得微薄的佣金，這不會增加您的購買成本，但能支持我們持續創作優質內容。
 </p>
 &copy; 2005-{new Date().getFullYear()} OutdoorFun. All rights reserved.
@@ -211,22 +211,22 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
 <div class="grid grid-cols-4 h-16">
 {/* Home */}
-<a href="/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<a href="/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/') ? 'text-sky-700 bg-sky-50/80 font-bold border-t-2 border-sky-600' : 'text-stone-600 hover:text-stone-800 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
 <span class="text-[11px]">首頁</span>
 </a>
 {/* Search */}
-<a href="/search" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/search') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<a href="/search" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/search') ? 'text-sky-700 bg-sky-50/80 font-bold border-t-2 border-sky-600' : 'text-stone-600 hover:text-stone-800 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
 <span class="text-[11px]">搜尋</span>
 </a>
 {/* Beginner */}
-<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-beginner') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-beginner') ? 'text-sky-700 bg-sky-50/80 font-bold border-t-2 border-sky-600' : 'text-stone-600 hover:text-stone-800 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 <span class="text-[11px]">新手</span>
 </a>
 {/* Advanced */}
-<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-advanced') ? 'text-sky-600 bg-sky-50/80 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-600 border-t-2 border-transparent'}`}>
+<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-advanced') ? 'text-sky-700 bg-sky-50/80 font-bold border-t-2 border-sky-600' : 'text-stone-600 hover:text-stone-800 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 <span class="text-[11px]">進階</span>
 </a>
