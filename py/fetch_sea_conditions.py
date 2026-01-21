@@ -20,12 +20,27 @@ def load_spots():
     with open(INPUT_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def load_existing_data():
+    if not os.path.exists(OUTPUT_FILE):
+        return {}
+    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
 def fetch_marine_data(spots):
-    data = {}
-    data["_metadata"] = {
+    # Load existing data to preserve history in case of fetch failure
+    data = load_existing_data()
+    
+    # Update metadata
+    if "_metadata" not in data:
+        data["_metadata"] = {}
+    
+    data["_metadata"].update({
         "updated_at": datetime.datetime.now().isoformat(),
         "source": "Open-Meteo Marine API"
-    }
+    })
 
     for spot in spots:
         name = spot["name"]
@@ -58,11 +73,14 @@ def fetch_marine_data(spots):
                 }
             else:
                 log(f"Failed to fetch {name}: {response.status_code} {response.text}")
+                # If failed, we conceptually 'keep' the old data (which is already in `data`)
+                # But we might want to know it's stale? For now, just keeping it is safer than 0 data.
                 
             time.sleep(1) # Respect rate limits
             
         except Exception as e:
             log(f"Exception for {name}: {e}")
+            # Keep old data
 
     return data
 
