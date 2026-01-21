@@ -49,10 +49,21 @@ const staticTileUrl = `https://tile.openstreetmap.org/${zoom}/${xTile}/${yTile}.
 </style>
 
 <script>
-  import L from 'leaflet';
+  // Use dynamic import to code-split Leaflet (Reduce Unused JS)
+  // This moves ~40KB+ of JS off the critical path
+  
+  async function initMap() {
+    const mapEl = document.getElementById('spot-map');
+    if (!mapEl) return;
+    
+    // Check if map is already initialized
+    // @ts-ignore
+    if (mapEl._leaflet_id) return;
 
-  // Fix for default marker icons missing in production builds sometimes
-  const fixLeafletIcons = () => {
+    // 1. Dynamically import Leaflet only when needed
+    const L = (await import('leaflet')).default;
+
+    // 2. Fix Icons (moved inside to access L scope)
     // @ts-ignore
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
@@ -60,21 +71,10 @@ const staticTileUrl = `https://tile.openstreetmap.org/${zoom}/${xTile}/${yTile}.
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
     });
-  };
-
-  function initMap() {
-    const mapEl = document.getElementById('spot-map');
-    if (!mapEl) return;
-    
-    // Check if map is already initialized to avoid "Map container is already initialized" error
-    // @ts-ignore
-    if (mapEl._leaflet_id) return;
 
     const lat = parseFloat(mapEl.dataset.lat || '0');
     const lng = parseFloat(mapEl.dataset.lng || '0');
     const name = mapEl.dataset.name || '';
-
-    fixLeafletIcons();
 
     // Default to Taiwan center if coordinates are missing
     const validLat = lat !== 0 ? lat : 23.97565;
@@ -85,6 +85,7 @@ const staticTileUrl = `https://tile.openstreetmap.org/${zoom}/${xTile}/${yTile}.
         zoomControl: false // Cleaner look initially
     }).setView([validLat, validLng], zoom);
 
+    // Add controls after init
     L.control.zoom({ position: 'topright' }).addTo(map);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -98,30 +99,28 @@ const staticTileUrl = `https://tile.openstreetmap.org/${zoom}/${xTile}/${yTile}.
         .openPopup();
     }
 
-    // Fade in map to reveal interactive version over static image
+    // Fade in map
     mapEl.classList.add('loaded');
     
-    // Cleanup static image to reduce DOM count after transition
+    // Cleanup static image
     const staticImg = mapEl.parentElement?.querySelector('img');
     if (staticImg) {
+        // Wait for fade transition to complete
         setTimeout(() => staticImg.remove(), 1200);
     }
   }
 
-  // Defer initialization:
-  // 1. Avoid Force Reflow by not running during critical path.
-  // 2. Prioritize LCP image display (static image).
-  // 3. User requestIdleCallback to run when main thread is free.
+  // Defer initialization to avoid Forced Reflow and prioritize LCP
   function scheduleInit() {
+      // Use requestIdleCallback if available, with a small delay to ensure main thread is clear
       if ('requestIdleCallback' in window) {
            // @ts-ignore
-           requestIdleCallback(() => initMap(), { timeout: 2000 });
+           requestIdleCallback(() => initMap(), { timeout: 3000 });
       } else {
-           setTimeout(initMap, 500); 
+           setTimeout(initMap, 1000); 
       }
   }
 
   // Support Astro View Transitions (ClientRouter)
-  // Ensure we init on first load and subsequent navigations
   document.addEventListener('astro:page-load', scheduleInit);
 </script>
