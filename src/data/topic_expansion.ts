@@ -24,6 +24,21 @@ export const TOPIC_CONFIG = {
     'easy-access': { name: '交通便利', tags: ['停車場', '火車站', '公車'] }
   },
 
+  // 4. [新增] 季節關鍵字對應 (Season Mapping)
+  // 用於在頁面生成時動態比對 best_swell
+  seasonMapping: {
+      winter: {
+        keywords: ['東北', '北'],
+        name: '冬季',
+        adjective: '東北季風'
+      },
+      summer: {
+        keywords: ['西南', '南', '颱風'],
+        name: '夏季',
+        adjective: '西南氣流'
+      }
+  },
+
   // 2. 目標城市 (含中英對照 slug)
   targetCities: [
     { name: '宜蘭縣', slug: 'yilan' },
@@ -54,13 +69,13 @@ export const TOPIC_CONFIG = {
     },
     { 
       id: 'best-winter', 
-      title: '全台冬季浪點精選', 
-      desc: '東北季風來襲！盤點全台灣冬季浪況最佳的衝浪熱點，感受強勁的推力與管浪快感。' 
+      title: '全台冬季浪點攻略 (東北季風)', 
+      desc: '盤點全台最適合東北季風的浪點。' 
     },
     { 
       id: 'summer-vibes', 
-      title: '夏日南風衝浪趣', 
-      desc: '除了颱風浪，夏天還有哪裡好玩？精選適合西南氣流或颱風前後的夏日浪點。' 
+      title: '全台夏季浪點推薦 (西南氣流)', 
+      desc: '夏天衝浪去哪裡？精選不受東北風影響的夏季浪點。' 
     }
   ]
 };

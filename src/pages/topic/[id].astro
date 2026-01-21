@@ -64,18 +64,40 @@ export async function getStaticPaths() {
   });
 
   // 2. 生成 [通用主題] 頁面 (e.g., /topic/all-beginner)
+  const currentYear = new Date().getFullYear(); // 🟢 pSEO 關鍵：注入當前年份
+
   TOPIC_CONFIG.generalTopics.forEach(topic => {
       let matchedSpots = [];
-      
+      let dynamicTitle = topic.title;
+      let dynamicDesc = topic.desc;
+
       // 根據 ID 硬編碼的特定篩選邏輯
       if (topic.id === 'all-beginner') {
           matchedSpots = safeSpots.filter(s => s.difficulty === '初學者' || s.tags?.includes('新手') || s.tags?.includes('教學'));
       } else if (topic.id === 'all-advanced') {
           matchedSpots = safeSpots.filter(s => s.difficulty === '中級' || s.difficulty === '專家' || s.tags?.includes('進階') || s.tags?.includes('高手'));
       } else if (topic.id === 'best-winter') {
-          matchedSpots = safeSpots.filter(s => s.best_swell?.includes('東北') || s.tags?.includes('東北季風'));
+           // 🟢 季節性 pSEO 邏輯升級：檢查最佳浪向是否包含「東北」或「北」
+          // Checks best_swell keywords defined in configuration
+          const mapping = TOPIC_CONFIG.seasonMapping.winter;
+          matchedSpots = safeSpots.filter(s => 
+            mapping.keywords.some(k => s.best_swell?.includes(k)) || 
+            s.tags?.includes('東北季風') ||
+            s.tags?.includes('冬季浪點')
+          );
+          // 優化：動態標題與描述
+          dynamicTitle = `${currentYear} 全台${mapping.adjective}衝浪地圖`;
+          dynamicDesc = `東北季風來襲！為您整理全台灣 ${matchedSpots.length} 個最適合冬季衝浪的浪點。這些地點在東北浪況下表現最佳，是${currentYear}年冬天的首選。`;
       } else if (topic.id === 'summer-vibes') {
-          matchedSpots = safeSpots.filter(s => s.best_swell?.includes('西南') || s.best_wind?.includes('西南'));
+          const mapping = TOPIC_CONFIG.seasonMapping.summer;
+          matchedSpots = safeSpots.filter(s => 
+            mapping.keywords.some(k => s.best_swell?.includes(k)) || 
+            s.best_wind?.includes('西南') ||
+            s.tags?.includes('夏季浪點')
+          );
+          
+          dynamicTitle = `${currentYear} 夏日${mapping.adjective}衝浪特輯`;
+          dynamicDesc = `夏天除了颱風浪還能去哪？精選 ${matchedSpots.length} 個適合西南氣流的浪點，讓你在炎炎夏日也能享受衝浪樂趣。`;
       } else {
         // Fallback catch all if logic not defined above
         matchedSpots = []; 
@@ -86,8 +108,8 @@ export async function getStaticPaths() {
             params: { id: topic.id },
             props: {
                 type: 'general',
-                title: topic.title,
-                description: topic.desc,
+                title: dynamicTitle,
+                description: dynamicDesc,
                 spots: matchedSpots,
                 city: null, // 通用主題不限城市，所以 AdCard 隨機顯示
                 keyword: topic.title
