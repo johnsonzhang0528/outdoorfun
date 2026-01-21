@@ -328,22 +328,8 @@ const searchSchema = {
                 </div>
             ))}
 
-			{spots.map((spot) => (
-                <div 
-                    class="spot-item transition-opacity duration-300 hidden"
-                    data-name={spot.name.toLowerCase()}
-                    data-city={spot.city}
-                    data-area={spot.area}
-                    data-bottom={spot.bottom_type}
-                    data-difficulty={spot.difficulty}
-                    data-tags={spot.tags ? spot.tags.join(',') : ''}
-                    data-features={spot.features ? spot.features.join(',') : ''}
-                    /* CSS Containment for performance */
-                    style="content-visibility: auto; contain-intrinsic-size: 1px 400px;"
-                >
-                    <SpotCard spot={spot as SurfSpot} />
-                </div>
-			))}
+			{/* Data injection for CSR to reduce HTML size */}
+            <script type="application/json" id="spots-data" set:html={JSON.stringify(spots)} />
 		</div>
 
         {/* Template for Client-side Ad Injection */}
@@ -371,7 +357,10 @@ const searchSchema = {
     let resultsGrid: HTMLElement | null;
     let noResults: HTMLElement | null;
     let countDisplay: HTMLElement | null;
-    let items: NodeListOf<HTMLElement>;
+    
+    // Data Source
+    let spotsData: any[] = [];
+    let filteredSpots: any[] = [];
     
     // Filter Modal Elements
     let modal: HTMLElement | null;
@@ -398,6 +387,103 @@ const searchSchema = {
     // Ad Strategy
     const AD_START_INDEX = Math.floor(Math.random() * 10);
 
+    // --- CSR Rendering CONSTANTS (Ported from SpotCard.astro) ---
+    const COLOR_PALETTES = [
+      { gradient: 'bg-gradient-to-br from-blue-600 to-blue-800', accent: 'bg-blue-400', text: 'text-blue-50', opacity: 0.15 },
+      { gradient: 'bg-gradient-to-br from-orange-400 to-red-500', accent: 'bg-orange-300', text: 'text-orange-50', opacity: 0.2 },
+      { gradient: 'bg-gradient-to-br from-teal-500 to-emerald-600', accent: 'bg-teal-300', text: 'text-teal-50', opacity: 0.15 },
+      { gradient: 'bg-gradient-to-br from-slate-700 to-slate-900', accent: 'bg-slate-500', text: 'text-slate-100', opacity: 0.1 },
+      { gradient: 'bg-gradient-to-br from-amber-600 to-yellow-700', accent: 'bg-yellow-400', text: 'text-amber-50', opacity: 0.18 },
+      { gradient: 'bg-gradient-to-br from-indigo-500 to-purple-600', accent: 'bg-indigo-300', text: 'text-indigo-50', opacity: 0.15 },
+      { gradient: 'bg-gradient-to-br from-cyan-500 to-blue-600', accent: 'bg-cyan-300', text: 'text-cyan-50', opacity: 0.15 }
+    ];
+
+    const GEO_ICONS = {
+      sand: `<path d="M12 21C7.5 21 4 17 4 12C4 7 7.5 3 12 3C16.5 3 20 7 20 12C20 17 16.5 21 12 21Z M12 21V13 M8 19L12 13L16 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+      reef: `<path d="M21 21H3L9 9L13 14L16 8L21 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/>`,
+      stone: `<circle cx="8" cy="14" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="18" cy="10" r="4" stroke="currentColor" stroke-width="2" fill="none"/>`,
+      mixed: `<path d="M2 12Q6 7 10 12T18 12T26 12" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round"/>`,
+      default: `<path d="M12 20V10 M6 6C6 6 8 10 12 10C16 10 18 6 18 6 M12 10C9 14 5 12 5 12 M12 10C15 14 19 12 19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`
+    };
+
+    const difficultyColor: Record<string, string> = { "初學者": "bg-green-500", "中級": "bg-blue-500", "專家": "bg-red-500" };
+
+    const getHashIndex = (str: string, max: number) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return Math.abs(hash % max);
+    };
+
+    function createSpotCardHTML(spot: any) {
+        // Theme Logic
+        const theme = COLOR_PALETTES[getHashIndex(spot.name + spot.city, COLOR_PALETTES.length)];
+        const diffBg = difficultyColor[spot.difficulty] || "bg-stone-500";
+        
+        let iconSvg = GEO_ICONS.default;
+        const bottom = spot.bottom_type || "";
+        if (bottom.includes("沙")) iconSvg = GEO_ICONS.sand;
+        else if (bottom.includes("礁") || bottom.includes("岩")) iconSvg = GEO_ICONS.reef;
+        else if (bottom.includes("石")) iconSvg = GEO_ICONS.stone;
+        else if (bottom.includes("混合")) iconSvg = GEO_ICONS.mixed;
+
+        const glowPos = getHashIndex(spot.name, 4);
+        const glowClasses = ['-top-12 -left-12', '-top-12 -right-12', '-bottom-12 -left-12', '-bottom-12 -right-12'];
+        const isLongName = spot.name.length > 8;
+        const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
+        
+        // Pattern logic
+        const patternId = `pattern-${spot.name}-${Math.random().toString(36).substr(2,9)}`;
+
+        const patternSvg = `
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="${patternId}" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+                 <g transform="translate(12, 12)" opacity="${theme.opacity}" color="currentColor" class="${theme.text}">
+                   ${iconSvg}
+                 </g>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="100%" height="100%" fill="url(#${patternId})" />
+          </svg>
+        `;
+
+        return `
+        <div class="spot-item transition-opacity duration-300" style="content-visibility: auto; contain-intrinsic-size: 1px 400px;">
+          <a href="/spot/${spot.name}" class="block group h-full">
+            <article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col active:scale-[0.98] transform duration-100">
+                <div class="relative overflow-hidden h-40 flex flex-col items-center justify-center p-4 text-center ${theme.gradient}">
+                    <div class="absolute w-40 h-40 rounded-full opacity-30 blur-3xl mix-blend-screen ${theme.accent} ${glowClasses[glowPos]}"></div>
+                    <div class="absolute inset-0 w-full h-full text-white pointer-events-none mix-blend-overlay">${patternSvg}</div>
+                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+                    <div class="relative z-10 flex flex-col items-center gap-1">
+                        <span class="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/30 pb-1 mb-1 shadow-sm ${theme.text}">TW SURF</span>
+                        <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans ${fontSize}">${spot.name}</div>
+                        <div class="w-6 h-1 bg-white/50 rounded-full mt-1 shadow-sm backdrop-blur-sm"></div>
+                    </div>
+                    <div class="absolute top-2 right-2 flex gap-2 z-20">
+                        <span class="${diffBg} text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm shadow-sm bg-opacity-90">${spot.difficulty}</span>
+                    </div>
+                    <div class="absolute bottom-2 left-2 text-white text-xs font-bold drop-shadow-md z-20">
+                        🌊 ${spot.bottom_type}
+                    </div>
+                </div>
+                <div class="p-5 flex-grow flex flex-col">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-800 transition-colors">${spot.name}</h2>
+                        <span class="text-xs font-semibold bg-stone-100 text-stone-700 px-2 py-1 rounded-full">${spot.city}</span>
+                    </div>
+                    <p class="text-stone-600 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">${spot.description || ''}</p>
+                    <div class="flex items-center gap-3 text-xs text-stone-600 border-t border-stone-100 pt-3">
+                        ${spot.best_swell ? `<span>最佳浪向: ${spot.best_swell}</span>` : ''}
+                    </div>
+                </div>
+            </article>
+          </a>
+        </div>`;
+    }
+
     function randomizeAdCard(adElement: Element, sequenceIndex: number) {
         const article = adElement.querySelector('.js-native-ad') as HTMLElement;
         if (!article || !article.dataset.adsPool) return;
@@ -408,7 +494,7 @@ const searchSchema = {
             
             const img = article.querySelector('.js-ad-img') as HTMLImageElement;
             const title = article.querySelector('.js-ad-title');
-            const titleOverlay = article.querySelector('.js-ad-title-overlay'); // New Header Title
+            const titleOverlay = article.querySelector('.js-ad-title-overlay');
             const desc = article.querySelector('.js-ad-desc');
             const cta = article.querySelector('.js-ad-cta');
             const link = article.querySelector('.js-ad-link') as HTMLAnchorElement;
@@ -416,7 +502,7 @@ const searchSchema = {
 
             if (img) { img.src = ad.image; img.alt = ad.title; }
             if (title) title.textContent = ad.title;
-            if (titleOverlay) titleOverlay.textContent = ad.title; // Update Header Title
+            if (titleOverlay) titleOverlay.textContent = ad.title; 
             if (desc) desc.textContent = ad.desc;
             if (cta) cta.textContent = ad.cta;
             if (link) {
@@ -435,20 +521,19 @@ const searchSchema = {
     }
 
     function calculateMatches(simulateCheckboxes = false): number {
-        if (!items) return 0;
+        if (!spotsData.length) return 0;
         const term = searchInput ? searchInput.value.toLowerCase() : '';
         const cityFilter = filterCityInput?.value || '';
         const activeCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
 
-        let count = 0;
-        items.forEach((el) => {
-            const name = el.dataset.name || '';
-            const city = el.dataset.city || '';
-            const area = el.dataset.area || '';
-            const bottom = el.dataset.bottom || '';
-            const difficulty = el.dataset.difficulty || '';
-            const tags = el.dataset.tags || '';
-            const features = el.dataset.features || '';
+        const results = spotsData.filter(spot => {
+            const name = (spot.name || '').toLowerCase();
+            const city = spot.city || '';
+            const area = spot.area || '';
+            const bottom = spot.bottom_type || '';
+            const difficulty = spot.difficulty || '';
+            const tags = (spot.tags || []).join(',');
+            const features = (spot.features || []).join(',');
             
             let matchesSearch = term === '' || 
                                   name.includes(term) || 
@@ -464,15 +549,15 @@ const searchSchema = {
                 const rawKey = cb.dataset.key || '';
                 const keys = rawKey.split('/');
 
-                if (type === 'bottom') { // 🌊 Filter by Bottom Type
+                if (type === 'bottom') {
                     return bottom.includes(rawKey);
-                } else if (type === 'difficulty') { // 🏄 Filter by Difficulty
+                } else if (type === 'difficulty') {
                     return difficulty === rawKey;
-                } else if (type === 'feature') { // 🚿 Filter by Features
+                } else if (type === 'feature') {
                     return features.includes(rawKey);
-                } else if (type === 'tag') { // 🔥 Filter by Tags
+                } else if (type === 'tag') {
                     return keys.some(k => tags.includes(k));
-                } else if (type === 'location') { // 📍 Filter by Location keywords
+                } else if (type === 'location') {
                      return keys.some(k => 
                         city.includes(k) || 
                         area.includes(k) || 
@@ -482,38 +567,37 @@ const searchSchema = {
                 return true;
             });
 
-            if (matchesSearch && matchesCity && matchesAdvanced) {
-                count++;
-            }
+            return matchesSearch && matchesCity && matchesAdvanced;
         });
-        return count;
+
+        if (!simulateCheckboxes) {
+            filteredSpots = results;
+        }
+        return results.length;
     }
 
     function renderResults() {
-        if (!resultsGrid || !sortOrderInput || !items) return;
+        if (!resultsGrid || !sortOrderInput) return;
 
-        // 1. Remove old ads & Skeletons
-        resultsGrid.querySelectorAll('.native-ad-injected').forEach(el => el.remove());
-        resultsGrid.querySelectorAll('.skeleton-loader').forEach(el => el.remove());
+        // 1. Remove Skeletons & Reset
+        resultsGrid.innerHTML = ''; // CSR Strategy: Clear all and rebuild
 
-        const adTemplate = document.getElementById('native-ad-template') as HTMLTemplateElement;
+        // 2. Filter & Sort
+        calculateMatches(); // updates filteredSpots
         const order = sortOrderInput.value;
-        const itemArray = Array.from(items);
 
-        // 2. Sort Logic
         if (order === 'default') {
-             itemArray.sort((a, b) => (a.dataset.name || '').localeCompare(b.dataset.name || ''));
+             filteredSpots.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         } else if (order.includes('difficulty')) {
             const diffRank: Record<string, number> = { "初學者": 1, "中級": 2, "專家": 3 };
-            itemArray.sort((a, b) => {
-                const da = diffRank[a.dataset.difficulty || ''] || 0;
-                const db = diffRank[b.dataset.difficulty || ''] || 0;
+            filteredSpots.sort((a, b) => {
+                const da = diffRank[a.difficulty || ''] || 0;
+                const db = diffRank[b.difficulty || ''] || 0;
                 return order === 'difficulty-asc' ? da - db : db - da;
             });
         }
 
-        // 3. Prepare filters
-        let visibleCount = 0;
+        // 3. Prepare filters UI
         let adInsertionCount = 0;
         const term = searchInput ? searchInput.value.toLowerCase() : '';
         const cityFilter = filterCityInput?.value || '';
@@ -534,39 +618,20 @@ const searchSchema = {
             quickClearBtn.classList.toggle('hidden', !term && !cityFilter && activeCheckboxes.length === 0);
         }
 
+        const adTemplate = document.getElementById('native-ad-template') as HTMLTemplateElement;
+
         // 4. Render Loop
-        itemArray.forEach((el) => {
-            const name = el.dataset.name || '';
-            const city = el.dataset.city || '';
-            const area = el.dataset.area || '';
-            const bottom = el.dataset.bottom || '';
-            const difficulty = el.dataset.difficulty || '';
-            const tags = el.dataset.tags || '';
-            const features = el.dataset.features || '';
+        filteredSpots.forEach((spot, index) => {
+             // Generate Card HTML
+             const cardHtml = createSpotCardHTML(spot);
+             const tempDiv = document.createElement('div');
+             tempDiv.innerHTML = cardHtml.trim();
+             const cardEl = tempDiv.firstChild as HTMLElement;
+             
+             resultsGrid?.appendChild(cardEl);
 
-            let matchesSearch = term === '' || name.includes(term) || city.includes(term) || area.includes(term) || tags.includes(term) || bottom.includes(term);
-            const matchesCity = cityFilter === '' || city === cityFilter;
-            
-            const matchesAdvanced = activeCheckboxes.every(cb => {
-                const type = cb.dataset.type;
-                const rawKey = cb.dataset.key || '';
-                const keys = rawKey.split('/');
-
-                if (type === 'bottom') return bottom.includes(rawKey);
-                if (type === 'difficulty') return difficulty === rawKey;
-                if (type === 'feature') return features.includes(rawKey);
-                if (type === 'tag') return keys.some(k => tags.includes(k));
-                if (type === 'location') return keys.some(k => city.includes(k) || area.includes(k) || name.includes(k));
-                return true;
-            });
-
-            if (matchesSearch && matchesCity && matchesAdvanced) {
-                el.style.display = 'block';
-                resultsGrid?.appendChild(el);
-                visibleCount++;
-
-                // Inject Ads every 6 items (Updated from 9)
-                if (visibleCount % 6 === 0 && adTemplate) {
+             // Inject Ads every 6 items
+             if ((index + 1) % 6 === 0 && adTemplate) {
                      const adClone = adTemplate.content.cloneNode(true) as HTMLElement;
                      const wrapper = adClone.querySelector('.native-ad-injected') as HTMLElement;
                      if (wrapper) {
@@ -574,15 +639,11 @@ const searchSchema = {
                         adInsertionCount++;
                      }
                      resultsGrid?.appendChild(adClone);
-                }
-            } else {
-                el.style.display = 'none';
-                resultsGrid?.appendChild(el);
             }
         });
 
-        if (countDisplay) countDisplay.textContent = visibleCount.toString();
-        if (visibleCount === 0) {
+        if (countDisplay) countDisplay.textContent = filteredSpots.length.toString();
+        if (filteredSpots.length === 0) {
             resultsGrid?.classList.add('hidden');
             noResults?.classList.remove('hidden');
         } else {
@@ -680,6 +741,16 @@ const searchSchema = {
     }
 
     function init() {
+        // Init Data
+        const scriptDataInfo = document.getElementById('spots-data');
+        if (scriptDataInfo && scriptDataInfo.textContent) {
+           try {
+               spotsData = JSON.parse(scriptDataInfo.textContent);
+           } catch(e) {
+               console.error("Failed to parse spots data", e);
+           }
+        }
+
         searchInput = document.getElementById('search-input') as HTMLInputElement;
         filterCityInput = document.getElementById('filter-city') as HTMLInputElement;
         sortOrderInput = document.getElementById('sort-order') as HTMLInputElement;
@@ -687,7 +758,7 @@ const searchSchema = {
         resultsGrid = document.getElementById('results-grid');
         noResults = document.getElementById('no-results');
         countDisplay = document.getElementById('count-display');
-        items = document.querySelectorAll('.spot-item'); // Updated class selector
+        // No longer need 'items' from DOM
         
         modal = document.getElementById('filter-modal');
         modalPanel = document.getElementById('modal-panel');
