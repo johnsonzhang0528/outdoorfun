@@ -5,6 +5,7 @@ import NativeAdCard from '../../components/NativeAdCard.astro';
 import GearChecklist from '../../components/GearChecklist.astro';
 import spots from '../../data/surf_spots.json';
 import { TOPIC_CONFIG } from '../../data/topic_expansion';
+import { getValidSpots } from '../../utils/filterSpots';
 
 // 定義 Spot 型別，避免 TypeScript 報錯
 type Spot = {
@@ -18,11 +19,14 @@ type Spot = {
     best_swell?: string;
     best_wind?: string;
     description?: string;
+    lat: number;
+    lng: number;
 };
 
 export async function getStaticPaths() {
   const paths = [];
-  const safeSpots = spots as Spot[];
+  const validSpots = getValidSpots(spots);
+  const safeSpots = validSpots as Spot[];
 
   // 1. 生成 [城市 + 特徵] 組合頁面 (e.g., /topic/yilan-beginner)
   const { targetCities, features } = TOPIC_CONFIG;

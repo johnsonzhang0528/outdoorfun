@@ -3,14 +3,16 @@ import Layout from '../layouts/Layout.astro';
 import SpotCard from '../components/SpotCard.astro';
 import NativeAdCard from '../components/NativeAdCard.astro';
 import surfSpotsData from '../data/surf_spots.json';
+import { getValidSpots } from '../utils/filterSpots';
 
 // 1. 伺服器端預先排序 (CLS 優化)
-const spots = [...surfSpotsData].sort((a, b) => 
+const validSpots = getValidSpots(surfSpotsData);
+const spots = [...validSpots].sort((a, b) => 
     a.name.localeCompare(b.name, 'zh-TW')
 );
 
 // 取得唯一縣市列表
-const cities = [...new Set(surfSpotsData.map(s => s.city))].sort();
+const cities = [...new Set(validSpots.map(s => s.city))].sort();
 
 // 定義排序選項 (供前端渲染使用)
 const sortOptions = [
@@ -54,11 +56,11 @@ const getRankedValues = (data: SurfSpot[], key: keyof SurfSpot, isArray = false,
 };
 
 // Generate dynamic lists
-const topAreas = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'area', false, ['待確認']).slice(0, 12);
-const allBottomTypes = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'bottom_type', false);
-const allDifficulties = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'difficulty', false);
-const topTags = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'tags', true, ['OSM']).slice(0, 10);
-const allFeatures = getRankedValues(surfSpotsData as unknown as SurfSpot[], 'features', true).slice(0, 10);
+const topAreas = getRankedValues(validSpots as unknown as SurfSpot[], 'area', false, ['待確認']).slice(0, 12);
+const allBottomTypes = getRankedValues(validSpots as unknown as SurfSpot[], 'bottom_type', false);
+const allDifficulties = getRankedValues(validSpots as unknown as SurfSpot[], 'difficulty', false);
+const topTags = getRankedValues(validSpots as unknown as SurfSpot[], 'tags', true, ['OSM']).slice(0, 10);
+const allFeatures = getRankedValues(validSpots as unknown as SurfSpot[], 'features', true).slice(0, 10);
 
 // Define grouped filters Dynamically
 const filterGroups = [

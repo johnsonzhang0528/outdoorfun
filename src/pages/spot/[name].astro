@@ -8,9 +8,12 @@ import SpotCard from '../../components/SpotCard.astro';
 import NativeAdCard from '../../components/NativeAdCard.astro';
 import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
+import { getValidSpots } from '../../utils/filterSpots';
 
 export async function getStaticPaths() {
-  return spots.map((spot) => ({
+  const validSpots = getValidSpots(spots);
+
+  return validSpots.map((spot) => ({
     params: { name: spot.name },
     props: { spot },
   }));
@@ -140,7 +143,8 @@ const seoTitleFeatures = [
     spot.best_swell ? `最佳浪向${spot.best_swell}` : null
 ].filter(Boolean).join('、');
 
-const seoTitle = `${spot.name}衝浪點 - ${spot.city}${spot.area} | ${seoTitleFeatures} | ${currentYear}浪況預報`;
+const areaDisplay = spot.area && spot.area !== '待確認' ? spot.area : '';
+const seoTitle = `${spot.name}衝浪點 - ${spot.city}${areaDisplay} | ${seoTitleFeatures} | ${currentYear}浪況預報`;
 
 const richDescription = `【${spot.name}】是位於${spot.city}的${spot.difficulty}衝浪點。${spot.description} 提供${seoTitleFeatures}等完整資訊，查看即時浪況與潮汐預報。`;
 
@@ -313,6 +317,26 @@ const relatedSpots = spots
                                 {spot.city}{spot.area && spot.area !== '待確認' ? ` ${spot.area}` : ''}
                             </span>
                         </div>
+                    </div>
+                </div>
+
+                {/* 🟢 [SEO Fix] Visible FAQ Rendering to match Schema and avoid penalties */}
+                <div class="bg-white p-6 rounded-xl border border-stone-200 mb-12 shadow-sm">
+                    <h3 class="font-bold text-stone-800 mb-6 flex items-center gap-2 text-xl">
+                        <span>❓</span> 關於 {spot.name} 的常見問題
+                    </h3>
+                    <div class="space-y-6">
+                        {faqSchema.mainEntity.map((faq) => (
+                            <div class="border-b border-stone-100 last:border-0 pb-4 last:pb-0">
+                                <h4 class="font-bold text-stone-900 mb-2 flex items-start gap-2">
+                                    <span class="text-emerald-500">Q.</span> 
+                                    {faq.name}
+                                </h4>
+                                <p class="text-stone-600 leading-relaxed pl-6">
+                                    {faq.acceptedAnswer.text}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

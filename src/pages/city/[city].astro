@@ -3,9 +3,11 @@ import Layout from '../../layouts/Layout.astro';
 import SpotCard from '../../components/SpotCard.astro';
 import NativeAdCard from '../../components/NativeAdCard.astro';
 import spots from '../../data/surf_spots.json';
+import { getValidSpots } from '../../utils/filterSpots';
 
 export async function getStaticPaths() {
-  const cities = [...new Set(spots.map((s) => s.city))];
+  const validSpots = getValidSpots(spots);
+  const cities = [...new Set(validSpots.map((s) => s.city))];
   return cities.map((city) => ({
     params: { city },
     props: { city },
@@ -13,7 +15,8 @@ export async function getStaticPaths() {
 }
 
 const { city } = Astro.props;
-const citySpots = spots.filter(s => s.city === city);
+const validSpots = getValidSpots(spots);
+const citySpots = validSpots.filter(s => s.city === city);
 
 const title = `${city}衝浪地點推薦 - 共 ${citySpots.length} 個熱門浪點`;
 const description = `精選 ${city} 衝浪點推薦，包含新手浪點、教學點。提供即時浪況與交通資訊。`;

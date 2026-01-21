@@ -5,6 +5,7 @@ import NativeAdCard from '../components/NativeAdCard.astro';
 import spots from '../data/surf_spots.json';
 import { Image } from 'astro:assets';
 import heroBg from '../assets/hero-bg-surf.jpg';
+import { getValidSpots } from '../utils/filterSpots';
 
 // Simple types for the dataset
 type Spot = {
@@ -16,16 +17,19 @@ type Spot = {
     best_swell: string;
 	description: string;
     tags?: string[];
+    lat: number;
+    lng: number;
 };
 
 // 篩選熱門精選浪點 (優先選擇資料較完整、有 features 且 difficulty 明確的點)
 // 這裡簡單模擬：取 tag 最多或描述最長的浪點
-const surfSpots = (spots as Spot[])
+const validSpots = getValidSpots(spots);
+const surfSpots = (validSpots as Spot[])
     .sort((a, b) => (b.tags?.length || 0) - (a.tags?.length || 0))
     .slice(0, 8); // 取前 8 個 (配合 3 欄佈局 + 1 個廣告 = 9 格)
 
 // 動態計算熱門縣市
-const cityStats = spots.reduce((acc, spot) => {
+const cityStats = validSpots.reduce((acc, spot) => {
   acc[spot.city] = (acc[spot.city] || 0) + 1;
   return acc;
 }, {} as Record<string, number>);
