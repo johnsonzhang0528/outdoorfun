@@ -7,30 +7,19 @@
     
     <a href="/" class="group flex flex-col justify-center">
       <div class="flex items-baseline gap-1.5">
-        {/* H1 Tag Logic: Only display H1 on Homepage if it lacks a Hero H1, otherwise Div */}
-        {/* Current design has semantic H1 on camp pages, so header needs to be Div */}
         <div class="font-black text-lg md:text-xl tracking-tight text-stone-800 group-hover:text-emerald-800 transition-colors">
           Outdoor Fun
         </div>
         
-        {/* 已修正: TW 徽章使用深灰 */}
-        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-800 border border-stone-200">
-            TW
+        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+            SURF
         </span>
       </div>
-
+      
       <div class="flex items-center gap-2">
-        {/* 已修正: Since 2004 使用深橘 */}
-        <span class="flex items-center text-[10px] font-semibold text-emerald-700 tracking-wide uppercase">
-          <span class="mr-1">🏄</span> Since 2005
-        </span>
-        <span class="hidden md:inline-block w-0.5 h-3 bg-stone-300"></span>
-        
-        {/* 🟢 [FIX] 對比度優化: text-stone-400 -> text-stone-600 */}
-        {/* 字體很小(10px)，必須使用較深的灰色才能符合 WCAG AA 標準 */}
-        <span class="text-[10px] text-stone-600 hidden md:inline-block">
-          Best surf spots & forecast
-        </span>
+         <span class="text-[10px] text-stone-500 hidden md:inline-block">
+            Taiwan's Best Surf & Ocean Guide
+         </span>
       </div>
     </a>
 

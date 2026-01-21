@@ -64,7 +64,7 @@ const homeSchema = {
   "@graph": [
     {
       "@type": "WebSite",
-      "name": "Surf Taiwan - 全台衝浪情報誌",
+      "name": "Outdoor Fun 衝浪情報 (Surf Taiwan)",
       "url": Astro.site?.origin,
       "potentialAction": {
         "@type": "SearchAction",
@@ -77,7 +77,8 @@ const homeSchema = {
     },
     {
       "@type": "Organization",
-      "name": "Surf Taiwan (Outdoor Fun)",
+      "name": "Outdoor Fun",
+      "alternateName": ["Outdoor Fun 衝浪", "Surf Taiwan"],
       "url": Astro.site,
       "description": "提供全台灣衝浪地圖、即時浪況預報、新手教學與衝浪店資訊的專業情報網站。",
       "logo": {
@@ -87,7 +88,7 @@ const homeSchema = {
     },
     {
       "@type": "WebPage",
-      "name": "Surf Taiwan 首頁",
+      "name": "Outdoor Fun 首頁",
       "url": Astro.site,
       "description": "全台衝浪與戶外運動情報，收錄超過 200 個浪點、即時海況與天氣預報。"
     }
@@ -96,7 +97,7 @@ const homeSchema = {
 ---
 
 <Layout 
-	title="Outdoor Fun (Surf Taiwan) | 全台衝浪與戶外運動情報 Since 2005"
+	title="Outdoor Fun 衝浪地圖 | 全台浪點與即時預報 (Surf Taiwan)"
     omitSuffix={true}
 >
     <!-- Inject Schema -->

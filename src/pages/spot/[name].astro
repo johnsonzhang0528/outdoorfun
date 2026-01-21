@@ -122,6 +122,7 @@ breadcrumbListItems.push({
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
+  "@id": `${Astro.url.href}#breadcrumb`,
   "itemListElement": breadcrumbListItems
 };
 
@@ -129,6 +130,7 @@ const breadcrumbSchema = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  "@id": `${Astro.url.href}#faq`,
   "mainEntity": []
 };
 
@@ -165,18 +167,15 @@ const seoTitle = `${spot.name}衝浪點 - ${spot.city}${areaDisplay} | ${seoTitl
 
 const richDescription = `【${spot.name}】是位於${spot.city}的${spot.difficulty}衝浪點。${spot.description} 提供${seoTitleFeatures}等完整資訊，查看即時浪況與潮汐預報。`;
 
-// Schema.org
+// Spot Schema (Enhanced with E-E-A-T)
 const spotSchema = {
   "@context": "https://schema.org",
   "@type": ["Beach", "SportsActivityLocation"],
-  "name": spot.name,
-  "description": richDescription,
-  "url": Astro.url.href,
-  "image": new URL("/images/hero-bg-surf.jpg", Astro.site?.origin || "https://www.outdoorfun.com.tw").href,
+  "@id": `${Astro.url.href}#place`,
+  "name": `${spot.name}衝浪區`,
+  "image": `https://maps.googleapis.com/maps/api/staticmap?center=${spot.lat},${spot.lng}&zoom=14&size=600x300&maptype=satellite&key=YOUR_API_KEY_PLACEHOLDER`, // Fallback Image
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": spot.address,
-    "addressLocality": spot.area,
     "addressRegion": spot.city,
     "addressCountry": "TW"
   },
@@ -185,6 +184,24 @@ const spotSchema = {
     "latitude": spot.lat,
     "longitude": spot.lng
   },
+  "url": Astro.url.href,
+  "description": richDescription,
+  // 🟢 E-E-A-T: 權威性注入
+  "author": {
+      "@type": "Organization",
+      "name": "Outdoor Fun 編輯團隊",
+      "url": Astro.site ? Astro.site.origin : "https://outdoorfun.com.tw"
+  },
+  "publisher": {
+      "@type": "Organization",
+      "name": "Outdoor Fun",
+      "logo": {
+          "@type": "ImageObject",
+          "url": `${Astro.site ? Astro.site.origin : ""}/favicon.svg`
+      }
+  },
+  "datePublished": publishedTime,
+  "dateModified": modifiedTime,
   "amenityFeature": spotFeatures.map(f => ({
       "@type": "LocationFeatureSpecification",
       "name": f.label,
@@ -192,6 +209,61 @@ const spotSchema = {
       "image": f.icon
   }))
 };
+
+// 🟢 Unified Graph Schema
+const graphSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebPage",
+            "@id": Astro.url.href,
+            "url": Astro.url.href,
+            "name": seoTitle,
+            "isPartOf": { "@id": `${Astro.site ? Astro.site.origin : ""}/#website` },
+            "breadcrumb": { "@id": `${Astro.url.href}#breadcrumb` },
+            "about": { "@id": `${Astro.url.href}#place` },
+            "mainEntity": { "@id": `${Astro.url.href}#place` },
+            "primaryImageOfPage": { "@id": `${Astro.url.href}#place` } // Use spot image as primary
+        },
+        spotSchema,
+        breadcrumbSchema,
+        faqSchema
+    ]
+};
+
+// 🟢 Dynamic OG Image Logic
+const cityImageMap: Record<string, string> = {
+    // North (北部)
+    "宜蘭縣": "/images/og-yilan.jpg",
+    "新北市": "/images/og-north.jpg",
+    "基隆市": "/images/og-north.jpg",
+    "桃園市": "/images/og-north.jpg",
+    "新竹縣": "/images/og-north.jpg",
+    "新竹市": "/images/og-north.jpg",
+    
+    // East (東部)
+    "花蓮縣": "/images/og-east.jpg",
+    "台東縣": "/images/og-east.jpg",
+    
+    // South (南部)
+    "屏東縣": "/images/og-south.jpg",
+    "高雄市": "/images/og-south.jpg",
+    "台南市": "/images/og-south.jpg",
+    "嘉義縣": "/images/og-south.jpg",
+    
+    // West (西部)
+    "苗栗縣": "/images/og-west.jpg",
+    "台中市": "/images/og-west.jpg",
+    "彰化縣": "/images/og-west.jpg",
+    "雲林縣": "/images/og-west.jpg",
+    
+    // Islands (離島)
+    "澎湖縣": "/images/og-islands.jpg",
+    
+    // Fallback
+    "Unknown": "/images/hero-bg-surf.jpg"
+};
+const ogImage = cityImageMap[spot.city] || "/images/hero-bg-surf.jpg";
 
 // 🟢 [SEO] Internal Linking: Contextual Logic (Diff -> Distance)
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -234,10 +306,10 @@ const relatedSpots = spots
   description={richDescription}
   noindex={!shouldIndex}
   omitSuffix={true}
+  image={ogImage}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(spotSchema)} />
+  {/* 🟢 Unified Schema Output */}
+  <script type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
 
     {/* Breadcrumbs - Mobile First Design */}
     <div class="bg-stone-100 border-b border-stone-200">

@@ -17,7 +17,7 @@ noindex?: boolean;
 
 const { 
     title, 
-    description = "Surf Taiwan - 全台衝浪情報誌。收錄全台熱門浪點資訊、即時浪況預報、潮汐表，以及專業的衝浪裝備導購建議。",
+    description = "Outdoor Fun 衝浪地圖 (Surf Taiwan)。收錄全台熱門浪點資訊、即時浪況預報、潮汐表，以及專業的衝浪裝備導購建議。",
     noindex = false,
     preloadImage,
     omitSuffix = false,
@@ -25,7 +25,7 @@ const {
     hideBottomNav = false
 } = Astro.props;
 
-const pageTitle = omitSuffix ? title : `${title} | Surf Taiwan`;
+const pageTitle = omitSuffix ? title : `${title} | Outdoor Fun`;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surftaiwan.tw');
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
@@ -95,6 +95,18 @@ const isActive = (path: string) => {
                 // 防止重複載入的旗標
                 let gtmLoaded = false;
                 const gtmId = '';
+
+                // 🟢 [Analytics] SPA Pageview Trigger
+                window.addEventListener('astro:page-load', () => {
+                   if (gtmLoaded && window.dataLayer) {
+                       window.dataLayer.push({
+                           'event': 'page_view',
+                           'page_location': window.location.href,
+                           'page_path': window.location.pathname,
+                           'page_title': document.title
+                       });
+                   } 
+                });
 
                 function loadGTM() {
                     if (gtmLoaded) return;
