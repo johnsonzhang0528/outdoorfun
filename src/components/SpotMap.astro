@@ -25,9 +25,9 @@ const staticTileUrl = `https://tile.openstreetmap.org/${zoom}/${xTile}/${yTile}.
     <img 
         src={staticTileUrl} 
         alt={`Map of ${name}`}
-        class="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
+        class="absolute inset-0 w-full h-full object-cover z-0"
         fetchpriority="high"
-        decoding="async"
+        decoding="sync"
     />
     
     <!-- Leaflet Container -->

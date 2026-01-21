@@ -73,8 +73,13 @@ const getFeatures = () => {
     
     // Bottom Type
     if (spot.bottom_type) {
-        const icon = spot.bottom_type.includes("沙") ? "🏖️" : "🪨";
-        activeFeatures.push({ icon, label: spot.bottom_type });
+        let icon = "🌊";
+        const type = spot.bottom_type;
+        if (type.includes("沙")) icon = "🏖️";
+        else if (type.includes("礁") || type.includes("岩") || type.includes("石")) icon = "🪨";
+        else if (type.includes("混合")) icon = "🏖️"; 
+        
+        activeFeatures.push({ icon, label: type });
     }
 
     return [...new Map(activeFeatures.map(item => [item.label, item])).values()];
