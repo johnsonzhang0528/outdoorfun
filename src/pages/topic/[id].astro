@@ -124,32 +124,47 @@ export async function getStaticPaths() {
 const { title, description, spots: pageSpots, city, keyword } = Astro.props;
 const { id } = Astro.params;
 
+// 🟢 [SEO] FAQ Logic
+const faqItems = [];
+if (pageSpots.length > 0) {
+    faqItems.push({
+        question: `${title}包含哪些推薦浪點？`,
+        answer: `本專題精選了 ${pageSpots.slice(0, 5).map(s => `<a href="/spot/${s.name}">${s.name}</a>`).join('、')} 等 ${pageSpots.length} 個與「${keyword}」相關的熱門衝浪地點。`
+    });
+    
+    faqItems.push({
+        question: `這些浪點有什麼特色？`,
+        answer: `這些地點主要符合「${keyword}」的篩選條件。${description}`
+    });
+}
+
 // Breadcrumb Schema
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@graph": [
+    // ... existing ...
     {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
             "@type": "ListItem",
             "position": 1,
             "name": "首頁",
-            "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url" // Fallback if Astro.site is not set
-            },
-            {
+            "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+        },
+        {
             "@type": "ListItem",
             "position": 2,
             "name": "主題策展",
             "item": Astro.site ? `${Astro.site.origin}/topic` : "https://surftaiwan.url/topic"
-            },
-            {
+        },
+        {
             "@type": "ListItem",
             "position": 3,
             "name": title,
             "item": Astro.url.href
-            }
-        ]
+        }
+      ]
     },
     {
       "@type": "CollectionPage",
@@ -166,12 +181,23 @@ const breadcrumbSchema = {
         "url": `${Astro.site ? Astro.site.origin : ''}/spot/${spot.name}`,
         "name": spot.name
       }))
-    }
+    },
+    ...(faqItems.length > 0 ? [{
+        "@type": "FAQPage",
+        "mainEntity": faqItems.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer
+            }
+        }))
+    }] : [])
   ]
 };
 ---
 
-<Layout title={`${title} | Surf Taiwan 衝浪地圖`} description={description}>
+<Layout title={`${title} | Surf Taiwan 衝浪地圖`} description={description} geo={{ placename: city || '台灣' }}>
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   
   {/* Hero Header */}
@@ -243,6 +269,21 @@ const breadcrumbSchema = {
                             回首頁瀏覽更多
                         </a>
                     </div>
+                )}
+
+                {/* 🟢 [Content Depth] FAQ Section */}
+                {faqItems.length > 0 && (
+                <div class="mt-12 bg-white rounded-2xl p-8 border border-stone-100 shadow-sm">
+                    <h2 class="text-2xl font-bold text-stone-800 mb-6">關於「{title}」的常見問題</h2>
+                    <ul class="space-y-6">
+                        {faqItems.map(item => (
+                            <li>
+                                <h3 class="font-bold text-sky-700 text-lg mb-2">{item.question}</h3>
+                                <p class="text-stone-600 leading-relaxed" set:html={item.answer}></p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 )}
             </div>
 

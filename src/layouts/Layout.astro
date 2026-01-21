@@ -13,6 +13,11 @@ noindex?: boolean;
     omitSuffix?: boolean; // 🟢 [NEW] 控制是否省略標題後綴
     image?: string;       // 🟢 [NEW] 自訂 OG Image
     hideBottomNav?: boolean; // 🟢 [NEW] 特定頁面隱藏底部導航
+    geo?: {               // 🟢 [NEW] Local SEO
+        lat?: number;
+        lng?: number;
+        placename?: string;
+    };
 }
 
 const { 
@@ -22,8 +27,21 @@ const {
     preloadImage,
     omitSuffix = false,
     image,
-    hideBottomNav = false
+    hideBottomNav = false,
+    geo
 } = Astro.props;
+
+// 🟢 [Local SEO] Region Code Mapping
+const regionMap: Record<string, string> = {
+    '宜蘭縣': 'TW-YIL', '新北市': 'TW-NWT', '基隆市': 'TW-KEE', '臺北市': 'TW-TPE', '台北市': 'TW-TPE',
+    '桃園市': 'TW-TAO', '新竹縣': 'TW-HSQ', '新竹市': 'TW-HSZ', '苗栗縣': 'TW-MIA',
+    '臺中市': 'TW-TXG', '台中市': 'TW-TXG', '彰化縣': 'TW-CHA', '雲林縣': 'TW-YUN',
+    '嘉義縣': 'TW-CYQ', '嘉義市': 'TW-CYI', '臺南市': 'TW-TNN', '台南市': 'TW-TNN',
+    '高雄市': 'TW-KHH', '屏東縣': 'TW-PIF', '花蓮縣': 'TW-HUA', '臺東縣': 'TW-TTT', '台東縣': 'TW-TTT',
+    '澎湖縣': 'TW-PEN', '金門縣': 'TW-KIN', '連江縣': 'TW-LIE'
+};
+
+const geoRegion = geo?.placename ? regionMap[geo.placename] : undefined;
 
 const pageTitle = omitSuffix ? title : `${title} | Outdoor Fun`;
 
@@ -43,8 +61,18 @@ const isActive = (path: string) => {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- 🟢 [Local SEO] Geo Tags -->
+    {geo?.placename && <meta name="geo.placename" content={geo.placename} />}
+    {geoRegion && <meta name="geo.region" content={geoRegion} />}
+    {geo?.lat && geo?.lng && (
+        <>
+            <meta name="geo.position" content={`${geo.lat};${geo.lng}`} />
+            <meta name="ICBM" content={`${geo.lat}, ${geo.lng}`} />
+        </>
+    )}
 
     <!-- 🟢 [Performance] Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

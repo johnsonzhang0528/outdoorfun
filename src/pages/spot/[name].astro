@@ -9,6 +9,7 @@ import NativeAdCard from '../../components/NativeAdCard.astro';
 import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
+import { TOPIC_CONFIG } from '../../data/topic_expansion';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -20,6 +21,51 @@ export async function getStaticPaths() {
 }
 
 const { spot } = Astro.props;
+
+// 🟢 [SEO] Reverse Silo Logic (Child -> Parent Theme Linking)
+const activeThemes = [];
+
+// 1. Check Seasonality
+if (spot.best_swell) {
+    const { winter, summer } = TOPIC_CONFIG.seasonMapping;
+    
+    // Winter Check
+    if (winter.keywords.some(k => spot.best_swell ? spot.best_swell.includes(k) : false) || spot.tags?.includes('東北季風')) {
+        activeThemes.push({
+            id: 'best-winter',
+            label: '冬季衝浪',
+            icon: '❄️',
+            desc: '東北季風首選'
+        });
+    }
+    // Summer Check
+    if (summer.keywords.some(k => spot.best_swell ? spot.best_swell.includes(k) : false) || spot.tags?.includes('西南氣流') || spot.best_wind?.includes('西南')) {
+         activeThemes.push({
+            id: 'summer-vibes',
+            label: '夏日浪點',
+            icon: '☀️',
+            desc: '西南氣流推薦'
+        });
+    }
+}
+
+// 2. Check Difficulty
+if (spot.difficulty === '初學者') {
+    activeThemes.push({
+        id: 'all-beginner',
+        label: '新手友善',
+        icon: '🔰',
+        desc: '適合初學體驗'
+    });
+} else if (['進階', '專家'].includes(spot.difficulty)) {
+     activeThemes.push({
+        id: 'all-advanced',
+        label: '進階挑戰',
+        icon: '🔥',
+        desc: '高手過招熱點'
+    });
+}
+
 const spotMarine = marineData[spot.name] || {};
 // Fallback logic for weather data structure
 const hourlyData = spotMarine.hourly || {};
@@ -307,6 +353,11 @@ const relatedSpots = spots
   noindex={!shouldIndex}
   omitSuffix={true}
   image={ogImage}
+  geo={{
+    lat: spot.lat,
+    lng: spot.lng,
+    placename: spot.city
+  }}
 >
   {/* 🟢 Unified Schema Output */}
   <script type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
@@ -319,8 +370,21 @@ const relatedSpots = spots
             {spot.area && spot.area !== '待確認' && (
                 <> &rsaquo; <span class="mx-1">{spot.area}</span> </>
             )}
-            &rsaquo; <span class="text-stone-800 font-medium">{spot.name}</span>
+            &rsaquo; <span class="text-stone-800 font-bold ml-1">{spot.name}</span>
         </div>
+        
+        {/* 🟢 [SEO] Reverse Silo UI: Theme Badges */}
+        {activeThemes.length > 0 && (
+            <div class="container mx-auto px-4 pt-1 pb-3 flex flex-wrap gap-2">
+                {activeThemes.map(theme => (
+                    <a href={`/topic/${theme.id}`} class="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-stone-200 rounded-full text-xs font-bold text-stone-600 hover:text-emerald-700 hover:border-emerald-300 transition-colors shadow-sm">
+                        <span>{theme.icon}</span>
+                        <span>{theme.label}</span>
+                        <span class="text-stone-400 border-l border-stone-200 pl-1.5 ml-0.5 font-normal hidden sm:inline">{theme.desc}</span>
+                    </a>
+                ))}
+            </div>
+        )}
     </div>
 
     <div class="container mx-auto px-4 py-8 md:py-12 pb-24 md:pb-12">
