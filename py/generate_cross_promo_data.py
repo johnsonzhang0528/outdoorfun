@@ -72,7 +72,7 @@ def generate_feed(source_file, output_file):
     print(f"✅ 已生成跨站推廣數據：{output_file}")
     print(f"📊 統計：涵蓋 {len(final_feed)} 個城市，共推薦 {total_spots} 個露營區")
 
-if __name__ == "__main__":
+def main():
     # 從露營專案讀取資料 (跨專案讀取)
     # 假設兩個專案資料夾在同一層級
     # 這裡主要是為了產生自己的 'top_spots.json' 給對方用，或者暫時產生 'top_camps.json' 做測試
@@ -93,3 +93,6 @@ if __name__ == "__main__":
         generate_feed(source_path, output_path)
     else:
         print(f"⚠️ 找不到 {source_path}，無法生成 Feed。請確認您在哪個專案目錄下。")
+
+if __name__ == "__main__":
+    main()
