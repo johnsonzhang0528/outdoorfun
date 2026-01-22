@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const updatedDate = new Date().toISOString().split('T')[0];
+---
+
+<Layout title="隱私權政策 | Outdoor Fun" description="Outdoor Fun 網站隱私權政策與使用者條款說明。" noindex={true}>
+  <div class="container mx-auto px-4 py-16 max-w-3xl">
+    <h1 class="text-3xl font-bold text-stone-900 mb-8 pb-4 border-b border-stone-200">隱私權政策 (Privacy Policy)</h1>
+    
+    <div class="prose prose-stone max-w-none text-stone-700 space-y-8">
+      <p class="text-sm text-stone-500">最後更新日期：{updatedDate}</p>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">1. 前言</h2>
+        <p>
+          歡迎使用 Outdoor Fun（以下簡稱「本網站」）。我們非常重視您的隱私權，本政策將說明我們如何蒐集、使用及保護您的個人資訊。
+          當您使用本網站時，即表示您同意本隱私權政策之內容。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">2. 我們蒐集的資訊</h2>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>自動蒐集資訊：</strong>當您瀏覽本網站時，我們會透過第三方分析工具（如 Google Analytics）蒐集您的 IP 位址、瀏覽器類型、裝置資訊、瀏覽頁面及停留時間等非個人識別資訊。</li>
+          <li><strong>Cookies：</strong>本網站使用 Cookies 技術來改善您的瀏覽體驗、記住您的偏好設定，以及進行網站流量分析。您可以透過瀏覽器設定拒絕 Cookies，但這可能會影響網站部分功能。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">3. 資訊使用方式</h2>
+        <p>我們蒐集的資訊主要用於：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>維護及優化網站運作與效能。</li>
+          <li>分析使用者行為以改善內容品質。</li>
+          <li>投放更符合您興趣的廣告內容。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">4. 第三方服務與廣告</h2>
+        <p>
+          本網站使用第三方服務（如 Google AdSense, Google Analytics）。這些服務提供者可能會在其隱私權政策規範下使用 Cookies 或 Web Beacons。
+          此外，本網站包含從屬行銷（Affiliate Marketing）連結。當您點擊這些連結並進行購買時，我們可能會獲得分潤，這不會影響您的交易權益。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">5. 免責聲明</h2>
+        <p>
+          本網站提供的氣象預報、浪況資訊與地點介紹僅供參考。戶外活動（包括但不限於衝浪、露營）具有潛在風險，使用者應自行評估並承擔相關風險。
+          對於因使用本網站資訊而導致的任何直接或間接損害，本網站不承擔法律責任。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-stone-800 mb-3">6. 聯絡我們</h2>
+        <p>
+          如果您對本隱私權政策有任何疑問，請來信至 service@outdoorfun.tw 與我們聯繫。
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>

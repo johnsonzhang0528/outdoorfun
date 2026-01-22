@@ -3,14 +3,14 @@ import json
 import time
 import requests
 from datetime import datetime
-from google import genai
+import google.generativeai as genai
 import re
 from urllib.parse import quote
 import html
 
 # ================= 設定區 =================
 
-# 您的 API Key (優先讀取環境變數)
+# 您的 API Key
 API_KEY = "AIzaSyB2O9xhxWEVwEEt9GpOss-YhW5JQX2Hf2s"
 MODEL_NAME = "gemma-3-27b-it"
 
@@ -18,7 +18,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # 輸出位置：指向衝浪專案的 data 資料夾
 OUTPUT_PATH = os.path.join(BASE_DIR, "..", "src", "data", "products.json")
 
-client = genai.Client(api_key=API_KEY) if API_KEY and API_KEY != "YOUR_GEMINI_API_KEY" else None
+# 初始化 Google GenAI
+genai.configure(api_key=API_KEY)
+model = genai.GenerativeModel(MODEL_NAME)
 
 def safe_json_decode(text_segment):
     """
@@ -110,7 +112,7 @@ def ai_select_best_product(candidates, target_intent):
     """
     
     try:
-        response = client.models.generate_content(model=MODEL_NAME, contents=prompt)
+        response = model.generate_content(prompt)
         text = response.text.replace("```json", "").replace("```", "").strip()
         if text.startswith("[") and text.endswith("]"):
              data = json.loads(text)
@@ -122,9 +124,9 @@ def ai_select_best_product(candidates, target_intent):
 def main():
     print("🏄 啟動【衝浪選品】分析模組...")
     
-    if not client:
+    if not model:
         print("❌ No API Key found. (請在檔案中設定 API_KEY 或環境變數 GEMINI_API_KEY)")
-        return
+        raise ValueError("Critical: Gemini API Key is missing or invalid.")
         
     season, keywords = get_surf_season_context()
     print(f"🌊 當前浪況情境: {season} (關鍵字: {keywords})")
@@ -151,7 +153,7 @@ def main():
     """
     
     try:
-        response = client.models.generate_content(model=MODEL_NAME, contents=prompt)
+        response = model.generate_content(prompt)
         raw_text = response.text.replace("```json", "").replace("```", "").strip()
         if "[" in raw_text:
             raw_text = raw_text[raw_text.find("["):raw_text.rfind("]")+1]
