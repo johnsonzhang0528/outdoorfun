@@ -10,8 +10,8 @@ import html
 
 # ================= 設定區 =================
 
-# 您的 API Key (請確保已設定)
-API_KEY = "AIzaSyB2O9xhxWEVwEEt9GpOss-YhW5JQX2Hf2s" # 主帳號
+# 您的 API Key (優先讀取環境變數)
+API_KEY = "AIzaSyB2O9xhxWEVwEEt9GpOss-YhW5JQX2Hf2s"
 MODEL_NAME = "gemma-3-27b-it"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -119,11 +119,11 @@ def ai_select_best_product(candidates, target_intent):
     except Exception:
         return candidates[0] if candidates else None # Fallback 到第一個
 
-def generate_trending_products():
+def main():
     print("🏄 啟動【衝浪選品】分析模組...")
     
     if not client:
-        print("❌ No API Key found. (請在檔案中設定 API_KEY)")
+        print("❌ No API Key found. (請在檔案中設定 API_KEY 或環境變數 GEMINI_API_KEY)")
         return
         
     season, keywords = get_surf_season_context()
@@ -212,6 +212,8 @@ def generate_trending_products():
         
     except Exception as e:
         print(f"❌ 執行失敗: {e}")
+        # 在 Pipeline 中拋出異常，確保 CI/CD 知道這裡失敗了
+        raise e 
 
 if __name__ == "__main__":
-    generate_trending_products()
+    main()

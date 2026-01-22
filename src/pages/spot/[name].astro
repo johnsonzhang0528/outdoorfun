@@ -200,6 +200,21 @@ faqSchema.mainEntity.push({
     }
 });
 
+// 🟢 [SEO Integration] Opportunity A: Rental & Lessons Keywords
+const hasRental = spot.tags?.some(t => t.includes('租') || t.includes('店')) || spot.features?.some(f => f.includes('租') || f.includes('店'));
+const hasLesson = spot.tags?.some(t => t.includes('教') || t.includes('學')) || spot.features?.some(f => f.includes('教') || f.includes('學'));
+
+if (hasRental || hasLesson) {
+     faqSchema.mainEntity.push({
+        "@type": "Question",
+        "name": `${spot.name}有衝浪板出租或教學課程嗎？`,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `是的，${spot.name}周邊${hasRental ? '提供衝浪板租借服務' : ''}${(hasRental && hasLesson) ? '，也有' : ''}${hasLesson ? '專業教練開設衝浪體驗課程' : ''}。建議初學者可先預約教學。`
+        }
+    });
+}
+
 // SEO Title
 const currentYear = new Date().getFullYear();
 const seoTitleFeatures = [
@@ -209,7 +224,8 @@ const seoTitleFeatures = [
 ].filter(Boolean).join('、');
 
 const areaDisplay = spot.area && spot.area !== '待確認' ? spot.area : '';
-const seoTitle = `${spot.name}衝浪點 - ${spot.city}${areaDisplay} | ${seoTitleFeatures} | ${currentYear}浪況預報`;
+// 🟢 [SEO Integration] Opportunity B: Real-time Condition Keywords
+const seoTitle = `${spot.name}衝浪點 - ${spot.city}${areaDisplay} | ${seoTitleFeatures} | 今日即時浪況與${currentYear}預報`;
 
 const richDescription = `【${spot.name}】是位於${spot.city}的${spot.difficulty}衝浪點。${spot.description} 提供${seoTitleFeatures}等完整資訊，查看即時浪況與潮汐預報。`;
 

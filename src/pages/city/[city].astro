@@ -25,8 +25,9 @@ const featuresList = [...new Set(citySpots.flatMap(s => s.features || []))].slic
 
 const summaryText = `精選 ${citySpots.length} 個${city}衝浪地標。其中包含 ${beginnerCount} 個適合初學者的浪點${expertCount > 0 ? `與 ${expertCount} 個挑戰級進階點` : ''}。${featuresList ? `多數地點具備${featuresList}等設施，` : ''}是體驗台灣衝浪文化的絕佳選擇。`;
 
-const title = `${city}衝浪地點推薦 - 共 ${citySpots.length} 個熱門浪點`;
-const description = `精選 ${city} 衝浪點推薦，包含新手浪點、教學點。提供即時浪況與交通資訊。`;
+// 🟢 [SEO Integration] Opportunity B: Real-time Condition Keywords
+const title = `${city}衝浪地圖 - 共 ${citySpots.length} 個熱門浪點 (今日即時浪況)`;
+const description = `精選 ${city} 衝浪點推薦，包含新手浪點、教學點。提供今日即時浪況、風速情報與交通資訊，助您掌握最佳下水時機。`;
 
 // 🟢 [SEO] FAQ Logic
 const beginnerSpots = citySpots.filter(s => s.difficulty === '初學者');
