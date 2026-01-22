@@ -40,40 +40,52 @@ let currentWave = 0;
 let currentSwell = 0;
 let currentPeriod = 0;
 let chartData = [];
+let yTicks = [];
 
 if (isSurfMode && marineData?.hourly) {
-    const now = new Date();
-    // Simple closest hour (Open-Meteo returns ISO strings)
-    // Find index where time > now - 1 hour
-    const nowTime = now.getTime();
-    const times = marineData.hourly.time.map(t => new Date(t).getTime());
-    let index = times.findIndex(t => t >= nowTime);
-    if (index === -1) index = 0; // Fallback or end of list
+    // Note: We now fetch 3 days (72h) of data to support client-side time shifting.
+    // Calculate global stats for scaling
+    const allWaves = marineData.hourly.wave_height;
+    const maxWave = Math.max(...allWaves, 0.5); // Min 0.5m for scale
 
-    currentWave = marineData.hourly.wave_height[index] || 0;
-    currentSwell = marineData.hourly.swell_wave_height[index] || 0;
-    currentPeriod = marineData.hourly.swell_wave_period[index] || 0;
+    // Calculate Y-Axis Grid Lines (ticks)
+    // Dynamic step: 0.5m for small waves, 1m for medium, 2m for big days
+    const step = maxWave > 4 ? 2 : (maxWave > 2 ? 1 : 0.5);
+    for (let v = step; v < maxWave; v += step) {
+        // Avoid lines too close to the top edge (>95%)
+        if ((v / maxWave) < 0.95) {
+            yTicks.push({
+                value: v,
+                bottomPct: (v / maxWave) * 100
+            });
+        }
+    }
 
-    // Prepare Chart Data (Next 24 Hours)
-    // Simple bar chart normalized to max height
-    const hoursToShow = 24;
-    const sliceStart = index;
-    const sliceEnd = index + hoursToShow;
-    
-    // Ensure we don't go out of bounds
-    const safeSliceEnd = Math.min(sliceEnd, marineData.hourly.time.length);
+    chartData = marineData.hourly.time.map((t, i) => {
+        // Parse time. Open-Meteo returns ISO without timezone (e.g. "2026-01-23T00:00")
+        // We will pass this string to client to handle "Current Time" matching relative to user.
+        const d = new Date(t);
+        const hour = d.getHours();
+        const dateStr = `${d.getMonth() + 1}/${d.getDate()}`;
+        
+        return {
+            rawTime: t, // "2026-01-23T00:00"
+            height: marineData.hourly.wave_height[i],
+            period: marineData.hourly.swell_wave_period[i],
+            swell: marineData.hourly.swell_wave_height[i],
+            
+            barHeight: (marineData.hourly.wave_height[i] / maxWave) * 100,
+            hour: hour,
+            dateStr: dateStr,
+            isNewDay: hour === 0,
+            isDay: hour >= 6 && hour <= 18
+        };
+    });
 
-    const sliceTimes = marineData.hourly.time.slice(sliceStart, safeSliceEnd);
-    const sliceWaves = marineData.hourly.wave_height.slice(sliceStart, safeSliceEnd);
-    
-    const maxWave = Math.max(...sliceWaves, 0.5); // Min 0.5m for scale
-    
-    chartData = sliceWaves.map((h, i) => ({
-        height: h,
-        barHeight: (h / maxWave) * 100, // Percentage
-        time: new Date(sliceTimes[i]).getHours(),
-        isDay: new Date(sliceTimes[i]).getHours() >= 6 && new Date(sliceTimes[i]).getHours() <= 18
-    }));
+    // Default Fallback values (Server-side rendering, will be updated by JS)
+    currentWave = chartData[0]?.height || 0;
+    currentSwell = chartData[0]?.swell || 0;
+    currentPeriod = chartData[0]?.period || 0;
 }
 
 // Camping Logic Helpers (Legacy)
@@ -106,15 +118,21 @@ const ICONS: Record<string, string> = {
         {/* Current Stats */}
         <div class="grid grid-cols-3 gap-4">
             <div class="text-center p-3 bg-blue-50 rounded-xl border border-blue-100">
-                <span class="block text-2xl font-black text-blue-700">{currentWave}<span class="text-sm">m</span></span>
+                <span class="block text-2xl font-black text-blue-700">
+                    <span id="stat-wave-val">{currentWave}</span><span class="text-sm">m</span>
+                </span>
                 <span class="text-xs text-blue-800 font-bold">浪高</span>
             </div>
             <div class="text-center p-3 bg-teal-50 rounded-xl border border-teal-100">
-                <span class="block text-2xl font-black text-teal-700">{currentPeriod}<span class="text-sm">s</span></span>
+                <span class="block text-2xl font-black text-teal-700">
+                    <span id="stat-period-val">{currentPeriod}</span><span class="text-sm">s</span>
+                </span>
                 <span class="text-xs text-teal-800 font-bold">週期</span>
             </div>
             <div class="text-center p-3 bg-indigo-50 rounded-xl border border-indigo-100">
-                <span class="block text-2xl font-black text-indigo-700">{currentSwell}<span class="text-sm">m</span></span>
+                <span class="block text-2xl font-black text-indigo-700">
+                    <span id="stat-swell-val">{currentSwell}</span><span class="text-sm">m</span>
+                </span>
                 <span class="text-xs text-indigo-800 font-bold">湧浪</span>
             </div>
         </div>
@@ -122,26 +140,56 @@ const ICONS: Record<string, string> = {
         {/* 24H Trend Chart */}
         <div>
             <h3 class="text-sm font-bold text-stone-600 mb-3 ml-1">未來 24 小時浪高趨勢</h3>
-            <div class="h-32 flex items-end gap-[2%] pt-6 pb-2 px-1 relative">
-                {/* Grid Lines */}
-                <div class="absolute inset-x-0 bottom-0 h-px bg-stone-200"></div>
-                <div class="absolute inset-x-0 top-0 h-px bg-stone-100 border-t border-dashed border-stone-200"></div>
+            {/* Added mb-6 to make room for absolute labels, removed overflow-hidden so they are visible */}
+            <div id="chart-container" class="h-32 flex items-end gap-[2%] pt-6 pb-2 px-1 relative mb-6">
+                {/* 1. Y-Axis Grid Lines (Background layer) */}
+                {yTicks.map(tick => (
+                    <div class="absolute inset-x-0 border-t border-dashed border-stone-200 pointer-events-none" style={`bottom: ${tick.bottomPct}%`}></div>
+                ))}
+
+                {/* Bottom Axis Line */}
+                <div class="absolute inset-x-0 bottom-0 h-px bg-stone-200 z-10"></div>
                 
-                {chartData.map((d) => (
-                    <div class="flex-1 flex flex-col items-center group relative group h-full justify-end">
+                {/* 2. Data Bars */}
+                {chartData.map((d, i) => (
+                    <div 
+                        class={`weather-bar flex-1 flex flex-col items-center group relative h-full justify-end transition-opacity duration-500 ${i < 24 ? '' : 'hidden'}`}
+                        data-time={d.rawTime}
+                        data-wave={d.height}
+                        data-period={d.period}
+                        data-swell={d.swell}
+                    >
                         <div 
                             style={`height: ${d.barHeight}%`} 
                             class={`w-full rounded-t-sm transition-all duration-300 ${d.isDay ? 'bg-blue-400' : 'bg-indigo-300'} group-hover:bg-blue-600`}
                         ></div>
-                        {d.time % 3 === 0 && (
-                            <span class="absolute -bottom-5 text-[10px] text-stone-400 font-mono">
-                                {d.time}
+                        
+                        {/* X-Axis Labels */}
+                        <div class="absolute -bottom-5 flex flex-col items-center w-full pointer-events-none">
+                            <span class={`label-text text-[10px] whitespace-nowrap font-sans leading-none transition-all duration-300
+                                ${d.isNewDay ? 'text-blue-600 font-bold opacity-100 bg-blue-50 px-1 py-0.5 rounded' : ''}
+                                ${!d.isNewDay && d.hour % 3 === 0 ? 'text-stone-400 opacity-100' : ''}
+                                ${!d.isNewDay && d.hour % 3 !== 0 ? 'opacity-0' : ''}
+                            `}>
+                                {d.isNewDay ? d.dateStr : d.hour + "時"}
                             </span>
-                        )}
-                        {/* Tooltip */}
-                        <div class="hidden group-hover:block absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-stone-800 text-white text-[10px] py-1 px-2 rounded pointer-events-none whitespace-nowrap z-10">
-                            {d.height}m / {d.time}:00
                         </div>
+
+                        {/* Tooltip */}
+                        <div class="hidden group-hover:block absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-stone-800 text-white text-[10px] py-1 px-2 rounded pointer-events-none whitespace-nowrap z-20 shadow-lg">
+                            <span class="block text-gray-400 text-[9px] mb-0.5">{d.dateStr}</span>
+                            <span class="font-bold text-white text-xs">{d.height}m</span> 
+                            <span class="text-gray-300 ml-1">@ {d.hour}:00</span>
+                        </div>
+                    </div>
+                ))}
+
+                {/* 3. Y-Axis Labels (Top layer, ensuring visibility over bars) */}
+                {yTicks.map(tick => (
+                    <div class="absolute inset-x-0 pointer-events-none" style={`bottom: ${tick.bottomPct}%`}>
+                        <span class="absolute -top-3 left-0 text-[10px] text-stone-500 font-bold font-mono bg-white/90 px-1.5 py-0.5 rounded shadow-sm z-10 border border-stone-100">
+                            {tick.value}m
+                        </span>
                     </div>
                 ))}
             </div>
@@ -151,6 +199,65 @@ const ICONS: Record<string, string> = {
             <span class="text-base">💡</span>
             <span>浪況變化快速，新手建議在無風且浪高 1m 以下時下水。若遇紅旗請勿強行下水。</span>
         </div>
+
+        <script>
+            // Client-side logic to shift the chart based on current time
+            document.addEventListener('DOMContentLoaded', () => {
+                const now = new Date();
+                const container = document.getElementById('chart-container');
+                if (!container) return; // Not in Surf Mode
+
+                const bars = Array.from(container.querySelectorAll('.weather-bar'));
+                if (bars.length === 0) return;
+
+                // Find the index that corresponds to the current hour
+                // We compare the ISO string (local time interpretation)
+                let startIndex = 0;
+                
+                // Safety: Find strictly the first bar that is in the future or within current hour
+                for (let i = 0; i < bars.length; i++) {
+                    const barTimeStr = bars[i].getAttribute('data-time'); // "YYYY-MM-DDTHH:MM"
+                    const barDate = new Date(barTimeStr);
+                    
+                    // If bar time is greater than (now - 1 hour), it's the current active slot
+                    if (barDate.getTime() > now.getTime() - 3600000) {
+                        startIndex = i;
+                        break;
+                    }
+                }
+
+                // Update visibility
+                let visibleCount = 0;
+                bars.forEach((bar, index) => {
+                    if (index >= startIndex && visibleCount < 24) {
+                        bar.classList.remove('hidden');
+                        visibleCount++;
+
+                        // Update top stats based on the FIRST visible bar (Current Status)
+                        if (visibleCount === 1) {
+                            const d = bar.dataset;
+                            const wEl = document.getElementById('stat-wave-val');
+                            const pEl = document.getElementById('stat-period-val');
+                            const sEl = document.getElementById('stat-swell-val');
+                            if (wEl) wEl.innerText = d.wave;
+                            if (pEl) pEl.innerText = d.period;
+                            if (sEl) sEl.innerText = d.swell;
+
+                            // Highlight "Now" label
+                            const label = bar.querySelector('.label-text');
+                            if (label) {
+                                label.innerText = '現在';
+                                label.classList.remove('opacity-0', 'text-stone-400', 'text-blue-600');
+                                label.classList.add('opacity-100', 'text-amber-600', 'font-bold', 'scale-110');
+                            }
+                        }
+
+                    } else {
+                        bar.classList.add('hidden');
+                    }
+                });
+            });
+        </script>
     </div>
   ) : (
     /* Existing Camping Weather (Legacy) */

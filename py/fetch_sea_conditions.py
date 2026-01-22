@@ -54,7 +54,8 @@ def fetch_marine_data(spots):
                 "latitude": lat,
                 "longitude": lng,
                 "hourly": "wave_height,wave_period,swell_wave_height,swell_wave_period,swell_wave_direction",
-                "timezone": "Asia/Taipei"
+                "timezone": "Asia/Taipei",
+                "forecast_days": 3
             }
             
             response = requests.get(API_URL, params=params, timeout=10)
