@@ -52,11 +52,27 @@ const seasonalTopic = isWinter
       }
     : { 
         name: '夏季西南氣流', 
-        desc: '溫暖海水與西南湧浪',
+        desc: '適合新手與長板的柔和浪況', 
         url: '/topic/summer-vibes', 
-        icon: '🌊',
+        icon: '☀️',
         color: 'from-orange-500 to-amber-500 border-orange-400/30'
       };
+
+// Schema.org: Sitelinks Search Box
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Outdoor Fun",
+  "url": Astro.site ? Astro.site.origin : "https://surftaiwan.tw",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${Astro.site ? Astro.site.origin : "https://surftaiwan.tw"}/search?q={search_term_string}`
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
 
 // Global Schema
 const homeSchema = {
@@ -102,6 +118,7 @@ const homeSchema = {
 >
     <!-- Inject Schema -->
     <script type="application/ld+json" slot="head" set:html={JSON.stringify(homeSchema)}></script>
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(websiteSchema)}></script>
     
     <div class="relative bg-slate-900 -mt-[64px] pt-[64px]">
         <div class="absolute inset-0 overflow-hidden">

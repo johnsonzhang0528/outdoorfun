@@ -157,6 +157,9 @@ const citySchema = {
     </div>
 
     <div class="container mx-auto px-4 pb-16">
+        {/* 🟢 [SEO] Semantic Heading for List */}
+        <h2 class="sr-only">精選{city}浪點列表</h2>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {citySpots.map((spot, index) => {
                 const showAd = (index + 1) % 6 === 0;
