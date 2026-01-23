@@ -1,26 +1,12 @@
 User-agent: *
 Allow: /
 
-# ✅ [Allow] 確保 Google 能爬取你的關鍵資產 (Astro 結構)
-Allow: /spot/
-Allow: /city/
-Allow: /topic/
-Allow: /search
-Allow: /directory
+# Sitemap
+Sitemap: https://outdoorfun.tw/sitemap-index.xml
 
-# 🛑 [Block] 封鎖站內搜尋結果
-Disallow: /search?*
-Disallow: /search/
+# AI Crawlers
+User-agent: GPTBot
+Disallow: /
 
-# 🧟‍♂️ [Zombie Block] 針對「好動網」舊系統的精準封鎖
-# 1. 絕殺令：新網站是靜態的，任何 PHP 請求都是找錯人，直接拒絕
-Disallow: /*.php$
-Disallow: /*.php?*
-
-# 2. 封鎖舊的資源資料夾 (節省爬取頻寬)
-Disallow: /upload/
-Disallow: /online2/
-Disallow: /admin/
-
-# 🟢 [Sitemap] 記得換成你衝浪站的真實網域
-Sitemap: https://www.outdoorfun.com.tw/sitemap-index.xml
+User-agent: CCBot
+Disallow: /

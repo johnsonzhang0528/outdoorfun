@@ -8,5 +8,22 @@
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*).php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/modules/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/upload/(.*)",
+      "destination": "/",
+      "permanent": true
+    }
   ]
 }
