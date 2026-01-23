@@ -43,7 +43,26 @@ const regionMap: Record<string, string> = {
 
 const geoRegion = geo?.placename ? regionMap[geo.placename] : undefined;
 
-const pageTitle = omitSuffix ? title : `${title} | Outdoor Fun`;
+// 🟢 [SEO Logic] Title & Meta Description Truncation
+const SITE_NAME_SUFFIX = " | Outdoor Fun";
+const MAX_TITLE_LENGTH = 60;
+const MAX_DESC_LENGTH = 160;
+
+// 1. Title Construction & Truncation
+let fullTitle = omitSuffix ? title : `${title}${SITE_NAME_SUFFIX}`;
+if (fullTitle.length > MAX_TITLE_LENGTH) {
+    if (!omitSuffix && title.length <= MAX_TITLE_LENGTH) {
+        fullTitle = title;
+    } else {
+        fullTitle = fullTitle.substring(0, MAX_TITLE_LENGTH - 3) + "...";
+    }
+}
+
+// 2. Description Truncation
+let metaDescription = description;
+if (metaDescription.length > MAX_DESC_LENGTH) {
+    metaDescription = metaDescription.substring(0, MAX_DESC_LENGTH - 3) + "...";
+}
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surftaiwan.tw');
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
@@ -87,9 +106,9 @@ const isActive = (path: string) => {
 		<meta name="apple-mobile-web-app-status-bar-style" content="default">
 		<meta name="apple-mobile-web-app-title" content="Surf Taiwan">
 
-		<title>{title}</title>
-<meta name="title" content={pageTitle} />
-<meta name="description" content={description} />
+		<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={metaDescription} />
 
         <link rel="preconnect" href="https://www.googletagmanager.com">
         <link rel="preconnect" href="https://www.conn.tw">

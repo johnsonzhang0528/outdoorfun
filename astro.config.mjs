@@ -5,7 +5,12 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.outdoorfun.com.tw',
-  integrations: [tailwind(), sitemap()],
+  integrations: [
+    tailwind(),
+    sitemap({
+      filter: (page) => page !== 'https://www.outdoorfun.com.tw/search/' && page !== 'https://www.outdoorfun.com.tw/search',
+    }),
+  ],
   
   // 🟢 [NEW] 加入這段設定
   build: {
