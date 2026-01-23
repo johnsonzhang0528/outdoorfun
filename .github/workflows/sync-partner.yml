@@ -1,0 +1,48 @@
+name: Daily Partner Sync
+
+on:
+  schedule:
+    # 每天台灣時間凌晨 2:30 (UTC 18:30) 觸發
+    # 延後半小時是為了確保「露營站」已完成 2:00 的更新，這樣 sync_partner_feed 才能抓到最新資料
+    - cron: '30 18 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-partner-feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r py/requirements.txt
+
+      - name: Run Partner Sync
+        run: |
+          # 2. 每日同步夥伴網站資料 (確保互惠導流最新)
+          python py/sync_partner_feed.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'GitHub Action Bot'
+          git config --global user.email 'action@github.com'
+          
+          # Stage specific generated files
+          git add src/data/top_camps.json
+
+          # Check if there are changes to commit
+          if [[ -n $(git status -s) ]]; then
+            git commit -m "chore(data): daily partner sync"
+            git push
+          else
+            echo "No feed changes from partner site."
+          fi

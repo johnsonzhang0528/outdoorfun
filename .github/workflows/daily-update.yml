@@ -2,7 +2,7 @@ name: Daily System Maintenance
 
 on:
   schedule:
-    # 每天台灣時間凌晨 2 點 (UTC 18:00) 觸發
+    # 每天台灣時間凌晨 2:00 (UTC 18:00) 觸發
     - cron: '0 18 * * *'
   workflow_dispatch:
 
@@ -32,13 +32,21 @@ jobs:
           # date +%u returns 7 for Sunday
           echo "is_weekly_update=$(if [ $(date +%u) -eq 7 ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_OUTPUT
 
-      - name: Run Daily Data Pipeline
+      - name: Run Weekly AI Product Generation
+        if: steps.check_schedule.outputs.is_weekly_update == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          # 使用新的整合 Pipeline，一次執行所有 ETL 任務
-          # 包含：抓天氣、同步露營資料、生成商品推薦、生成互惠 Feed
-          python py/update_pipeline.py
+          # 每週一執行重型 AI 任務 (生成商品推薦)
+          python py/generate_surf_products.py
+
+      - name: Run Daily Data Pipeline
+        run: |
+          # 1. 每日更新天氣/浪況 (最重要)
+          python py/fetch_sea_conditions.py
+          
+          # 2. 每日生成自己的推廣 Feed (讓夥伴網站抓最新的)
+          python py/generate_cross_promo_data.py
 
       - name: Commit and Push
         run: |
@@ -47,13 +55,14 @@ jobs:
           
           # Stage specific generated files
           git add src/data/sea_conditions.json
-          git add src/data/top_camps.json
-          git add src/data/products.json
           git add public/feeds/top_spots.json
+          
+          # Only add products if it exists/changed (Weekly)
+          git add src/data/products.json
 
           # Check if there are changes to commit
           if [[ -n $(git status -s) ]]; then
-            git commit -m "chore(data): daily update (weather, inventory, promo)"
+            git commit -m "chore(data): daily system update (weather/feed)"
             git push
           else
             # Daily trigger for Vercel (Force Rebuild to refresh ISR/SSG if needed)
