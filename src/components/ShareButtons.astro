@@ -113,76 +113,88 @@ const messengerShareUrl = `fb-messenger://share/?link=${encodedUrl}`;
 </div>
 
 <script>
-  // DOM Elements
-  const shareBtn = document.getElementById('share-trigger-btn');
-  const modal = document.getElementById('share-modal');
-  const backdrop = document.getElementById('share-modal-backdrop');
-  const modalContent = modal?.querySelector('div'); // The inner white box
-  const closeBtn = document.getElementById('share-modal-close');
-  const copyBtns = document.querySelectorAll('.copy-btn');
-  const feedback = document.getElementById('copy-feedback');
+  function initShareButtons() {
+      // DOM Elements
+      const shareBtn = document.getElementById('share-trigger-btn');
+      const modal = document.getElementById('share-modal');
+      const backdrop = document.getElementById('share-modal-backdrop');
+      const modalContent = modal?.querySelector('div'); // The inner white box
+      const closeBtn = document.getElementById('share-modal-close');
+      const copyBtns = document.querySelectorAll('.copy-btn');
+      const feedback = document.getElementById('copy-feedback');
 
-  // Toggle Functions
-  const openModal = async () => {
-    // 🟢 [UX] Mobile Native Share API Priority
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: document.title,
-                text: '快來看看這個超棒的浪點！',
-                url: window.location.href
-            });
-        } catch (err) {
-            console.log('Native share cancelled/failed', err);
-        }
-        return; // 🛑 Stop here regardless of success/cancel
-    }
-
-    modal?.classList.remove('hidden');
-    backdrop?.classList.remove('hidden');
-    // Small delay for transition
-    setTimeout(() => {
-        backdrop?.classList.remove('opacity-0');
-        modalContent?.classList.remove('opacity-0', 'scale-95');
-        modalContent?.classList.add('opacity-100', 'scale-100');
-    }, 10);
-  };
-
-  const closeModal = () => {
-    backdrop?.classList.add('opacity-0');
-    modalContent?.classList.remove('opacity-100', 'scale-100');
-    modalContent?.classList.add('opacity-0', 'scale-95');
-    
-    setTimeout(() => {
-        modal?.classList.add('hidden');
-        backdrop?.classList.add('hidden');
-    }, 200);
-  };
-
-  // Event Listeners
-  shareBtn?.addEventListener('click', openModal);
-  closeBtn?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', closeModal);
-
-  // Copy Logic
-  copyBtns.forEach(btn => {
-    btn.addEventListener('click', async () => {
-        try {
-            await navigator.clipboard.writeText(window.location.href);
-            
-            // Show Feedback
-            if (feedback) {
-                feedback.textContent = '連結已複製！';
-                feedback.classList.remove('opacity-0');
-                
-                // Keep feedback visible briefly
-                setTimeout(() => {
-                    feedback.classList.add('opacity-0');
-                }, 2000);
+      // Toggle Functions
+      const openModal = async () => {
+        // 🟢 [UX] Mobile Native Share API Priority
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: document.title,
+                    text: '快來看看這個超棒的浪點！',
+                    url: window.location.href
+                });
+            } catch (err) {
+                console.log('Native share cancelled/failed', err);
             }
-        } catch (err) {
-            console.error('Failed to copy:', err);
+            return; // 🛑 Stop here regardless of success/cancel
         }
-    });
-  });
+
+        modal?.classList.remove('hidden');
+        backdrop?.classList.remove('hidden');
+        // Small delay for transition
+        setTimeout(() => {
+            backdrop?.classList.remove('opacity-0');
+            modalContent?.classList.remove('opacity-0', 'scale-95');
+            modalContent?.classList.add('opacity-100', 'scale-100');
+        }, 10);
+      };
+
+      const closeModal = () => {
+        backdrop?.classList.add('opacity-0');
+        modalContent?.classList.remove('opacity-100', 'scale-100');
+        modalContent?.classList.add('opacity-0', 'scale-95');
+        
+        setTimeout(() => {
+            modal?.classList.add('hidden');
+            backdrop?.classList.add('hidden');
+        }, 200);
+      };
+
+      // Event Listeners
+      // Remove previous listener to be safe (though usually new elements don't have them)
+      shareBtn?.removeEventListener('click', openModal);
+      shareBtn?.addEventListener('click', openModal);
+      
+      closeBtn?.removeEventListener('click', closeModal);
+      closeBtn?.addEventListener('click', closeModal);
+      
+      backdrop?.removeEventListener('click', closeModal);
+      backdrop?.addEventListener('click', closeModal);
+
+      // Copy Logic
+      copyBtns.forEach(btn => {
+        // Clone node is a dirty trick to remove listeners, but here we just append logic to new DOM
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                
+                // Show Feedback
+                if (feedback) {
+                    feedback.textContent = '連結已複製！';
+                    feedback.classList.remove('opacity-0');
+                    
+                    // Keep feedback visible briefly
+                    setTimeout(() => {
+                        feedback.classList.add('opacity-0');
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+      });
+  }
+
+  // Hook into Astro View Transitions
+  document.addEventListener('astro:page-load', initShareButtons);
 </script>
