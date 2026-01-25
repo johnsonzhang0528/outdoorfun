@@ -4,6 +4,17 @@ import SpotCard from '../components/SpotCard.astro';
 import NativeAdCard from '../components/NativeAdCard.astro';
 import surfSpotsData from '../data/surf_spots.json';
 import { getValidSpots } from '../utils/filterSpots';
+import { getAllAds } from '../utils/adManager';
+import { getBadgeClasses } from '../data/adContent';
+
+// Prepare Ads with classes for client-side
+const adsWithClasses = getAllAds().map(ad => ({
+    ...ad,
+    badges: ad.badges.map(b => ({
+        ...b,
+        classString: `text-[10px] font-bold px-2 py-0.5 rounded-full border ${getBadgeClasses(b.color)}`
+    }))
+}));
 
 // 1. 伺服器端預先排序 (CLS 優化)
 const validSpots = getValidSpots(surfSpotsData);
@@ -329,8 +340,9 @@ const searchSchema = {
             ))}
 
 			{/* Data injection for CSR to reduce HTML size */}
-            <script type="application/json" id="spots-data" set:html={JSON.stringify(spots)} />
 		</div>
+        <script type="application/json" id="spots-data" set:html={JSON.stringify(spots)} />
+        <script type="application/json" id="global-ads-pool" set:html={JSON.stringify(adsWithClasses)} />
 
         {/* Template for Client-side Ad Injection */}
         <template id="native-ad-template">
@@ -374,6 +386,11 @@ const searchSchema = {
     let activeFilterCount: HTMLElement | null;
     let quickClearBtn: HTMLElement | null;
 
+    // Ad Rotator State
+    let adPool: any[] = [];
+    let adPoolIndex = 0;
+
+    // Picker Modal Elements
     // Picker Modal Elements
     let pickerModal: HTMLElement | null;
     let pickerPanel: HTMLElement | null;
@@ -485,24 +502,28 @@ const searchSchema = {
     }
 
     function randomizeAdCard(adElement: Element, sequenceIndex: number) {
-        const article = adElement.querySelector('.js-native-ad') as HTMLElement;
-        if (!article || !article.dataset.adsPool) return;
+        if (!adPool || adPool.length === 0) return;
+
+        // Get next ad from pool (using global rotation index)
+        const ad = adPool[adPoolIndex];
+        adPoolIndex = (adPoolIndex + 1) % adPool.length;
+        
+        // Find component root
+        const card = adElement.querySelector('.js-feature-card');
+        if (!card) return;
 
         try {
-            const ads = JSON.parse(article.dataset.adsPool);
-            const ad = ads[sequenceIndex % ads.length];
-            
-            const img = article.querySelector('.js-ad-img') as HTMLImageElement;
-            const title = article.querySelector('.js-ad-title');
-            const titleOverlay = article.querySelector('.js-ad-title-overlay');
-            const desc = article.querySelector('.js-ad-desc');
-            const cta = article.querySelector('.js-ad-cta');
-            const link = article.querySelector('.js-ad-link') as HTMLAnchorElement;
-            const badgesContainer = article.querySelector('.js-ad-badges');
+            const img = card.querySelector('.js-feature-img') as HTMLImageElement;
+            const title = card.querySelector('.js-feature-title');
+            const titleOverlay = card.querySelector('.js-feature-title-overlay');
+            const desc = card.querySelector('.js-feature-desc');
+            const cta = card.querySelector('.js-feature-cta');
+            const link = card.querySelector('.js-feature-link') as HTMLAnchorElement;
+            const badgesContainer = card.querySelector('.js-feature-badges');
 
             if (img) { img.src = ad.image; img.alt = ad.title; }
             if (title) title.textContent = ad.title;
-            if (titleOverlay) titleOverlay.textContent = ad.title; 
+            if (titleOverlay) titleOverlay.textContent = ad.overlayTitle || ad.title; 
             if (desc) desc.textContent = ad.desc;
             if (cta) cta.textContent = ad.cta;
             if (link) {
@@ -632,13 +653,14 @@ const searchSchema = {
 
              // Inject Ads every 6 items
              if ((index + 1) % 6 === 0 && adTemplate) {
-                     const adClone = adTemplate.content.cloneNode(true) as HTMLElement;
-                     const wrapper = adClone.querySelector('.native-ad-injected') as HTMLElement;
+                     const fragment = adTemplate.content.cloneNode(true) as DocumentFragment;
+                     const wrapper = fragment.querySelector('.native-ad-injected') as HTMLElement;
+                     
                      if (wrapper) {
                         randomizeAdCard(wrapper, AD_START_INDEX + adInsertionCount);
                         adInsertionCount++;
                      }
-                     resultsGrid?.appendChild(adClone);
+                     resultsGrid?.appendChild(fragment);
             }
         });
 
@@ -741,14 +763,36 @@ const searchSchema = {
     }
 
     function init() {
+        console.log('Search Page Init Started');
         // Init Data
         const scriptDataInfo = document.getElementById('spots-data');
         if (scriptDataInfo && scriptDataInfo.textContent) {
            try {
                spotsData = JSON.parse(scriptDataInfo.textContent);
+               console.log('Spots Data Loaded:', spotsData.length);
            } catch(e) {
                console.error("Failed to parse spots data", e);
            }
+        } else {
+            console.error('Spots Data Element Not Found');
+        }
+
+        // Init Ad Pool (Global Shuffled)
+        const adsDataInfo = document.getElementById('global-ads-pool');
+        if (adsDataInfo && adsDataInfo.textContent) {
+             try {
+                 adPool = JSON.parse(adsDataInfo.textContent);
+                 // Shuffle
+                 for (let i = adPool.length - 1; i > 0; i--) {
+                     const j = Math.floor(Math.random() * (i + 1));
+                     [adPool[i], adPool[j]] = [adPool[j], adPool[i]];
+                 }
+                 // Random Start
+                 adPoolIndex = Math.floor(Math.random() * adPool.length);
+                 console.log('Ads Pool Loaded:', adPool.length);
+             } catch(e) { console.error('Failed to parse ads data', e); }
+        } else {
+            console.warn('Ads Pool Element Not Found');
         }
 
         searchInput = document.getElementById('search-input') as HTMLInputElement;
@@ -760,6 +804,8 @@ const searchSchema = {
         countDisplay = document.getElementById('count-display');
         // No longer need 'items' from DOM
         
+        if (!resultsGrid) console.error('Results Grid Not Found');
+
         modal = document.getElementById('filter-modal');
         modalPanel = document.getElementById('modal-panel');
         openModalBtn = document.getElementById('open-filter-modal');
@@ -816,12 +862,18 @@ const searchSchema = {
              renderResults();
         });
 
-        setTimeout(() => {
+        // Initialize immediately if possible, or wait a tick
+        if (spotsData.length > 0) {
             initFromURL();
-        }, 0);
+        } else {
+             setTimeout(() => {
+                initFromURL();
+            }, 50);
+        }
     }
 
     function initFromURL() {
+         console.log('Init From URL called');
          const params = new URLSearchParams(window.location.search);
          const query = params.get('q');
          const city = params.get('city');

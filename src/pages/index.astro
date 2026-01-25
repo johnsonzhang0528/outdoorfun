@@ -6,6 +6,10 @@ import spots from '../data/surf_spots.json';
 import { Image } from 'astro:assets';
 import heroBg from '../assets/hero-bg-surf.jpg';
 import { getValidSpots } from '../utils/filterSpots';
+import { getAdRotator } from '../utils/adManager';
+
+// Initialize Ad Rotator
+const adRotator = getAdRotator();
 
 // Simple types for the dataset
 type Spot = {
@@ -239,7 +243,7 @@ const homeSchema = {
                     {/* Insert Native Ad after the 6th item */}
                     {index === 5 && (
                         <div class="h-full">
-                            <NativeAdCard />
+                            <NativeAdCard adData={adRotator.next()} />
                         </div>
                     )}
                 </>

@@ -4,6 +4,7 @@ import SpotCard from '../../components/SpotCard.astro';
 import NativeAdCard from '../../components/NativeAdCard.astro';
 import spots from '../../data/surf_spots.json';
 import { getValidSpots } from '../../utils/filterSpots';
+import { getAdRotator } from '../../utils/adManager';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -17,6 +18,7 @@ export async function getStaticPaths() {
 const { city } = Astro.props;
 const validSpots = getValidSpots(spots);
 const citySpots = validSpots.filter(s => s.city === city);
+const adRotator = getAdRotator();
 
 // 🟢 [SEO] Auto-Generated Statistical Summary
 const beginnerCount = citySpots.filter(s => s.difficulty === '初學者').length;
@@ -161,17 +163,17 @@ const citySchema = {
         {/* 🟢 [SEO] Semantic Heading for List */}
         <h2 class="sr-only">精選{city}浪點列表</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {citySpots.map((spot, index) => {
                 const showAd = (index + 1) % 6 === 0;
                 return (
                     <>
                         <SpotCard spot={spot} />
                         {showAd && (
-                            <NativeAdCard location={city} />
+                            <NativeAdCard adData={adRotator.next()} />
                         )}
                     </>
                 );
+            })} );
             })}
         </div>
 

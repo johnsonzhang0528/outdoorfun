@@ -2,12 +2,14 @@
 // src/components/NativeAdCard.astro
 import { ads, getBadgeClasses } from '../data/adContent';
 import topCampsInventory from '../data/top_camps.json';
+import type { Ad } from '../utils/adManager';
 
 interface Props {
     city?: string;
+    adData?: Ad;
 }
 
-const { city } = Astro.props;
+const { city, adData } = Astro.props;
 
 // 1. 定義「純地理」鄰居關係 (Geographic Map)
 // 這只代表地理位置的替補建議，不代表資料有無
@@ -47,7 +49,12 @@ const adsWithClasses = ads.map(ad => ({
 // Server-side Logic
 let selectedAd;
 
-if (city) {
+if (adData) {
+    // 🟢 Strategy 1: Explicit Ad Data (Caller Controlled)
+    // 如果外部已經決定好廣告內容 (例如 Ad Rotator)，直接使用
+    selectedAd = adData;
+
+} else if (city) {
     // 🟢 Strategy 2: Contextual Deep Linking (情境式深度互連)
     // 如果有傳入 city (例如: 宜蘭縣)，則優先顯示該城市的露營區推廣
     

@@ -6,6 +6,7 @@ import GearChecklist from '../../components/GearChecklist.astro';
 import spots from '../../data/surf_spots.json';
 import { TOPIC_CONFIG } from '../../data/topic_expansion';
 import { getValidSpots } from '../../utils/filterSpots';
+import { getAdRotator } from '../../utils/adManager';
 
 // 定義 Spot 型別，避免 TypeScript 報錯
 type Spot = {
@@ -123,6 +124,7 @@ export async function getStaticPaths() {
 
 const { title, description, spots: pageSpots, city, keyword } = Astro.props;
 const { id } = Astro.params;
+const adRotator = getAdRotator();
 
 // 🟢 [SEO] FAQ Logic
 const faqItems = [];
@@ -254,7 +256,7 @@ const breadcrumbSchema = {
 
                                 {/* 3. Feature 2 廣告 (Native Ad) */}
                                 {showAd && (
-                                    <NativeAdCard />
+                                    <NativeAdCard adData={adRotator.next()} />
                                 )}
                             </>
                         );
@@ -297,7 +299,7 @@ const breadcrumbSchema = {
                     }} />
 
                    <div class="mt-8">
-                        <NativeAdCard city={city || undefined} />
+                        <NativeAdCard adData={adRotator.next()} />
                    </div>
                 </div>
             </aside>
