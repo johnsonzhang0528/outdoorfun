@@ -131,7 +131,7 @@ const faqItems = [];
 if (pageSpots.length > 0) {
     faqItems.push({
         question: `${title}包含哪些推薦浪點？`,
-        answer: `本專題精選了 ${pageSpots.slice(0, 5).map(s => `<a href="/spot/${s.name}">${s.name}</a>`).join('、')} 等 ${pageSpots.length} 個與「${keyword}」相關的熱門衝浪地點。`
+        answer: `本專題精選了 ${pageSpots.slice(0, 5).map(s => `<a href="/spot/${s.name}/">${s.name}</a>`).join('、')} 等 ${pageSpots.length} 個與「${keyword}」相關的熱門衝浪地點。`
     });
     
     faqItems.push({
@@ -180,7 +180,7 @@ const breadcrumbSchema = {
       "itemListElement": pageSpots.map((spot, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `${Astro.site ? Astro.site.origin : ''}/spot/${spot.name}`,
+        "url": `${Astro.site ? Astro.site.origin : ''}/spot/${spot.name}/`, // 🟢 [Fix] 補上結尾斜線，避免 Schema 連結到非標準網址
         "name": spot.name
       }))
     },

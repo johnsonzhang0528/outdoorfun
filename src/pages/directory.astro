@@ -108,14 +108,17 @@ const description = "Outdoor Fun 收錄的全台衝浪點完整列表。依照�
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {Object.keys(regionData).map(city => (
                   <div class="break-inside-avoid">
-                     <h3 class="font-bold text-lg text-emerald-800 mb-3 bg-emerald-50 px-3 py-1 rounded-lg inline-block">
-                       {city} <span class="text-xs text-emerald-600 font-normal ml-1">({regionData[city].length})</span>
-                     </h3>
+                     {/* 🟢 [Fix] 讓縣市名稱變成可點擊的連結，解決孤島問題 */}
+                     <a href={`/city/${city}/`} class="group inline-block">
+                        <h3 class="font-bold text-lg text-emerald-800 mb-3 bg-emerald-50 px-3 py-1 rounded-lg inline-block group-hover:bg-emerald-100 transition-colors">
+                          {city} <span class="text-xs text-emerald-600 font-normal ml-1">({regionData[city].length})</span>
+                        </h3>
+                     </a>
                      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                        {regionData[city].map(spot => (
                          <li>
                            <a 
-                             href={`/spot/${spot.name}`}
+                             href={`/spot/${spot.name}/`}
                              class="text-stone-600 hover:text-emerald-700 text-sm flex items-center group transition-colors"
                            >
                              <span class="w-1.5 h-1.5 rounded-full bg-stone-300 group-hover:bg-emerald-500 mr-2 transition-colors"></span>
