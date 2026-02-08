@@ -38,28 +38,28 @@
     "title": "🥶 冬季保暖專區",
     "items": [
       {
+        "name": "【Aropec】Seahawks 3mm 潛水衣 防寒長褲 潛水防寒外套 兩件式防寒衣 衝浪服",
+        "search_keyword": "3/2mm 潛水衣",
+        "desc": "適合潛水、浮潛及各類水上活動",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=3/2mm%20%E6%BD%9B%E6%B0%B4%E8%A1%A3&searchType=1",
+        "price": "$1,835"
+      },
+      {
         "name": "【SWIMFLOW】成人 ZCCO 專業連體潛水衣(潛水服 UPF50 3mm加厚 連身長袖潛水服 浮潛衣 衝浪 泳衣)",
-        "search_keyword": "3mm 潛水衣 全套",
+        "search_keyword": "5/3mm 連帽潛水衣",
         "desc": "滿1件享8折",
         "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=3mm%20%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E5%85%A8%E5%A5%97&searchType=1",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=5/3mm%20%E9%80%A3%E5%B8%BD%E6%BD%9B%E6%B0%B4%E8%A1%A3&searchType=1",
         "price": "$1,599"
       },
       {
-        "name": "【ADISI】男3mm潛水防寒長褲AP2113212(浮潛 溯溪 水上活動 UPF50+ 防曬 防磨 防水母)",
-        "search_keyword": "5mm 潛水衣 全套",
+        "name": "【MYSTIC】毛巾衣 保暖泰迪毛(潛水 衝浪 上岸)",
+        "search_keyword": "潛水衣 內層 保暖",
         "desc": "滿1件享8折",
         "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=5mm%20%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E5%85%A8%E5%A5%97&searchType=1",
-        "price": "$2,000 (下單再折)"
-      },
-      {
-        "name": "【Columbia 哥倫比亞】Columbia 潛水布 連帽外套 衣長偏長 防風 防潑水 微刷毛 長袖 哥倫比亞(7875EN2)",
-        "search_keyword": "潛水衣 連帽",
-        "desc": "最高享85折",
-        "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E9%80%A3%E5%B8%BD&searchType=1",
-        "price": "$3,502"
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%BD%9B%E6%B0%B4%E8%A1%A3%20%E5%85%A7%E5%B1%A4%20%E4%BF%9D%E6%9A%96&searchType=1",
+        "price": "$2,000"
       }
     ]
   },
@@ -76,7 +76,7 @@
       "防曬衣",
       "水母衣",
       "UV protection",
-      "長袖防曬"
+      "太陽眼鏡"
     ],
     "title": "☀️ 陽光防護大作戰",
     "items": [
@@ -89,20 +89,20 @@
         "price": "$1,200"
       },
       {
-        "name": "【國家地理服飾官方旗艦】女裝 拉鍊防曬衣 - 炭黑色(UPF 50+防護力/防曬)",
+        "name": "【國家地理服飾官方旗艦】男女同款 拼色長袖拉鍊防曬衣 - 蜜桃色(UPF 50+防護力/防曬)",
         "search_keyword": "UPF 50+ 防曬衣",
         "desc": "全館限時 6 折起",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=UPF%2050%2B%20%E9%98%B2%E6%9B%AC%E8%A1%A3&searchType=1",
-        "price": "$1,968"
+        "price": "$2,148"
       },
       {
-        "name": "【Kosmiya】1套 專業級 前拉鍊 長袖連身 運動泳裝/水母衣/淺水衣/保守泳裝/溫泉泳裝/防曬泳裝(3色/L-2XL)",
-        "search_keyword": "水母衣",
-        "desc": "熱銷現貨｜年節新衣特惠",
+        "name": "【AHC】9重全護爆水舒緩防曬棒22g 二入組(SPF50+PA++++ /海洋友善/小白傘/戶外防水抗汗)",
+        "search_keyword": "防水 防曬棒",
+        "desc": "最高折300",
         "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%B0%B4%E6%AF%8D%E8%A1%A3&searchType=1",
-        "price": "$759"
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%B0%B4%20%E9%98%B2%E6%9B%AC%E6%A3%92&searchType=1",
+        "price": "$950"
       }
     ]
   },
@@ -114,38 +114,37 @@
       "safety"
     ],
     "keywords": [
-      "防滑板繩",
-      "衝浪板",
-      "板面防滑墊",
-      "Leash",
-      "Surfboard",
-      "traction pad"
+      "軟板",
+      "立槳",
+      "衝浪板繩",
+      "板面保護墊",
+      "防滑墊"
     ],
-    "title": "🏄‍♀️ 衝浪硬體升級",
+    "title": "🏄‍♀️ 浪上飛舞的夥伴",
     "items": [
       {
-        "name": "L型ABS白色加強防滑安全扶手(不鏽鋼 浴室扶手 防滑扶手 廁所扶手 無障礙扶手 夜光)",
-        "search_keyword": "防滑板繩 加強",
-        "desc": "滿1件享82折",
-        "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%BB%91%E6%9D%BF%E7%B9%A9%20%E5%8A%A0%E5%BC%B7&searchType=1",
-        "price": "$902"
-      },
-      {
-        "name": "【TAS 極限運動】急速刷街 S5衝浪滑板 第三代(陸上衝浪板 滑板 類蛇板 交通板 沖浪滑板)",
+        "name": "【TAS 極限運動】任意巡航 CX4 衝浪滑板 第三代(初學適用 陸上衝浪板 滑板 類蛇板 交通板 沖浪滑板)",
         "search_keyword": "軟板 衝浪板",
         "desc": "滿1件享8折",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%BB%9F%E6%9D%BF%20%E8%A1%9D%E6%B5%AA%E6%9D%BF&searchType=1",
-        "price": "$3,095"
+        "price": "$2,159"
       },
       {
-        "name": "平衡板 單板衝浪訓練木質平衡板 防滑瑜伽滑雪板 平衡感訓練 全樺木板衝浪板滑雪板瑜伽健身核心訓練成人板",
-        "search_keyword": "衝浪板 防滑墊",
+        "name": "✨下殺價 宅配到府🚛  可摺疊 便攜式充氣槳板 入門水上 滑水板 趴板 浮板 衝浪板 滑水 立槳 衝浪板 釣魚",
+        "search_keyword": "立槳 SUP",
         "desc": "",
         "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%E6%9D%BF%20%E9%98%B2%E6%BB%91%E5%A2%8A&searchType=1",
-        "price": "$5,888"
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E7%AB%8B%E6%A7%B3%20SUP&searchType=1",
+        "price": "$4,326"
+      },
+      {
+        "name": "《極光》 2.5米直繩旋轉腳繩 衝浪板/SUP （黑色/透明白）",
+        "search_keyword": "衝浪板繩",
+        "desc": "",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%E6%9D%BF%E7%B9%A9&searchType=1",
+        "price": "$259"
       }
     ]
   },
@@ -156,37 +155,37 @@
       "sun_protection"
     ],
     "keywords": [
-      "防水袋",
       "沙灘巾",
+      "防水袋",
       "保溫瓶",
-      "防水手機殼",
-      "沙灘鞋"
+      "海灘拖鞋",
+      "防水背包"
     ],
     "title": "🏖️ 海邊生活好幫手",
     "items": [
       {
-        "name": "【Bone 蹦克】頸掛防水手機袋二代-黑/紅/莫蘭迪藍(防水手機套 可觸控適合潛水游泳 配件收納包 手機周邊)",
+        "name": "【YODOXIUI】日本雲朵絨柔軟超吸水快乾毛巾(大浴巾 沙灘巾 成人浴巾)",
+        "search_keyword": "沙灘巾 大",
+        "desc": "大尺寸浴巾，超強吸水8秒瞬吸",
+        "cta": "看裝備",
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%B2%99%E7%81%98%E5%B7%BE%20%E5%A4%A7&searchType=1",
+        "price": "$387"
+      },
+      {
+        "name": "【PELICAN】Marine 陸戰隊防水飄浮手機袋(隱形黑色)",
         "search_keyword": "防水手機袋",
-        "desc": "",
+        "desc": "滿1件享8折",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%B0%B4%E6%89%8B%E6%A9%9F%E8%A2%8B&searchType=1",
-        "price": "$699"
+        "price": "$784"
       },
       {
-        "name": "【Chillai】超細纖維超吸水速乾沙灘巾 瑜伽運動健身游泳浴巾 潛水衝浪海灘巾 戶外海邊游泳毛巾衣(80x130cm)",
-        "search_keyword": "沙灘巾 超吸水",
-        "desc": "吸濕不悶熱,肌膚即刻乾爽",
-        "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%B2%99%E7%81%98%E5%B7%BE%20%E8%B6%85%E5%90%B8%E6%B0%B4&searchType=1",
-        "price": "$339"
-      },
-      {
-        "name": "【KOUJI】買一送一手提吸管雙飲304不鏽鋼保溫杯900ml 保溫杯 冰壩杯 提把水杯 環保杯 吸管杯 保冷水壺",
+        "name": "2.2L 保溫水壺 304不鏽鋼按壓式熱水瓶 長效保溫瓶 保冷壺 大容量保溫 熱水壺 保溫杯 按壓出水 安全鎖扣",
         "search_keyword": "保溫瓶 保冷瓶",
-        "desc": "雙飲設計，304長效保冰溫",
+        "desc": "現貨速發 還有超多優惠",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E4%BF%9D%E6%BA%AB%E7%93%B6%20%E4%BF%9D%E5%86%B7%E7%93%B6&searchType=1",
-        "price": "$499"
+        "price": "$1,099"
       }
     ]
   },
@@ -200,34 +199,34 @@
       "救生衣",
       "哨子",
       "急救包",
-      "防寒帽",
-      "安全繩"
+      "防磨膏",
+      "水母防護"
     ],
-    "title": "🚨 安全第一！",
+    "title": "🚨 安全第一，玩得開心",
     "items": [
       {
-        "name": "【LEZUN 樂尊】皮劃艇救生衣成人兒童帆船沖浪釣魚浮力衣遊泳漂流馬甲夏 季求生衣",
-        "search_keyword": "衝浪 救生衣",
-        "desc": "皮劃艇救生衣",
+        "name": "【Aropec】救生衣 浮力背心 成人 兒童 救生衣 海釣服 磯釣服 漂流服",
+        "search_keyword": "救生衣 成人",
+        "desc": "兒童 成人皆有",
         "cta": "看裝備",
-        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E8%A1%9D%E6%B5%AA%20%E6%95%91%E7%94%9F%E8%A1%A3&searchType=1",
-        "price": "$3,464"
+        "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E6%95%91%E7%94%9F%E8%A1%A3%20%E6%88%90%E4%BA%BA&searchType=1",
+        "price": "$1,435"
       },
       {
-        "name": "【HH】理享家 求生 警報器 2入組(防災電子哨 蜂鳴器 電子哨子 電子口哨 緊急救難避難防狼專用)",
+        "name": "【E.City】多功能戶外7合1多功能緊急求生哨(2入)",
         "search_keyword": "緊急哨子",
-        "desc": "滿1件享77折",
+        "desc": "亦可當旅遊隨身小物",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E7%B7%8A%E6%80%A5%E5%93%A8%E5%AD%90&searchType=1",
-        "price": "$236"
+        "price": "$498"
       },
       {
-        "name": "【LEEHER】防水收納包/包包/手提行李袋/旅行袋/行李袋/行李箱拉桿包/摺疊行李袋/健身包/防水旅行袋/",
+        "name": "【AHOYE】戶外運動專用防水醫藥包(急救包 醫療包 醫藥包 醫護包)",
         "search_keyword": "防水 急救包",
-        "desc": "最高享92折",
+        "desc": "滿1件享85折",
         "cta": "看裝備",
         "link": "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=%E9%98%B2%E6%B0%B4%20%E6%80%A5%E6%95%91%E5%8C%85&searchType=1",
-        "price": "$940"
+        "price": "$211"
       }
     ]
   }
