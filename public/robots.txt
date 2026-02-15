@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://outdoorfun.tw/sitemap-index.xml
+Sitemap: https://www.outdoorfun.com.tw/sitemap-index.xml
 
 # AI Crawlers
 User-agent: GPTBot

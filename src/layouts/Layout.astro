@@ -119,13 +119,7 @@ const isActive = (path: string) => {
     <link rel="preconnect" href="https://b.tile.openstreetmap.org" crossorigin />
     <link rel="preconnect" href="https://c.tile.openstreetmap.org" crossorigin />
 
-        {/* 🟢 [LCP FIX] 加入 fetchpriority="high" 以消除 LCP 警告 */}
-        <link 
-            rel="preload" 
-            href="https://www.transparenttextures.com/patterns/stardust.png" 
-            as="image" 
-            fetchpriority="high"
-        />
+        {/* stardust.png 預載已移除：該紋理為裝飾性背景，不應佔用 LCP 最高優先資源 */}
 
         {preloadImage && (
             <link rel="preload" href={preloadImage} as="image" fetchpriority="high" />
@@ -137,6 +131,8 @@ const isActive = (path: string) => {
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 )}
 {!noindex && <link rel="canonical" href={canonicalURL.href} />}
+<link rel="alternate" hreflang="zh-TW" href={canonicalURL.href} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
 
 		<script is:inline>
             (function() {
@@ -239,15 +235,23 @@ Outdoor Fun | Surf Taiwan (Since 2005) 致力於提供最準確的浪況資訊�
 <div>
 <h3 class="text-white font-bold text-lg mb-4">熱門連結</h3>
 <ul class="space-y-2 text-sm text-stone-50">
-							<li><a href="/topic/all-advanced" class="hover:text-white transition">進階浪點</a></li>
-							<li><a href="/topic/all-beginner" class="hover:text-white transition">新手體驗</a></li>
-                            <li><a href="/directory" class="hover:text-white transition">全台浪點索引</a></li>
+							<li><a href="/topic/all-advanced/" class="hover:text-white transition">進階浪點</a></li>
+							<li><a href="/topic/all-beginner/" class="hover:text-white transition">新手體驗</a></li>
+							<li><a href="/topic/best-winter/" class="hover:text-white transition">冬季浪點</a></li>
+							<li><a href="/topic/summer-vibes/" class="hover:text-white transition">夏季浪點</a></li>
+                            <li><a href="/directory/" class="hover:text-white transition">全台浪點索引</a></li>
 							
 							<li class="pt-2 border-t border-stone-800 mt-2 text-xs text-stone-300 font-mono">地區推薦</li>
-							<li><a href="/city/宜蘭縣" class="hover:text-white transition">宜蘭衝浪</a></li>
-							<li><a href="/city/台東縣" class="hover:text-white transition">台東衝浪</a></li>
-<li><a href="/city/屏東縣" class="hover:text-white transition">墾丁衝浪</a></li>
-<li><a href="/city/新北市" class="hover:text-white transition">北海岸衝浪</a></li>
+							<li><a href="/city/宜蘭縣/" class="hover:text-white transition">宜蘭衝浪</a></li>
+							<li><a href="/city/台東縣/" class="hover:text-white transition">台東衝浪</a></li>
+<li><a href="/city/屏東縣/" class="hover:text-white transition">墾丁衝浪</a></li>
+<li><a href="/city/新北市/" class="hover:text-white transition">北海岸衝浪</a></li>
+<li><a href="/city/花蓮縣/" class="hover:text-white transition">花蓮衝浪</a></li>
+<li><a href="/city/苗栗縣/" class="hover:text-white transition">苗栗衝浪</a></li>
+<li><a href="/city/台南市/" class="hover:text-white transition">台南衝浪</a></li>
+<li><a href="/city/高雄市/" class="hover:text-white transition">高雄衝浪</a></li>
+<li><a href="/city/桃園市/" class="hover:text-white transition">桃園衝浪</a></li>
+<li><a href="/city/台中市/" class="hover:text-white transition">台中衝浪</a></li>
 </ul>
 </div>
 <div>
@@ -265,7 +269,7 @@ Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" re
 聯盟行銷聲明：本站部分內容包含推廣連結。當您透過這些連結購買商品時，我們可能會獲得微薄的佣金，這不會增加您的購買成本，但能支持我們持續創作優質內容。
 </p>
 <div class="mb-4 space-x-4">
-    <a href="/privacy" class="hover:text-white underline transition">隱私權政策</a>
+    <a href="/privacy/" class="hover:text-white underline transition">隱私權政策</a>
     {/* 服務條款暫時導向首頁或隱私頁，待內容完成後開啟獨立頁面 */}
     {/* <span class="text-stone-600">|</span> */}
     {/* <a href="/terms" class="hover:text-white underline transition">服務條款</a> */}
@@ -287,17 +291,17 @@ Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" re
 <span class="text-xs font-bold">首頁</span>
 </a>
 {/* Search */}
-<a href="/search" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/search') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
+<a href="/search/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/search/') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
 <span class="text-xs font-bold">搜尋</span>
 </a>
 {/* Beginner */}
-<a href="/topic/all-beginner" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-beginner') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
+<a href="/topic/all-beginner/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-beginner/') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 <span class="text-xs font-bold">新手</span>
 </a>
 {/* Advanced */}
-<a href="/topic/all-advanced" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-advanced') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
+<a href="/topic/all-advanced/" class={`flex flex-col items-center justify-center transition-all duration-200 gap-1 ${isActive('/topic/all-advanced/') ? 'text-white bg-stone-800 font-bold border-t-2 border-sky-500' : 'text-stone-400 hover:text-stone-200 border-t-2 border-transparent'}`}>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
 <span class="text-xs font-bold">進階</span>
 </a>
@@ -350,6 +354,21 @@ Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" re
 
             document.addEventListener('astro:page-load', startObserver);
             document.addEventListener('DOMContentLoaded', startObserver);
+
+            // 🟢 [GA4] Affiliate Click Event Tracking
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a[data-track-affiliate]');
+                if (!link) return;
+                if (typeof gtag === 'function') {
+                    gtag('event', 'affiliate_click', {
+                        affiliate_type: link.dataset.trackAffiliate || 'unknown',
+                        item_name: link.dataset.itemName || '',
+                        item_price: link.dataset.itemPrice || '',
+                        link_url: link.href,
+                        page_path: window.location.pathname
+                    });
+                }
+            }, true);
         </script>
 
 <style>

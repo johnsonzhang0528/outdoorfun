@@ -18,12 +18,22 @@
     {
       "source": "/modules/(.*)",
       "destination": "/",
-      "permanent": true
+      "statusCode": 410
     },
     {
       "source": "/upload/(.*)",
       "destination": "/",
-      "permanent": true
+      "statusCode": 410
+    },
+    {
+      "source": "/member/(.*)",
+      "destination": "/",
+      "statusCode": 410
+    },
+    {
+      "source": "/product/(.*)",
+      "destination": "/",
+      "statusCode": 410
     }
   ]
 }

@@ -117,7 +117,7 @@ const recommendedCategories = (productData as any[])
                 </div>
                 <div class="p-3 grid gap-2">
                     {cat.items.slice(0, 3).map((item: any, idx: number) => (
-                        <a href={item.link} target="_blank" class="flex items-center justify-between p-2 rounded-md hover:bg-sky-50 transition-colors group/item relative z-20">
+                        <a href={item.link} target="_blank" rel="nofollow noopener noreferrer sponsored" data-track-affiliate="gear" data-item-name={item.name} data-item-price={item.price} class="flex items-center justify-between p-2 rounded-md hover:bg-sky-50 transition-colors group/item relative z-20">
                             <div class="flex-1 min-w-0 pr-3">
                                 <div class="flex items-start gap-2 mb-0.5">
                                     <span class={`text-xs font-bold px-1.5 py-0.5 rounded text-white shrink-0 mt-0.5 ${idx === 0 ? 'bg-blue-600' : 'bg-slate-500'}`}>

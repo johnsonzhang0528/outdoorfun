@@ -12,6 +12,9 @@ export default defineConfig({
     }),
   ],
   
+  // 🟢 [SEO] 統一 URL 格式，確保 /spot/xxx/ 結尾斜線一致，避免重複索引
+  trailingSlash: 'always',
+
   // 🟢 [NEW] 加入這段設定
   build: {
     // 強制將 CSS 寫入 HTML，消除 CSS 轉譯封鎖 (Render Blocking)
