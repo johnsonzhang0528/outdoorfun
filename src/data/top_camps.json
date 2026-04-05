@@ -151,6 +151,44 @@
       "score": 60
     }
   ],
+  "高雄市": [
+    {
+      "name": "愛莉絲森林露營區",
+      "desc": "彷彿走進童話故事般的森林秘境，愛莉絲森林位於高雄桃源高海拔山區。這裡保留了原始森林風貌，空氣中充滿芬多精。海拔 1...",
+      "link": "https://www.outdoorcampingworld.com/camp/愛莉絲森林露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "一帳包區",
+        "南部高海拔",
+        "吹風機"
+      ],
+      "score": 80
+    },
+    {
+      "name": "阿爾山休閒農場",
+      "desc": "想在高雄市露營，欣賞絕美雲海嗎？阿爾山休閒農場絕對是你的首選！這片高海拔森林系露營區，不僅有廣闊的高雄大草皮，更在...",
+      "link": "https://www.outdoorcampingworld.com/camp/阿爾山休閒農場",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "ㄧ帳包區",
+        "寵物友善",
+        "小包區"
+      ],
+      "score": 60
+    },
+    {
+      "name": "晨月緣露營區",
+      "desc": "高雄少見的高海拔營地，位於桃源區深山，海拔達 1300 公尺。這裡視野極佳，可俯瞰壯麗山景與雲海。提供在地美味餐飲...",
+      "link": "https://www.outdoorcampingworld.com/camp/晨月緣露營區",
+      "image": "/images/camps/default.webp",
+      "tags": [
+        "3G/4G訊號微弱",
+        "ㄧ帳包區",
+        "包區專用衛浴"
+      ],
+      "score": 60
+    }
+  ],
   "桃園市": [
     {
       "name": "桃子菇菇休閒農莊",
@@ -237,44 +275,6 @@
         "台中",
         "台中賞櫻",
         "台中雲海"
-      ],
-      "score": 60
-    }
-  ],
-  "高雄市": [
-    {
-      "name": "愛莉絲森林露營區",
-      "desc": "彷彿走進童話故事般的森林秘境，愛莉絲森林位於高雄桃源高海拔山區。這裡保留了原始森林風貌，空氣中充滿芬多精。海拔 1...",
-      "link": "https://www.outdoorcampingworld.com/camp/愛莉絲森林露營區",
-      "image": "/images/camps/default.webp",
-      "tags": [
-        "一帳包區",
-        "南部高海拔",
-        "吹風機"
-      ],
-      "score": 80
-    },
-    {
-      "name": "晨月緣露營區",
-      "desc": "高雄少見的高海拔營地，位於桃源區深山，海拔達 1300 公尺。這裡視野極佳，可俯瞰壯麗山景與雲海。提供在地美味餐飲...",
-      "link": "https://www.outdoorcampingworld.com/camp/晨月緣露營區",
-      "image": "/images/camps/default.webp",
-      "tags": [
-        "3G/4G訊號微弱",
-        "ㄧ帳包區",
-        "包區專用衛浴"
-      ],
-      "score": 60
-    },
-    {
-      "name": "大學林",
-      "desc": "高雄桃源區的高山秘境，海拔 1300 公尺讓這裡即使在南部炎夏也享有涼爽氣溫。擁有遼闊的大草皮與櫻花林，夜晚的星空...",
-      "link": "https://www.outdoorcampingworld.com/camp/大學林",
-      "image": "/images/camps/default.webp",
-      "tags": [
-        "南部露營",
-        "夜景",
-        "大草皮"
       ],
       "score": 60
     }
