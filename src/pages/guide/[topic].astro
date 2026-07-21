@@ -1,0 +1,152 @@
+---
+// src/pages/guide/[topic].astro
+// 🟢 可被引用的資料資產頁 (linkable assets) — 全部由真實資料自動生成。
+// 白帽自然連結誘因(排行/清單類頁面容易被引用/分享),非連結操縱。
+import Layout from '../../layouts/Layout.astro';
+import SpotCompareTable from '../../components/SpotCompareTable.astro';
+import spots from '../../data/surf_spots.json';
+import marineData from '../../data/sea_conditions.json';
+import { getValidSpots } from '../../utils/filterSpots';
+import { getSpotStats, todayWaveRange, seaUpdatedAt } from '../../utils/surfData';
+
+export async function getStaticPaths() {
+  const all = getValidSpots(spots);
+  const hasFeat = (s: any, kw: string) => (s.features ?? []).some((f: string) => f.includes(kw)) || (s.tags ?? []).some((t: string) => t.includes(kw));
+
+  const topics = [
+    {
+      id: 'beginner',
+      title: '全台新手友善衝浪浪點清單',
+      lead: '收錄全台適合初學者的衝浪浪點:地形平緩、多為沙岸、常有衝浪店與教學課程。第一次衝浪從這些點開始最安心。',
+      spots: all.filter((s: any) => s.difficulty === '初學者'),
+      emoji: '🔰',
+    },
+    {
+      id: 'advanced',
+      title: '全台進階衝浪浪點清單',
+      lead: '收錄全台適合中階到專家的衝浪浪點,浪型較有挑戰性、部分為礁石底質。追浪的你別錯過。',
+      spots: all.filter((s: any) => s.difficulty === '專家' || s.difficulty === '中級'),
+      emoji: '🏄',
+    },
+    {
+      id: 'surf-shop',
+      title: '全台有衝浪店・租板的浪點清單',
+      lead: '收錄現場有衝浪店、租板或教學服務的浪點,免自備裝備即可下水,適合臨時起意或旅遊途中衝一波。',
+      spots: all.filter((s: any) => hasFeat(s, '衝浪店') || hasFeat(s, '租板')),
+      emoji: '🛹',
+    },
+    {
+      id: 'today-ranking',
+      title: '今日全台浪況排行',
+      lead: '依 Open-Meteo 海象 API 的今日浪高即時排序,快速看出全台哪裡有浪。每日自動更新。',
+      spots: all,
+      emoji: '📊',
+      byWave: true,
+    },
+  ];
+
+  return topics.map((t) => ({ params: { topic: t.id }, props: t }));
+}
+
+const { title, lead, spots: topicSpots, emoji, byWave } = Astro.props as any;
+const marine = marineData as Record<string, any>;
+
+// 今日浪高 map
+const waves: Record<string, { min: number; max: number } | null> = {};
+for (const s of topicSpots) waves[s.name] = todayWaveRange(marine[s.name]);
+
+// 今日排行頁:只留有浪高資料者、依浪高排序;其餘頁維持原順序
+let listSpots = topicSpots;
+if (byWave) {
+  listSpots = topicSpots
+    .filter((s: any) => waves[s.name])
+    .sort((a: any, b: any) => (waves[b.name]!.max) - (waves[a.name]!.max));
+}
+
+const stats = getSpotStats(listSpots);
+const seaUpdated = seaUpdatedAt(marine);
+const top3 = listSpots.slice(0, 3);
+const description = `${title}:收錄 ${stats.count} 個浪點,依真實資料自動整理,附難度、底質、最佳浪向與今日浪高比較表。`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: Astro.site?.origin },
+        { '@type': 'ListItem', position: 2, name: title, item: Astro.url.href },
+      ],
+    },
+    {
+      '@type': 'CollectionPage',
+      name: title,
+      description,
+      url: Astro.url.href,
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: listSpots.slice(0, 20).map((s: any, i: number) => ({
+          '@type': 'ListItem', position: i + 1,
+          url: `${Astro.site?.origin}/spot/${s.name}/`, name: s.name,
+        })),
+      },
+    },
+  ],
+};
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+
+  <div class="bg-indigo-900 text-white py-14 md:py-20">
+    <div class="container mx-auto px-4 text-center">
+      <div class="text-4xl mb-3">{emoji}</div>
+      <h1 class="text-3xl md:text-4xl font-black mb-4">{title}</h1>
+      <p class="max-w-2xl mx-auto text-indigo-100/90 leading-relaxed">{lead}</p>
+      {byWave && seaUpdated && <p class="text-xs text-indigo-300 mt-3">海況資料更新於 {seaUpdated}</p>}
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-12">
+    <div class="bg-gray-100 border-b border-gray-200 -mx-4 px-4 py-3 text-sm text-gray-500 mb-8">
+      <a href="/" class="hover:text-indigo-700">首頁</a> &rsaquo;
+      <span class="text-gray-800 font-medium ml-1">{title}</span>
+    </div>
+
+    {top3.length > 0 && (
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">{byWave ? '今日浪最大' : '精選推薦'}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {top3.map((s: any, i: number) => (
+            <a href={`/spot/${s.name}/`} class="block bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-300 transition">
+              <div class="text-xs font-bold text-indigo-600 mb-1">NO.{i + 1}</div>
+              <div class="font-bold text-lg text-gray-900">{s.name}</div>
+              <div class="text-sm text-gray-500 mt-1">
+                {s.city}{s.area}{s.difficulty ? ` · ${s.difficulty}` : ''}
+                {waves[s.name] ? ` · 今日 ${waves[s.name]!.max}m` : ''}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {listSpots.length > 1 && (
+      <div class="mt-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">完整清單（可排序）</h2>
+        <SpotCompareTable spots={listSpots} waves={waves} />
+      </div>
+    )}
+
+    <div class="mt-12 text-sm text-gray-500 border-t border-gray-200 pt-6">
+      <p class="mb-2 font-medium text-gray-600">延伸探索：</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="/guide/beginner/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">🔰 新手友善浪點</a>
+        <a href="/guide/advanced/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">🏄 進階浪點</a>
+        <a href="/guide/surf-shop/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">🛹 有衝浪店</a>
+        <a href="/guide/today-ranking/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">📊 今日浪況排行</a>
+        <a href="/directory/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">📖 全台索引</a>
+      </div>
+    </div>
+  </div>
+</Layout>

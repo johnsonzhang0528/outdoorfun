@@ -1,0 +1,85 @@
+---
+// src/components/SpotCompareTable.astro
+// 可排序的浪點比較表 — 用真實資料(難度/底質/最佳浪向/今日浪高)呈現,每頁不同。
+// 預設依今日浪高排序;點欄位標題可客戶端重排。
+import type { Spot } from '../utils/surfData';
+
+interface Props {
+  spots: Spot[];
+  waves?: Record<string, { min: number; max: number } | null>;
+  caption?: string;
+}
+
+const { spots, waves = {}, caption } = Astro.props;
+
+const waveMax = (name: string) => waves[name]?.max ?? -1;
+const anyWave = spots.some((s) => waves[s.name]);
+// 預設:今日浪高高→低(無浪高資料者排後)
+const sorted = [...spots].sort((a, b) => waveMax(b.name) - waveMax(a.name));
+
+const diffColor = (d?: string) =>
+  d === '初學者' ? 'bg-emerald-100 text-emerald-700'
+  : d === '專家' ? 'bg-rose-100 text-rose-700'
+  : 'bg-amber-100 text-amber-700';
+---
+
+<div class="my-8 not-prose">
+  {caption && <h3 class="text-lg font-bold text-gray-900 mb-3">{caption}</h3>}
+  <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+    <table class="w-full text-sm text-left js-spot-table" data-sort-dir="desc">
+      <thead class="bg-gray-50 text-gray-600 border-b border-gray-200">
+        <tr>
+          <th class="px-4 py-3 font-bold">浪點</th>
+          <th class="px-4 py-3 font-bold whitespace-nowrap">難度</th>
+          <th class="px-4 py-3 font-bold whitespace-nowrap">底質</th>
+          <th class="px-4 py-3 font-bold whitespace-nowrap">最佳浪向</th>
+          {anyWave && <th class="px-4 py-3 font-bold whitespace-nowrap cursor-pointer select-none js-sort">今日浪高 <span class="text-gray-400 text-xs">▼</span></th>}
+        </tr>
+      </thead>
+      <tbody>
+        {sorted.map((spot) => {
+          const w = waves[spot.name];
+          return (
+            <tr class="border-b border-gray-100 hover:bg-indigo-50/40 transition-colors" data-wave={w ? w.max : -1}>
+              <td class="px-4 py-3">
+                <a href={`/spot/${spot.name}/`} class="font-medium text-indigo-700 hover:underline">{spot.name}</a>
+                <span class="block text-xs text-gray-400">{spot.city}{spot.area}</span>
+              </td>
+              <td class="px-4 py-3 whitespace-nowrap">
+                {spot.difficulty && <span class={`text-xs font-bold px-2 py-0.5 rounded ${diffColor(spot.difficulty)}`}>{spot.difficulty}</span>}
+              </td>
+              <td class="px-4 py-3 whitespace-nowrap text-gray-600 text-xs">{spot.bottom_type ?? '—'}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-gray-600 text-xs">{spot.best_swell ?? '—'}</td>
+              {anyWave && (
+                <td class="px-4 py-3 whitespace-nowrap tabular-nums text-gray-700">
+                  {w ? (w.min === w.max ? `${w.max}m` : `${w.min}–${w.max}m`) : <span class="text-gray-300">—</span>}
+                </td>
+              )}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-xs text-gray-400 mt-2">今日浪高來自 Open-Meteo 海象 API,每日更新;點欄位標題可重新排序。</p>
+</div>
+
+<script>
+  document.querySelectorAll('.js-spot-table').forEach((table) => {
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    table.querySelectorAll('.js-sort').forEach((th) => {
+      th.addEventListener('click', () => {
+        const dir = table.getAttribute('data-sort-dir') === 'desc' ? 'asc' : 'desc';
+        table.setAttribute('data-sort-dir', dir);
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        rows.sort((a, b) => {
+          const av = parseFloat(a.getAttribute('data-wave') || '-1');
+          const bv = parseFloat(b.getAttribute('data-wave') || '-1');
+          return dir === 'desc' ? bv - av : av - bv;
+        });
+        rows.forEach((r) => tbody.appendChild(r));
+      });
+    });
+  });
+</script>
