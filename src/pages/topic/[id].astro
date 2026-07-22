@@ -3,10 +3,14 @@ import Layout from '../../layouts/Layout.astro';
 import SpotCard from '../../components/SpotCard.astro';
 import NativeAdCard from '../../components/NativeAdCard.astro';
 import GearChecklist from '../../components/GearChecklist.astro';
+import SpotCompareTable from '../../components/SpotCompareTable.astro';
+import SurfLessonCTA from '../../components/SurfLessonCTA.astro';
 import spots from '../../data/surf_spots.json';
+import marineData from '../../data/sea_conditions.json';
 import { TOPIC_CONFIG } from '../../data/topic_expansion';
 import { getValidSpots } from '../../utils/filterSpots';
 import { getAdRotator } from '../../utils/adManager';
+import { summarizeRegionSea, seaUpdatedAt, todayWaveRange, getSpotStats } from '../../utils/surfData';
 
 // 定義 Spot 型別，避免 TypeScript 報錯
 type Spot = {
@@ -126,6 +130,20 @@ const { title, description, spots: pageSpots, city, keyword } = Astro.props;
 const { id } = Astro.params;
 const adRotator = getAdRotator();
 
+// 🟢 [Data-Driven] 真實海況 + 統計 + 今日各浪點浪高
+const marine = marineData as Record<string, any>;
+const regionSea = summarizeRegionSea(marine, pageSpots, city || '全台');
+const seaUpdated = seaUpdatedAt(marine);
+const topicStats = getSpotStats(pageSpots);
+const topicWaves: Record<string, { min: number; max: number } | null> = {};
+for (const s of pageSpots) topicWaves[s.name] = todayWaveRange(marine[s.name]);
+
+// 🟢 [變現] 新手類主題 → 顯示衝浪課程 CTA(高意圖轉換)
+const isBeginnerTopic = id === 'all-beginner'
+  || /新手|初學|beginner/i.test(id)
+  || /新手|初學|教學/.test(String(keyword || ''));
+const beginnerSpotNames = pageSpots.filter((s: any) => s.difficulty === '初學者').map((s: any) => s.name);
+
 // 🟢 [SEO] FAQ Logic
 const faqItems = [];
 if (pageSpots.length > 0) {
@@ -232,6 +250,25 @@ const breadcrumbSchema = {
                     </div>
                 </div>
 
+                {/* 🟢 [Data-Driven] 今日真實區域海況 */}
+                {regionSea && (
+                    <div class="mb-6 flex items-start gap-3 bg-sky-50 border border-sky-100 rounded-xl px-5 py-4">
+                        <span class="text-2xl leading-none">🌊</span>
+                        <div>
+                            <p class="text-sky-900 font-medium">{regionSea}</p>
+                            <p class="text-xs text-sky-600 mt-1">
+                                共 {topicStats.count} 個浪點 · 新手友善 {topicStats.beginner} 個
+                                {seaUpdated && <> · 海況資料更新於 {seaUpdated}</>}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* 🟢 [變現] 新手主題 → 城市化衝浪課程 CTA */}
+                {isBeginnerTopic && (
+                    <SurfLessonCTA city={city || undefined} beginnerSpotNames={beginnerSpotNames} />
+                )}
+
                 {/* Spots Listing */}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {pageSpots.map((spot, index) => {
@@ -270,6 +307,14 @@ const breadcrumbSchema = {
                         <a href="/" class="inline-block mt-4 text-sky-600 font-bold hover:underline">
                             回首頁瀏覽更多
                         </a>
+                    </div>
+                )}
+
+                {/* 🟢 [Data-Driven] 浪點比較表(難度/底質/最佳浪向/今日浪高) */}
+                {pageSpots.length > 1 && (
+                    <div class="mt-12">
+                        <h2 class="text-xl font-bold text-stone-800 mb-2">浪點比較表</h2>
+                        <SpotCompareTable spots={pageSpots} waves={topicWaves} />
                     </div>
                 )}
 

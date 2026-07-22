@@ -80,6 +80,13 @@ export function seaUpdatedAt(marineData: MarineData): string {
   return (meta?.updated_at || '').slice(0, 10);
 }
 
+// 城市化 Klook 衝浪課程連結。全域聯盟改寫器會自動把 klook.com 連結
+// 包成通路王聯盟連結,所以這裡只需產生城市化的搜尋 URL。
+export function klookLessonUrl(city?: string): string {
+  const q = encodeURIComponent(`${city ? city : '台灣'}衝浪`);
+  return `https://www.klook.com/zh-TW/search/result/?query=${q}`;
+}
+
 // 一組浪點統計(給 Hub 頁資料佐證)
 export function getSpotStats(spots: Spot[]): {
   count: number;

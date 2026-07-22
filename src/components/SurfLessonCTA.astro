@@ -1,0 +1,49 @@
+---
+// src/components/SurfLessonCTA.astro
+// 城市化衝浪課程導購 CTA(核心變現)。
+// - 城市化 Klook 課程連結(全域聯盟改寫器會自動加通路王聯盟)。
+// - 鎖定「{city}衝浪教學/課程/推薦」高商業意圖查詢。
+// - 帶 data-track-affiliate="surf_lesson" 供 GA4 量測。
+import { klookLessonUrl } from '../utils/surfData';
+
+interface Props {
+  city?: string;
+  beginnerSpotNames?: string[]; // 該地區新手浪點,增強在地相關性
+  compact?: boolean;
+}
+
+const { city, beginnerSpotNames = [], compact = false } = Astro.props;
+const place = city || '台灣';
+const url = klookLessonUrl(city);
+const heading = `${place}衝浪課程・教學推薦`;
+const sub = city
+  ? `第一次到${city}衝浪?找專業教練帶最安心 —— 提供裝備租借與新手教學,保證站起來。`
+  : `新手第一次衝浪?找專業教練帶最安心 —— 全台衝浪課程,含裝備租借與教學。`;
+---
+
+<div class={`not-prose rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-sky-50 ${compact ? 'p-4' : 'p-6'} my-8`}>
+  <div class="flex items-start gap-3">
+    <span class={compact ? 'text-2xl' : 'text-3xl'}>🏄‍♂️</span>
+    <div class="flex-1">
+      <h3 class={`font-bold text-indigo-900 ${compact ? 'text-base' : 'text-lg'} mb-1`}>{heading}</h3>
+      <p class="text-sm text-indigo-800/80 leading-relaxed mb-3">{sub}</p>
+      {beginnerSpotNames.length > 0 && !compact && (
+        <p class="text-xs text-indigo-600 mb-3">
+          {city} 新手友善浪點:{beginnerSpotNames.slice(0, 5).join('、')}{beginnerSpotNames.length > 5 ? ' 等' : ''}。
+        </p>
+      )}
+      <a
+        href={url}
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        data-track-affiliate="surf_lesson"
+        data-item-name={`${place}衝浪課程`}
+        class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-lg transition-colors active:scale-95"
+      >
+        <span>查看 {place} 衝浪課程</span>
+        <span>→</span>
+      </a>
+      <p class="text-[11px] text-indigo-400 mt-2">透過 Klook 預訂 · 本連結為合作推廣,不影響您的價格</p>
+    </div>
+  </div>
+</div>

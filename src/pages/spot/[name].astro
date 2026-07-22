@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import SpotMap from '../../components/SpotMap.astro';
 import GearChecklist from '../../components/GearChecklist.astro';
+import SurfLessonCTA from '../../components/SurfLessonCTA.astro';
 import BaseShareButtons from '../../components/ShareButtons.astro';
 import WeatherWidget from '../../components/WeatherWidget.astro';
 import SpotCard from '../../components/SpotCard.astro';
@@ -449,7 +450,14 @@ const relatedSpots = spots
                 <article class="prose prose-stone prose-lg md:prose-xl max-w-none mb-12 prose-headings:font-bold prose-p:text-stone-700 prose-a:text-emerald-600">
                     <h2 class="text-2xl font-bold text-stone-800 mb-4 border-l-4 border-emerald-500 pl-4">浪點介紹</h2>
                     <p class="text-lg md:text-xl leading-relaxed text-stone-700 tracking-wide text-justify">{spot.description}</p>
-                    
+
+                    {/* 🟢 [變現] 新手浪點 → 城市化衝浪課程 CTA(高意圖轉換) */}
+                    {isBeginner && (
+                        <div class="not-prose">
+                            <SurfLessonCTA city={spot.city} compact={true} />
+                        </div>
+                    )}
+
                     <div class="mt-8 flex flex-wrap gap-2 not-prose">
                         {(spot.tags || []).map(tag => (
                             <span class="bg-stone-100 text-stone-600 px-3 py-1.5 rounded-full text-base border border-stone-200">

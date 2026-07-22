@@ -4,6 +4,7 @@
 // 白帽自然連結誘因(排行/清單類頁面容易被引用/分享),非連結操縱。
 import Layout from '../../layouts/Layout.astro';
 import SpotCompareTable from '../../components/SpotCompareTable.astro';
+import SurfLessonCTA from '../../components/SurfLessonCTA.astro';
 import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
@@ -49,6 +50,8 @@ export async function getStaticPaths() {
 }
 
 const { title, lead, spots: topicSpots, emoji, byWave } = Astro.props as any;
+const { topic } = Astro.params;
+const showLessonCTA = topic === 'beginner' || topic === 'surf-shop';
 const marine = marineData as Record<string, any>;
 
 // 今日浪高 map
@@ -112,6 +115,8 @@ const schema = {
       <a href="/" class="hover:text-indigo-700">首頁</a> &rsaquo;
       <span class="text-gray-800 font-medium ml-1">{title}</span>
     </div>
+
+    {showLessonCTA && <SurfLessonCTA />}
 
     {top3.length > 0 && (
       <div class="mb-8">

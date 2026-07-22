@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import SpotCard from '../../components/SpotCard.astro';
 import NativeAdCard from '../../components/NativeAdCard.astro';
 import SpotCompareTable from '../../components/SpotCompareTable.astro';
+import SurfLessonCTA from '../../components/SurfLessonCTA.astro';
 import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
@@ -30,6 +31,8 @@ const seaUpdated = seaUpdatedAt(marine);
 const cityStats = getSpotStats(citySpots);
 const cityWaves: Record<string, { min: number; max: number } | null> = {};
 for (const s of citySpots) cityWaves[s.name] = todayWaveRange(marine[s.name]);
+// 變現:該市新手浪點(給衝浪課程 CTA 增強在地相關性)
+const cityBeginnerNames = citySpots.filter(s => s.difficulty === '初學者').map(s => s.name);
 
 // 🟢 [SEO] Auto-Generated Statistical Summary
 const beginnerCount = citySpots.filter(s => s.difficulty === '初學者').length;
@@ -184,6 +187,9 @@ const citySchema = {
                 </div>
             </div>
         )}
+
+        {/* 🟢 [變現] 在地衝浪課程 CTA(鎖定「{city}衝浪教學/推薦/課程」高意圖查詢) */}
+        <SurfLessonCTA city={city} beginnerSpotNames={cityBeginnerNames} />
 
         {/* 🟢 [SEO] Semantic Heading for List */}
         <h2 class="sr-only">精選{city}浪點列表</h2>
