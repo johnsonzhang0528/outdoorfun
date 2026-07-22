@@ -1,0 +1,142 @@
+---
+// src/pages/guide/season-calendar.astro
+// 🟢 資料資產頁:全台衝浪浪季月曆。全部由真實 best_swell 資料計算。
+// 鎖定「台灣衝浪季節 / 什麼時候衝浪 / X月衝浪」等資訊型查詢,是可被引用/分享的 linkable asset。
+import Layout from '../../layouts/Layout.astro';
+import SurfLessonCTA from '../../components/SurfLessonCTA.astro';
+import spots from '../../data/surf_spots.json';
+import { getValidSpots } from '../../utils/filterSpots';
+import {
+  getMonthlyInSeasonCounts,
+  getCitySeasonProfile,
+  SURF_WINTER_MONTHS,
+} from '../../utils/surfData';
+
+const all = getValidSpots(spots);
+const monthly = getMonthlyInSeasonCounts(all);
+const maxCount = Math.max(...monthly);
+
+// 區域分組(用真實縣市歸類),各區季節輪廓由該區浪點計算
+const REGIONS: { name: string; cities: string[] }[] = [
+  { name: '北部・東北角', cities: ['基隆市', '新北市', '宜蘭縣', '桃園市', '新竹市', '新竹縣'] },
+  { name: '中部', cities: ['苗栗縣', '台中市', '彰化縣', '雲林縣'] },
+  { name: '南部', cities: ['嘉義縣', '台南市', '高雄市', '屏東縣'] },
+  { name: '東部', cities: ['花蓮縣', '台東縣'] },
+  { name: '離島（澎湖）', cities: ['澎湖縣'] },
+];
+const regionRows = REGIONS.map((r) => {
+  const rs = all.filter((s: any) => r.cities.includes(s.city));
+  const prof = getCitySeasonProfile(rs);
+  return { name: r.name, count: rs.length, prof };
+}).filter((r) => r.count > 0);
+
+const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
+const monthMeta = (m: number) => SURF_WINTER_MONTHS.includes(m)
+  ? { season: '東北季風季', tone: 'sky', note: '東北浪穩定,北部/東北角主場,浪較大' }
+  : { season: '西南・颱風季', tone: 'amber', note: '南向浪為主,南部/東部主場,含颱風湧浪' };
+
+const title = '全台衝浪浪季月曆｜幾月去哪衝浪最好';
+const description = `台灣一年四季哪裡有浪?依 ${all.length} 個浪點的最佳浪向自動整理的浪季月曆:冬季東北季風季(10–3月)、夏季西南與颱風季(4–9月),含各區域最佳季節。`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: Astro.site?.origin },
+        { '@type': 'ListItem', position: 2, name: '全台衝浪浪季月曆', item: Astro.url.href },
+      ],
+    },
+    { '@type': 'Article', headline: title, description, url: Astro.url.href },
+  ],
+};
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+
+  <div class="bg-indigo-900 text-white py-14 md:py-20">
+    <div class="container mx-auto px-4 text-center">
+      <div class="text-4xl mb-3">🗓️</div>
+      <h1 class="text-3xl md:text-4xl font-black mb-4">全台衝浪浪季月曆</h1>
+      <p class="max-w-2xl mx-auto text-indigo-100/90 leading-relaxed">
+        台灣衝浪分兩大季:<strong>冬季東北季風季(約 10–3 月)</strong>浪最穩,北部與東北角是主場;
+        <strong>夏季西南氣流與颱風湧浪季(約 4–9 月)</strong>則換南部與東部登場。以下依 {all.length} 個浪點的最佳浪向自動整理。
+      </p>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="bg-gray-100 border-b border-gray-200 -mx-4 px-4 py-3 text-sm text-gray-500 mb-8">
+      <a href="/" class="hover:text-indigo-700">首頁</a> &rsaquo;
+      <span class="text-gray-800 font-medium ml-1">全台衝浪浪季月曆</span>
+    </div>
+
+    {/* 月曆:每月當季浪點數 + 浪況 */}
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">逐月浪況一覽</h2>
+    <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm mb-6">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-50 text-gray-600 border-b border-gray-200">
+          <tr>
+            <th class="px-4 py-3 font-bold whitespace-nowrap">月份</th>
+            <th class="px-4 py-3 font-bold whitespace-nowrap">主要浪季</th>
+            <th class="px-4 py-3 font-bold whitespace-nowrap">當季浪點數</th>
+            <th class="px-4 py-3 font-bold">說明</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MONTHS.map((m) => {
+            const meta = monthMeta(m);
+            const c = monthly[m - 1];
+            const pct = Math.round((c / maxCount) * 100);
+            return (
+              <tr class="border-b border-gray-100">
+                <td class="px-4 py-3 font-bold text-gray-800 whitespace-nowrap">{m} 月</td>
+                <td class="px-4 py-3 whitespace-nowrap">
+                  <span class={`text-xs font-bold px-2 py-0.5 rounded ${meta.tone === 'sky' ? 'bg-sky-100 text-sky-700' : 'bg-amber-100 text-amber-700'}`}>{meta.season}</span>
+                </td>
+                <td class="px-4 py-3 whitespace-nowrap">
+                  <div class="flex items-center gap-2">
+                    <span class="tabular-nums text-gray-700 w-8">{c}</span>
+                    <span class="inline-block h-2 rounded bg-indigo-400" style={`width:${Math.max(pct, 6)}%;max-width:120px`}></span>
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-gray-600 text-xs">{meta.note}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-400 mb-10">「當季浪點數」依各浪點最佳浪向(east/north = 冬季東北季風;south/west = 夏季)自動計算。</p>
+
+    {/* 各區域最佳季節 */}
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">各區域最佳衝浪季節</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+      {regionRows.map((r) => (
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-bold text-gray-900">{r.name}</h3>
+            <span class="text-xs text-gray-400">{r.count} 個浪點</span>
+          </div>
+          <p class="text-sm font-medium text-indigo-700 mb-1">最佳季節:{r.prof.bestMonthsLabel}</p>
+          <p class="text-xs text-gray-500 leading-relaxed">{r.prof.summary(r.name)}</p>
+        </div>
+      ))}
+    </div>
+
+    <SurfLessonCTA />
+
+    <div class="mt-10 text-sm text-gray-500 border-t border-gray-200 pt-6">
+      <p class="mb-2 font-medium text-gray-600">延伸探索：</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="/topic/best-winter/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">❄️ 冬季浪點</a>
+        <a href="/topic/summer-vibes/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">☀️ 夏季浪點</a>
+        <a href="/guide/beginner/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">🔰 新手友善浪點</a>
+        <a href="/guide/today-ranking/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">📊 今日浪況排行</a>
+        <a href="/directory/" class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition">📖 全台索引</a>
+      </div>
+    </div>
+  </div>
+</Layout>

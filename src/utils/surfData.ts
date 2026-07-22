@@ -80,6 +80,68 @@ export function seaUpdatedAt(marineData: MarineData): string {
   return (meta?.updated_at || '').slice(0, 10);
 }
 
+// ------------------------------------------------------------------
+// 浪季(依 best_swell 判斷)—— 台灣衝浪季節學:
+//   東北浪(東北季風,約 10-3 月)主場在東北部/北部;
+//   南/西南/東南浪(西南氣流+颱風湧浪,約 4-9 月)主場在南部/東部。
+// ------------------------------------------------------------------
+export const SURF_WINTER_MONTHS = [10, 11, 12, 1, 2, 3];
+export const SURF_SUMMER_MONTHS = [4, 5, 6, 7, 8, 9];
+
+export function getSpotSeason(spot: Spot): 'winter' | 'summer' | 'all' {
+  const sw = spot.best_swell || '';
+  const w = sw.includes('北'); // 東北/北/西北 → 東北季風季
+  const s = sw.includes('南'); // 南/西南/東南/南風 → 夏季
+  if (w && s) return 'all';
+  if (w) return 'winter';
+  if (s) return 'summer';
+  return 'all';
+}
+
+// 某月當季的浪點數(index 0..11 對應 1..12 月)
+export function getMonthlyInSeasonCounts(spots: Spot[]): number[] {
+  const counts = new Array(12).fill(0);
+  for (const s of spots) {
+    const se = getSpotSeason(s);
+    const months = se === 'winter' ? SURF_WINTER_MONTHS
+      : se === 'summer' ? SURF_SUMMER_MONTHS
+      : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    for (const m of months) counts[m - 1]++;
+  }
+  return counts;
+}
+
+// 一組浪點(通常是同縣市)的季節輪廓 + 建議季節文案
+export function getCitySeasonProfile(spots: Spot[]): {
+  winter: number; summer: number; both: number;
+  dominant: 'winter' | 'summer' | 'balanced';
+  bestMonthsLabel: string;
+  summary: (cityName: string) => string;
+} {
+  let winter = 0, summer = 0, both = 0;
+  for (const s of spots) {
+    const se = getSpotSeason(s);
+    if (se === 'winter') winter++;
+    else if (se === 'summer') summer++;
+    else both++;
+  }
+  let dominant: 'winter' | 'summer' | 'balanced';
+  if (winter > (summer + 1) * 1.4) dominant = 'winter';
+  else if (summer > (winter + 1) * 1.4) dominant = 'summer';
+  else dominant = 'balanced';
+  const bestMonthsLabel = dominant === 'winter' ? '10–3 月(東北季風季)'
+    : dominant === 'summer' ? '4–9 月(西南氣流與颱風湧浪季)'
+    : '冬季東北浪、夏季南向浪各有主場,春秋較全面';
+  const summary = (cityName: string) => {
+    if (dominant === 'winter')
+      return `${cityName}多為東北浪點,最佳衝浪季節是 10–3 月的東北季風季,浪最穩定;夏季浪較小,適合新手練習。`;
+    if (dominant === 'summer')
+      return `${cityName}多為南向/西南浪點,最佳衝浪季節是 4–9 月(西南氣流與颱風湧浪),夏季最熱鬧;冬季浪況較不穩。`;
+    return `${cityName}冬夏皆有浪:冬季(10–3 月)靠東北浪、夏季(4–9 月)靠南向浪,一年四季都能找到適合的浪點。`;
+  };
+  return { winter, summer, both, dominant, bestMonthsLabel, summary };
+}
+
 // 城市化 Klook 衝浪課程連結。全域聯盟改寫器會自動把 klook.com 連結
 // 包成通路王聯盟連結,所以這裡只需產生城市化的搜尋 URL。
 export function klookLessonUrl(city?: string): string {
