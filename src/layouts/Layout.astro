@@ -140,6 +140,12 @@ const isActive = (path: string) => {
                 let gtmLoaded = false;
                 const gtmId = 'G-ZK11421WQY';
 
+                // 🔧 [Fix] 全域 gtag stub —— 讓自訂事件(如 affiliate_click)能被送出。
+                // 先前 gtag 被定義在 loadGTM 內(區域作用域),導致外部 affiliate 追蹤抓不到 gtag。
+                // 事件會先進 dataLayer 佇列,待 gtag.js 載入後自動送出。
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+
                 // 🟢 [Analytics] SPA Pageview Trigger
                 window.addEventListener('astro:page-load', () => {
                    if (gtmLoaded && window.dataLayer) {
@@ -161,10 +167,8 @@ const isActive = (path: string) => {
                     script.async = true;
                     document.head.appendChild(script);
 
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', gtmId);
+                    window.gtag('js', new Date());
+                    window.gtag('config', gtmId);
                 }
 
                 // 定義會觸發載入的「使用者互動」事件
@@ -362,8 +366,8 @@ Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" re
             document.addEventListener('click', function(e) {
                 const link = e.target.closest('a[data-track-affiliate]');
                 if (!link) return;
-                if (typeof gtag === 'function') {
-                    gtag('event', 'affiliate_click', {
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'affiliate_click', {
                         affiliate_type: link.dataset.trackAffiliate || 'unknown',
                         item_name: link.dataset.itemName || '',
                         item_price: link.dataset.itemPrice || '',
