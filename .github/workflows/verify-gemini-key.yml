@@ -1,0 +1,78 @@
+name: Verify Gemini API Key
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-key:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check GEMINI_API_KEY secret is configured
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::GEMINI_API_KEY secret is not set."
+            exit 1
+          fi
+          echo "GEMINI_API_KEY is present (value not shown)."
+
+      - name: Call Gemini models.list via header auth (no repo checkout, no SDK)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python3 - <<'PYEOF'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          api_key = os.environ.get("GEMINI_API_KEY", "")
+          if not api_key:
+              print("RESULT: FAIL category=missing_key")
+              sys.exit(1)
+
+          req = urllib.request.Request(
+              "https://generativelanguage.googleapis.com/v1beta/models",
+              headers={"x-goog-api-key": api_key},
+          )
+
+          try:
+              with urllib.request.urlopen(req, timeout=10) as resp:
+                  status = resp.status
+                  body = resp.read()
+          except urllib.error.HTTPError as e:
+              category = {
+                  400: "bad_request",
+                  401: "unauthorized_invalid_or_revoked_key",
+                  403: "forbidden_permission_denied",
+                  404: "not_found",
+                  429: "rate_limited",
+              }.get(e.code, "http_error")
+              print(f"RESULT: FAIL status={e.code} category={category}")
+              sys.exit(1)
+          except urllib.error.URLError:
+              print("RESULT: FAIL category=network_error_or_timeout")
+              sys.exit(1)
+          except Exception:
+              print("RESULT: FAIL category=unexpected_error")
+              sys.exit(1)
+
+          try:
+              model_count = len(json.loads(body).get("models", []))
+          except Exception:
+              print("RESULT: FAIL category=invalid_json_response")
+              sys.exit(1)
+
+          if status == 200 and model_count > 0:
+              print(f"RESULT: PASS status={status} model_count={model_count}")
+              sys.exit(0)
+
+          print(f"RESULT: FAIL status={status} model_count={model_count}")
+          sys.exit(1)
+          PYEOF
