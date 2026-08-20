@@ -10,17 +10,18 @@ import html
 
 # ================= 設定區 =================
 
-# 您的 API Key
-API_KEY = "AIzaSyB2O9xhxWEVwEEt9GpOss-YhW5JQX2Hf2s"
+API_KEY = os.environ.get("GEMINI_API_KEY")
 MODEL_NAME = "gemma-3-27b-it"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # 輸出位置：指向衝浪專案的 data 資料夾
 OUTPUT_PATH = os.path.join(BASE_DIR, "..", "src", "data", "products.json")
 
-# 初始化 Google GenAI
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel(MODEL_NAME)
+# 初始化 Google GenAI(僅在環境變數存在時才初始化,缺少金鑰時 fail closed)
+model = None
+if API_KEY:
+    genai.configure(api_key=API_KEY)
+    model = genai.GenerativeModel(MODEL_NAME)
 
 def safe_json_decode(text_segment):
     """
@@ -125,8 +126,8 @@ def main():
     print("🏄 啟動【衝浪選品】分析模組...")
     
     if not model:
-        print("❌ No API Key found. (請在檔案中設定 API_KEY 或環境變數 GEMINI_API_KEY)")
-        raise ValueError("Critical: Gemini API Key is missing or invalid.")
+        print("❌ 找不到 GEMINI_API_KEY 環境變數,已中止執行(fail closed,不會覆寫既有 products.json)。")
+        raise ValueError("Critical: GEMINI_API_KEY environment variable is not set.")
         
     season, keywords = get_surf_season_context()
     print(f"🌊 當前浪況情境: {season} (關鍵字: {keywords})")
