@@ -73,6 +73,80 @@ test('internalUrl does not double-encode a value that already looks percent-enco
   assert.equal(decoded, raw);
 });
 
+test('internalUrl keeps an empty-string query value instead of omitting it', () => {
+  const result = internalUrl('/search', { q: '' });
+  assert.equal(result, '/search/?q=');
+  const params = new URLSearchParams(result.split('?')[1]);
+  assert.equal(params.has('q'), true);
+  assert.equal(params.get('q'), '');
+});
+
+test('internalUrl keeps a numeric 0 query value instead of treating it as falsy', () => {
+  const result = internalUrl('/search', { page: 0 });
+  assert.equal(result, '/search/?page=0');
+  assert.equal(new URLSearchParams(result.split('?')[1]).get('page'), '0');
+});
+
+test('internalUrl accepts non-zero numeric query values too', () => {
+  const result = internalUrl('/search', { page: 3 });
+  assert.equal(result, '/search/?page=3');
+});
+
+test('internalUrl only omits undefined, never empty string or 0, when mixed in the same call', () => {
+  const result = internalUrl('/search', { q: '', page: 0, sort: undefined });
+  const params = new URLSearchParams(result.split('?')[1]);
+  assert.equal(params.has('sort'), false);
+  assert.equal(params.get('q'), '');
+  assert.equal(params.get('page'), '0');
+});
+
+test('internalUrl adds the trailing slash correctly when path already has an embedded query', () => {
+  assert.equal(internalUrl('/search?q=beginner'), '/search/?q=beginner');
+  // slash comes before the query, not after or interleaved
+  const result = internalUrl('/search?q=beginner');
+  assert.equal(result.indexOf('/?'), 7); // ".../search" + "/?..." — slash immediately precedes "?"
+  assert.equal(result, '/search/?q=beginner');
+});
+
+test('internalUrl folds an embedded query in path together with the query param object', () => {
+  const result = internalUrl('/search?city=hualien', { q: 'beginner' });
+  const params = new URLSearchParams(result.split('?')[1]);
+  assert.equal(params.get('city'), 'hualien');
+  assert.equal(params.get('q'), 'beginner');
+  assert.equal(result.startsWith('/search/?'), true);
+});
+
+test('internalUrl does not double-encode a query value that is already percent-encoded in the input path', () => {
+  // Distinct from the raw-"%"-character test above: here the *input itself*
+  // is a pre-encoded query string embedded in `path` (the defensive fold-in
+  // case, not the "pass raw values to `query`" contract). URLSearchParams
+  // decodes it once on parse and re-encodes it once on output, so the
+  // result must contain exactly one layer of percent-encoding - never
+  // "%25E5..." (which would mean the literal "%" from the input got
+  // re-encoded on top of the existing encoding).
+  const preEncoded = '/search?q=%E5%B7%A6%E8%B7%91%E6%B5%AA';
+  const result = internalUrl(preEncoded);
+  assert.equal(result, '/search/?q=%E5%B7%A6%E8%B7%91%E6%B5%AA');
+  assert.equal(result.includes('%25'), false); // no double-encoding artifact
+  const decoded = new URLSearchParams(result.split('?')[1]).get('q');
+  assert.equal(decoded, '左跑浪'); // decodes back to the original semantic value
+});
+
+test('internalUrl never produces a stray "/?" when there is no query to append', () => {
+  for (const result of [
+    internalUrl('/'),
+    internalUrl('/search'),
+    internalUrl('/search', {}),
+    internalUrl('/search', { q: undefined }),
+  ]) {
+    assert.equal(result.includes('?'), false, `unexpected "?" in: ${result}`);
+  }
+  assert.equal(internalUrl('/'), '/');
+  assert.equal(internalUrl('/search'), '/search/');
+  assert.equal(internalUrl('/search', {}), '/search/');
+  assert.equal(internalUrl('/search', { q: undefined }), '/search/');
+});
+
 test('internalUrl preserves a fragment after the trailing slash and query', () => {
   assert.equal(internalUrl('/search#results'), '/search/#results');
   assert.equal(internalUrl('/search#results', { q: 'x' }), '/search/?q=x#results');

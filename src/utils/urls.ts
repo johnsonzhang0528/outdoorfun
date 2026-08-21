@@ -23,15 +23,16 @@ export const SITE_ORIGIN_FALLBACK = 'https://www.outdoorfun.com.tw';
  * segments themselves (e.g. spot/city names) - only trailing-slash
  * normalization and query construction are in scope here.
  *
- * A `query` value of `undefined` omits that key entirely (never becomes
- * the literal string "undefined").
+ * A `query` value of `undefined` omits that key entirely (never becomes the
+ * literal string "undefined"). An empty string ('') and the number `0` are
+ * both real values and are kept - only `undefined` is treated as "omit".
  *
  * Only accepts root-relative internal paths (must start with exactly one
  * "/", never "//" or a scheme) - throws for anything that looks like an
  * external or protocol-relative URL, since this helper must never be used
  * to "normalize" one.
  */
-export function internalUrl(path: string, query?: Record<string, string | undefined>): string {
+export function internalUrl(path: string, query?: Record<string, string | number | undefined>): string {
   if (typeof path !== 'string' || !path.startsWith('/') || path.startsWith('//')) {
     throw new Error(`internalUrl() only accepts a root-relative internal path, got: ${JSON.stringify(path)}`);
   }
@@ -58,8 +59,10 @@ export function internalUrl(path: string, query?: Record<string, string | undefi
   const params = new URLSearchParams(existingQuery);
   if (query) {
     for (const [key, value] of Object.entries(query)) {
+      // Only `undefined` is "omit this key". '' and 0 are real values and
+      // must not be dropped by a truthy/falsy check.
       if (value === undefined) continue;
-      params.set(key, value);
+      params.set(key, String(value));
     }
   }
   const queryString = params.toString();
