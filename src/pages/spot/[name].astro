@@ -12,6 +12,7 @@ import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
 import { TOPIC_CONFIG } from '../../data/topic_expansion';
 import { toSafeJsonScript } from '../../utils/safeHtml';
+import { internalUrl, SITE_ORIGIN_FALLBACK } from '../../utils/urls';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -141,7 +142,7 @@ const breadcrumbListItems = [
       "@type": "ListItem",
       "position": 1,
       "name": "首頁",
-      "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+      "item": Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK
     },
     {
       "@type": "ListItem",
@@ -384,7 +385,7 @@ const relatedSpots = spots
     <div class="bg-stone-100 border-b border-stone-200">
         <div class="container mx-auto px-4 py-3 text-sm text-stone-500">
             <a href="/" class="hover:text-emerald-700">首頁</a> &rsaquo; 
-            <a href={`/city/${spot.city}`} class="hover:text-emerald-700 mx-1">{spot.city}</a> 
+            <a href={internalUrl(`/city/${spot.city}`)} class="hover:text-emerald-700 mx-1">{spot.city}</a>
             {spot.area && spot.area !== '待確認' && (
                 <> &rsaquo; <span class="mx-1">{spot.area}</span> </>
             )}
@@ -395,7 +396,7 @@ const relatedSpots = spots
         {activeThemes.length > 0 && (
             <div class="container mx-auto px-4 pt-1 pb-3 flex flex-wrap gap-2">
                 {activeThemes.map(theme => (
-                    <a href={`/topic/${theme.id}`} class="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-stone-200 rounded-full text-xs font-bold text-stone-600 hover:text-emerald-700 hover:border-emerald-300 transition-colors shadow-sm">
+                    <a href={internalUrl(`/topic/${theme.id}`)} class="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-stone-200 rounded-full text-xs font-bold text-stone-600 hover:text-emerald-700 hover:border-emerald-300 transition-colors shadow-sm">
                         <span>{theme.icon}</span>
                         <span>{theme.label}</span>
                         <span class="text-stone-400 border-l border-stone-200 pl-1.5 ml-0.5 font-normal hidden sm:inline">{theme.desc}</span>

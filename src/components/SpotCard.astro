@@ -1,4 +1,6 @@
 ---
+import { internalUrl } from '../utils/urls';
+
 interface Props {
 	spot: {
 		name: string;
@@ -144,7 +146,7 @@ const isLongName = spot.name.length > 8;
 const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
 ---
 
-<a href={`/spot/${spot.name}`} class="block group h-full" style="content-visibility: auto; contain-intrinsic-size: 1px 400px;">
+<a href={internalUrl(`/spot/${spot.name}`)} class="block group h-full" style="content-visibility: auto; contain-intrinsic-size: 1px 400px;">
 	<article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col active:scale-[0.98] transform duration-100">
 		<div class={`relative overflow-hidden h-40 flex flex-col items-center justify-center p-4 text-center ${theme.gradient}`}>
             

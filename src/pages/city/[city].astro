@@ -10,6 +10,7 @@ import { getValidSpots } from '../../utils/filterSpots';
 import { getAdRotator } from '../../utils/adManager';
 import { summarizeRegionSea, seaUpdatedAt, todayWaveRange, getSpotStats, getCitySeasonProfile } from '../../utils/surfData';
 import { toSafeJsonScript } from '../../utils/safeHtml';
+import { internalUrl, SITE_ORIGIN_FALLBACK } from '../../utils/urls';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -106,7 +107,7 @@ const baseSchema = [
           "@type": "ListItem",
           "position": 1,
           "name": "首頁",
-          "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+          "item": Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK
         },
         {
           "@type": "ListItem",
@@ -129,7 +130,7 @@ const citySchema = {
           "@type": "ListItem",
           "position": 1,
           "name": "首頁",
-          "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+          "item": Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK
         },
         {
           "@type": "ListItem",
@@ -268,7 +269,7 @@ const citySchema = {
                 </h3>
                 
                 <div class="flex flex-col md:flex-row justify-center items-center gap-6 relative z-10">
-                    <a href={`/city/${neighbors.prev}`} class="group flex items-center bg-indigo-800 hover:bg-indigo-700 px-6 py-3 rounded-lg transition-colors border border-indigo-700">
+                    <a href={internalUrl(`/city/${neighbors.prev}`)} class="group flex items-center bg-indigo-800 hover:bg-indigo-700 px-6 py-3 rounded-lg transition-colors border border-indigo-700">
                         <span class="mr-3 text-indigo-300 group-hover:-translate-x-1 transition-transform">←</span>
                         <div class="text-left">
                             <div class="text-xs text-indigo-300 font-bold uppercase tracking-wider">往北/往西</div>
@@ -278,7 +279,7 @@ const citySchema = {
 
                     <div class="hidden md:block w-px h-12 bg-indigo-700"></div>
 
-                    <a href={`/city/${neighbors.next}`} class="group flex items-center bg-indigo-800 hover:bg-indigo-700 px-6 py-3 rounded-lg transition-colors border border-indigo-700">
+                    <a href={internalUrl(`/city/${neighbors.next}`)} class="group flex items-center bg-indigo-800 hover:bg-indigo-700 px-6 py-3 rounded-lg transition-colors border border-indigo-700">
                         <div class="text-right">
                              <div class="text-xs text-indigo-300 font-bold uppercase tracking-wider">往南/往東</div>
                              <div class="font-bold text-lg">{neighbors.next}</div>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import surfSpots from '../data/surf_spots.json';
 import { toSafeJsonScript } from '../utils/safeHtml';
+import { internalUrl } from '../utils/urls';
 
 // Define regions mapping for surf spots
 const regionMap: Record<string, string> = {
@@ -58,7 +59,7 @@ const breadcrumbSchema = {
         <h1 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">全台衝浪點總覽</h1>
         <p class="text-stone-600 max-w-2xl mx-auto">
           這裡收錄了我們目前資料庫中所有的衝浪點資訊（共 {surfSpots.length} 筆）。
-          若您想尋找特定地點，可以使用 <a href="/search" class="text-emerald-600 hover:text-emerald-700 underline">搜尋功能</a>。
+          若您想尋找特定地點，可以使用 <a href={internalUrl('/search')} class="text-emerald-600 hover:text-emerald-700 underline">搜尋功能</a>。
         </p>
       </header>
       
@@ -71,7 +72,7 @@ const breadcrumbSchema = {
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* 冬季入口 */}
-                <a href="/topic/best-winter" class="group relative overflow-hidden rounded-xl h-24 flex items-center px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
+                <a href={internalUrl('/topic/best-winter')} class="group relative overflow-hidden rounded-xl h-24 flex items-center px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
                     <div class="absolute inset-0 bg-white/10 group-hover:bg-white/0 transition-colors"></div>
                     <div class="relative z-10 flex items-center gap-4">
                         <span class="text-4xl filter drop-shadow-md">🌬️</span>
@@ -85,7 +86,7 @@ const breadcrumbSchema = {
                 </a>
 
                 {/* 夏季入口 */}
-                <a href="/topic/summer-vibes" class="group relative overflow-hidden rounded-xl h-24 flex items-center px-6 bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
+                <a href={internalUrl('/topic/summer-vibes')} class="group relative overflow-hidden rounded-xl h-24 flex items-center px-6 bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
                     <div class="absolute inset-0 bg-white/10 group-hover:bg-white/0 transition-colors"></div>
                     <div class="relative z-10 flex items-center gap-4">
                         <span class="text-4xl filter drop-shadow-md">🌊</span>

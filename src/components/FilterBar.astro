@@ -1,5 +1,6 @@
 ---
 import spots from '../data/surf_spots.json';
+import { internalUrl } from '../utils/urls';
 
 // 1. 定義固定篩選項目 (衝浪專屬)
 const fixedFilters = [
@@ -63,7 +64,7 @@ const filters = [...fixedFilters, ...sortedTags];
     <div class="flex items-center gap-3 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 md:mx-0 md:px-0 scroll-smooth">
       {filters.map((filter) => (
         <a 
-            href={filter.value === 'all' ? '/search' : `/search?q=${filter.label}`} 
+            href={filter.value === 'all' ? internalUrl('/search') : internalUrl('/search', { q: filter.label })}
             class="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-stone-200 text-stone-600 text-sm font-medium shadow-sm active:scale-95 transition-all hover:border-emerald-500 hover:text-emerald-700 whitespace-nowrap"
         >
           <span>{filter.icon}</span>

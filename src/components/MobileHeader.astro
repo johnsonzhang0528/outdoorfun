@@ -1,5 +1,6 @@
 ---
 // src/components/MobileHeader.astro
+import { internalUrl } from '../utils/urls';
 ---
 
 <header class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all duration-300">
@@ -24,7 +25,7 @@
     </a>
 
     <div class="flex items-center gap-3">
-        <a href="/search" aria-label="搜尋浪點" class="p-2 text-stone-500 hover:bg-stone-100 rounded-full transition-colors">
+        <a href={internalUrl('/search')} aria-label="搜尋浪點" class="p-2 text-stone-500 hover:bg-stone-100 rounded-full transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
