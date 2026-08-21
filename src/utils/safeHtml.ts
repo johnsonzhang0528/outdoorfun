@@ -61,6 +61,11 @@ export function isAllowedExternalUrl(value: unknown, allowedHosts: readonly stri
   if (!url) return false;
   if (url.protocol !== 'https:') return false;
   if (url.username || url.password) return false;
+  // url.port is '' both when no port was written and when the default port
+  // (443 for https) was written explicitly - the URL parser normalizes the
+  // latter away. Any other value means a non-standard port was requested,
+  // which this allowlist never permits even for an otherwise-trusted host.
+  if (url.port !== '') return false;
   const hostname = url.hostname.toLowerCase();
   return allowedHosts.some((h) => h.toLowerCase() === hostname);
 }

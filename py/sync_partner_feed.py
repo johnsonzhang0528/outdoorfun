@@ -24,7 +24,7 @@ REQUIRED_CAMP_FIELDS = ("name", "link")
 
 
 def _is_allowed_external_url(value, allowed_hosts):
-    """僅接受 https、hostname 完全比對、且不含 userinfo 的網址。"""
+    """僅接受 https、標準 443 port、hostname 完全比對、且不含 userinfo 的網址。"""
     if not isinstance(value, str) or not value.strip():
         return False
     try:
@@ -34,6 +34,16 @@ def _is_allowed_external_url(value, allowed_hosts):
     if parsed.scheme.lower() != "https":
         return False
     if "@" in parsed.netloc:
+        return False
+    try:
+        # parsed.port raises ValueError for a non-numeric port (e.g. ":abc").
+        # None means no port was written; 443 means the default https port
+        # was written explicitly. Anything else is a non-standard port this
+        # allowlist never permits, even for an otherwise-trusted host.
+        port = parsed.port
+    except ValueError:
+        return False
+    if port not in (None, 443):
         return False
     hostname = parsed.hostname
     if not hostname:

@@ -80,6 +80,14 @@ test('isAllowedExternalUrl rejects hostname bypass attempts', () => {
   assert.equal(isAllowedExternalUrl('https://evil-allowed.example', ALLOWED), false);
   assert.equal(isAllowedExternalUrl('https://allowed.example@evil.test/', ALLOWED), false);
   assert.equal(isAllowedExternalUrl('https://user:pass@allowed.example/', ALLOWED), false);
+  assert.equal(isAllowedExternalUrl('https://allowed.example.', ALLOWED), false); // trailing dot
+});
+
+test('isAllowedExternalUrl is case-insensitive on hostname, but rejects non-standard ports', () => {
+  assert.equal(isAllowedExternalUrl('https://ALLOWED.EXAMPLE/path', ALLOWED), true);
+  assert.equal(isAllowedExternalUrl('https://allowed.example:443/path', ALLOWED), true); // default port, same resource
+  assert.equal(isAllowedExternalUrl('https://allowed.example:8443/path', ALLOWED), false);
+  assert.equal(isAllowedExternalUrl('https://allowed.example:80/path', ALLOWED), false);
 });
 
 test('isAllowedExternalUrl rejects malformed / non-string / empty input', () => {

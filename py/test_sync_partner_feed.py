@@ -76,6 +76,31 @@ class SanitizeFeedLinkValidationTests(unittest.TestCase):
         clean, stats = sanitize_feed(data)
         self.assertEqual(clean, {})
 
+    def test_rejects_trailing_dot_host(self):
+        data = {"苗栗縣": [make_camp(link="https://www.outdoorcampingworld.com./x")]}
+        clean, stats = sanitize_feed(data)
+        self.assertEqual(clean, {})
+
+    def test_accepts_case_insensitive_host(self):
+        data = {"苗栗縣": [make_camp(link="https://WWW.OUTDOORCAMPINGWORLD.COM/x")]}
+        clean, stats = sanitize_feed(data)
+        self.assertEqual(stats["campaigns_accepted"], 1)
+
+    def test_accepts_explicit_default_port(self):
+        data = {"苗栗縣": [make_camp(link="https://www.outdoorcampingworld.com:443/x")]}
+        clean, stats = sanitize_feed(data)
+        self.assertEqual(stats["campaigns_accepted"], 1)
+
+    def test_rejects_non_standard_port(self):
+        data = {"苗栗縣": [make_camp(link="https://www.outdoorcampingworld.com:8443/x")]}
+        clean, stats = sanitize_feed(data)
+        self.assertEqual(clean, {})
+
+    def test_rejects_malformed_port(self):
+        data = {"苗栗縣": [make_camp(link="https://www.outdoorcampingworld.com:abc/x")]}
+        clean, stats = sanitize_feed(data)
+        self.assertEqual(clean, {})
+
     def test_rejects_missing_required_fields(self):
         data = {"苗栗縣": [{"name": "No Link Camp"}]}
         clean, stats = sanitize_feed(data)
