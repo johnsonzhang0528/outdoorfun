@@ -7,6 +7,7 @@ import { Image } from 'astro:assets';
 import heroBg from '../assets/hero-bg-surf.jpg';
 import { getValidSpots } from '../utils/filterSpots';
 import { getAdRotator } from '../utils/adManager';
+import { toSafeJsonScript } from '../utils/safeHtml';
 
 // Initialize Ad Rotator
 const adRotator = getAdRotator();
@@ -121,8 +122,8 @@ const homeSchema = {
     omitSuffix={true}
 >
     <!-- Inject Schema -->
-    <script type="application/ld+json" slot="head" set:html={JSON.stringify(homeSchema)}></script>
-    <script type="application/ld+json" slot="head" set:html={JSON.stringify(websiteSchema)}></script>
+    <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(homeSchema)}></script>
+    <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(websiteSchema)}></script>
     
     <div class="relative bg-slate-900 -mt-[64px] pt-[64px]">
         <div class="absolute inset-0 overflow-hidden">

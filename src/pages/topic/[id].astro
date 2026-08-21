@@ -11,6 +11,7 @@ import { TOPIC_CONFIG } from '../../data/topic_expansion';
 import { getValidSpots } from '../../utils/filterSpots';
 import { getAdRotator } from '../../utils/adManager';
 import { summarizeRegionSea, seaUpdatedAt, todayWaveRange, getSpotStats } from '../../utils/surfData';
+import { toSafeJsonScript } from '../../utils/safeHtml';
 
 // 定義 Spot 型別，避免 TypeScript 報錯
 type Spot = {
@@ -218,7 +219,7 @@ const breadcrumbSchema = {
 ---
 
 <Layout title={`${title} | Surf Taiwan 衝浪地圖`} description={description} geo={{ placename: city || '台灣' }}>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={toSafeJsonScript(breadcrumbSchema)} />
   
   {/* Hero Header */}
   <div class="bg-slate-900 text-white py-16 md:py-24 relative overflow-hidden">

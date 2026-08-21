@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import surfSpots from '../data/surf_spots.json';
+import { toSafeJsonScript } from '../utils/safeHtml';
 
 // Define regions mapping for surf spots
 const regionMap: Record<string, string> = {
@@ -50,7 +51,7 @@ const breadcrumbSchema = {
 ---
 
 <Layout title={pageTitle} description={description}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(breadcrumbSchema)}></script>
   <div class="bg-stone-50 min-h-screen py-12">
     <div class="container mx-auto px-4 max-w-5xl">
       <header class="mb-12 text-center">

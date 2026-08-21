@@ -11,6 +11,7 @@ import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
 import { TOPIC_CONFIG } from '../../data/topic_expansion';
+import { toSafeJsonScript } from '../../utils/safeHtml';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -377,7 +378,7 @@ const relatedSpots = spots
   }}
 >
   {/* 🟢 Unified Schema Output */}
-  <script type="application/ld+json" set:html={JSON.stringify(graphSchema)} />
+  <script type="application/ld+json" set:html={toSafeJsonScript(graphSchema)} />
 
     {/* Breadcrumbs - Mobile First Design */}
     <div class="bg-stone-100 border-b border-stone-200">
