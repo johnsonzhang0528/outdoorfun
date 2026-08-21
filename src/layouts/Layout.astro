@@ -4,6 +4,7 @@
 import MobileHeader from '../components/MobileHeader.astro';
 import BackToTop from '../components/BackToTop.astro';
 import { ClientRouter } from 'astro:transitions';
+import { SITE_ORIGIN_FALLBACK } from '../utils/urls';
 
 interface Props {
 title: string;
@@ -64,7 +65,7 @@ if (metaDescription.length > MAX_DESC_LENGTH) {
     metaDescription = metaDescription.substring(0, MAX_DESC_LENGTH - 3) + "...";
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surftaiwan.tw');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || SITE_ORIGIN_FALLBACK);
 const socialImageURL = new URL(image || '/images/hero-bg-surf.jpg', Astro.url);
 const currentPath = Astro.url.pathname;
 const isActive = (path: string) => {

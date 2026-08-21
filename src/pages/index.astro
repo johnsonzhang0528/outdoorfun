@@ -8,6 +8,7 @@ import heroBg from '../assets/hero-bg-surf.jpg';
 import { getValidSpots } from '../utils/filterSpots';
 import { getAdRotator } from '../utils/adManager';
 import { toSafeJsonScript } from '../utils/safeHtml';
+import { internalUrl, SITE_ORIGIN_FALLBACK } from '../utils/urls';
 
 // Initialize Ad Rotator
 const adRotator = getAdRotator();
@@ -51,14 +52,14 @@ const seasonalTopic = isWinter
     ? { 
         name: '冬季東北季風', 
         desc: '強勁東北風帶來的穩定浪況',
-        url: '/topic/best-winter', 
+        url: internalUrl('/topic/best-winter'),
         icon: '🌬️',
-        color: 'from-blue-600 to-cyan-500 border-cyan-400/30' 
+        color: 'from-blue-600 to-cyan-500 border-cyan-400/30'
       }
-    : { 
-        name: '夏季西南氣流', 
-        desc: '適合新手與長板的柔和浪況', 
-        url: '/topic/summer-vibes', 
+    : {
+        name: '夏季西南氣流',
+        desc: '適合新手與長板的柔和浪況',
+        url: internalUrl('/topic/summer-vibes'),
         icon: '☀️',
         color: 'from-orange-500 to-amber-500 border-orange-400/30'
       };
@@ -68,12 +69,12 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Outdoor Fun",
-  "url": Astro.site ? Astro.site.origin : "https://surftaiwan.tw",
+  "url": Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK,
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": `${Astro.site ? Astro.site.origin : "https://surftaiwan.tw"}/search?q={search_term_string}`
+      "urlTemplate": `${Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK}/search?q={search_term_string}`
     },
     "query-input": "required name=search_term_string"
   }
@@ -152,7 +153,7 @@ const homeSchema = {
                 <br class="hidden md:inline"/>隨時掌握最佳下水時機。
             </p>
             <div class="flex justify-center gap-4">
-                <a href="/search" class="w-full md:w-auto bg-sky-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-sky-800 transition shadow-lg shadow-sky-900/50 active:scale-95 transform duration-100 inline-flex items-center justify-center gap-2">
+                <a href={internalUrl('/search')} class="w-full md:w-auto bg-sky-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-sky-800 transition shadow-lg shadow-sky-900/50 active:scale-95 transform duration-100 inline-flex items-center justify-center gap-2">
                     <span>🏄</span> 搜尋浪點
                 </a>
             </div>
@@ -189,7 +190,7 @@ const homeSchema = {
                     <h2 class="text-sm font-bold text-stone-700 uppercase tracking-wider">熱門衝浪縣市</h2>
                     <p class="text-2xl font-bold text-stone-900 mt-1">你想去哪裡衝浪？</p>
                 </div>
-                <a href="/search" class="hidden md:block text-sky-800 text-sm font-bold hover:underline">看完整地圖 &rarr;</a>
+                <a href={internalUrl('/search')} class="hidden md:block text-sky-800 text-sm font-bold hover:underline">看完整地圖 &rarr;</a>
             </div>
             
             {/* 🟢 [UX FIX] Mobile Scroll Container */}
@@ -198,7 +199,7 @@ const homeSchema = {
                 <div class="flex overflow-x-auto pb-4 gap-3 md:grid md:grid-cols-4 lg:grid-cols-6 md:overflow-visible md:pb-0 snap-x scrollbar-hide -mx-2 px-2 md:mx-0 md:px-0">
                     {popularCities.map(({ city, count }) => (
                         <a 
-                            href={`/city/${city}`} 
+                            href={internalUrl(`/city/${city}`)}
                             /* 🟢 寬度優化: 手機版設為 w-[26%] (約3.5個)，讓第4個露出一半，暗示可捲動 */
                             class="snap-start shrink-0 w-[26%] md:w-auto flex flex-col items-center justify-center p-3 md:p-4 rounded-xl bg-stone-50 hover:bg-emerald-50 hover:text-emerald-800 transition-all duration-200 group/btn border border-stone-100 hover:border-emerald-200 hover:shadow-md active:scale-95"
                         >
@@ -209,7 +210,7 @@ const homeSchema = {
                     ))}
                     
                     {/* 查看更多的「假卡片」(Optional, 增加點擊入口) */}
-                    <a href="/search" class="snap-start shrink-0 w-[26%] md:hidden flex flex-col items-center justify-center p-3 rounded-xl border-2 border-dashed border-stone-300 text-stone-600 hover:text-emerald-700 hover:border-emerald-300 transition-colors">
+                    <a href={internalUrl('/search')} class="snap-start shrink-0 w-[26%] md:hidden flex flex-col items-center justify-center p-3 rounded-xl border-2 border-dashed border-stone-300 text-stone-600 hover:text-emerald-700 hover:border-emerald-300 transition-colors">
                         <span class="text-xl mb-1">➔</span>
                         <span class="text-xs font-bold">更多</span>
                     </a>
@@ -220,7 +221,7 @@ const homeSchema = {
             </div>
             
             <div class="mt-4 md:hidden text-center border-t border-stone-100 pt-4">
-                 <a href="/search" class="text-emerald-700 text-sm font-bold flex items-center justify-center gap-1 active:opacity-70">
+                 <a href={internalUrl('/search')} class="text-emerald-700 text-sm font-bold flex items-center justify-center gap-1 active:opacity-70">
                     探索所有地區 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                  </a>
             </div>
@@ -233,7 +234,7 @@ const homeSchema = {
             <h2 class="text-2xl font-bold text-stone-800 flex items-center gap-2">
                 <span class="text-3xl">🔥</span> 熱門精選浪點
             </h2>
-            <a href="/search" class="text-sky-700 font-bold hover:text-sky-800 flex items-center gap-1 text-sm md:text-base transition-colors">
+            <a href={internalUrl('/search')} class="text-sky-700 font-bold hover:text-sky-800 flex items-center gap-1 text-sm md:text-base transition-colors">
                 瀏覽所有浪點 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
             </a>
          </div>

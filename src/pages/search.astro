@@ -7,6 +7,7 @@ import { getValidSpots } from '../utils/filterSpots';
 import { getAllAds } from '../utils/adManager';
 import { getBadgeClasses } from '../data/adContent';
 import { toSafeJsonScript } from '../utils/safeHtml';
+import { SITE_ORIGIN_FALLBACK } from '../utils/urls';
 
 // Prepare Ads with classes for client-side
 const adsWithClasses = getAllAds().map(ad => ({
@@ -126,7 +127,7 @@ const searchSchema = {
           "@type": "ListItem",
           "position": 1,
           "name": "首頁",
-          "item": Astro.site ? Astro.site.origin : "https://surftaiwan.url"
+          "item": Astro.site ? Astro.site.origin : SITE_ORIGIN_FALLBACK
         },
         {
           "@type": "ListItem",
@@ -363,6 +364,7 @@ const searchSchema = {
 
 <script>
     import { escapeHtml, isAllowedExternalUrl, isSafeInternalPath } from '../utils/safeHtml';
+    import { internalUrl } from '../utils/urls';
 
     // Ads may include entries mapped from the external partner feed
     // (src/data/top_camps.json). adManager.ts and NativeAdCard.astro already
@@ -507,12 +509,13 @@ const searchSchema = {
           </svg>
         `;
 
-        // href uses the HTML-escaped name (e.g. an "&" would render as
-        // "&amp;" here, same as Astro's own attribute escaping does for the
-        // equivalent server-rendered link in SpotCard.astro) so the target
-        // URL is unchanged for every currently valid spot name while no
-        // longer being able to break out of the href="" attribute.
-        const href = `/spot/${nameEsc}`;
+        // internalUrl() normalizes the raw (unescaped) path first - trailing
+        // slash, no query/fragment here - then the whole result is
+        // HTML-escaped for safe insertion into the href="" attribute string
+        // (e.g. an "&" in spot.name would render as "&amp;" here, same as
+        // Astro's own attribute escaping does for the equivalent
+        // server-rendered link in SpotCard.astro).
+        const href = escapeHtml(internalUrl(`/spot/${spot.name}`));
 
         return `
         <div class="spot-item transition-opacity duration-300" style="content-visibility: auto; contain-intrinsic-size: 1px 400px;">
