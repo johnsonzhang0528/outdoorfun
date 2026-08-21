@@ -11,6 +11,7 @@ import {
   getCitySeasonProfile,
   SURF_WINTER_MONTHS,
 } from '../../utils/surfData';
+import { toSafeJsonScript } from '../../utils/safeHtml';
 
 const all = getValidSpots(spots);
 const monthly = getMonthlyInSeasonCounts(all);
@@ -54,7 +55,7 @@ const schema = {
 ---
 
 <Layout title={title} description={description}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+  <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(schema)}></script>
 
   <div class="bg-indigo-900 text-white py-14 md:py-20">
     <div class="container mx-auto px-4 text-center">

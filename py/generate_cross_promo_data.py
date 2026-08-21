@@ -1,5 +1,6 @@
 import json
 import os
+from urllib.parse import quote
 
 def generate_feed(source_file, output_file):
     try:
@@ -40,9 +41,9 @@ def generate_feed(source_file, output_file):
         
         link = ""
         if is_surf:
-            link = f"https://www.outdoorfun.com.tw/spot/{item['name']}"
+            link = f"https://www.outdoorfun.com.tw/spot/{quote(item['name'])}"
         else:
-            link = f"https://www.outdoorcampingworld.com/camp/{item['name']}"
+            link = f"https://www.outdoorcampingworld.com/camp/{quote(item['name'])}"
 
         feed[city].append({
             "name": item['name'],

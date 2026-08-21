@@ -6,6 +6,7 @@ import surfSpotsData from '../data/surf_spots.json';
 import { getValidSpots } from '../utils/filterSpots';
 import { getAllAds } from '../utils/adManager';
 import { getBadgeClasses } from '../data/adContent';
+import { toSafeJsonScript } from '../utils/safeHtml';
 
 // Prepare Ads with classes for client-side
 const adsWithClasses = getAllAds().map(ad => ({
@@ -148,7 +149,7 @@ const searchSchema = {
     title="全台衝浪點搜尋 | Surf Taiwan" 
     noindex={true}
 >
-    <script type="application/ld+json" slot="head" set:html={JSON.stringify(searchSchema)}></script>
+    <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(searchSchema)}></script>
 
 	<div class="bg-stone-100 py-6 md:py-12 border-b border-stone-200">
 		<div class="container mx-auto px-4">
@@ -341,8 +342,8 @@ const searchSchema = {
 
 			{/* Data injection for CSR to reduce HTML size */}
 		</div>
-        <script type="application/json" id="spots-data" set:html={JSON.stringify(spots)} />
-        <script type="application/json" id="global-ads-pool" set:html={JSON.stringify(adsWithClasses)} />
+        <script type="application/json" id="spots-data" set:html={toSafeJsonScript(spots)} />
+        <script type="application/json" id="global-ads-pool" set:html={toSafeJsonScript(adsWithClasses)} />
 
         {/* Template for Client-side Ad Injection */}
         <template id="native-ad-template">
@@ -361,6 +362,32 @@ const searchSchema = {
 </Layout>
 
 <script>
+    import { escapeHtml, isAllowedExternalUrl, isSafeInternalPath } from '../utils/safeHtml';
+
+    // Ads may include entries mapped from the external partner feed
+    // (src/data/top_camps.json). adManager.ts and NativeAdCard.astro already
+    // validate link/image before this data ever reaches the client, but this
+    // script does not assume that — it re-validates immediately before
+    // writing to href/src, same allowlist as the rest of the ad pipeline.
+    const ALLOWED_AD_LINK_HOSTS = ['www.outdoorcampingworld.com', 'www.klook.com', 'www.momoshop.com.tw'];
+    const SAFE_FALLBACK_LINK = '#';
+    const DEFAULT_AD_IMAGE = '/images/featured/glamping.jpg';
+
+    function safeAdHref(link: unknown): string {
+        if (link === SAFE_FALLBACK_LINK) return SAFE_FALLBACK_LINK;
+        if (typeof link === 'string' && (isSafeInternalPath(link) || isAllowedExternalUrl(link, ALLOWED_AD_LINK_HOSTS))) {
+            return link;
+        }
+        return SAFE_FALLBACK_LINK;
+    }
+
+    function safeAdImageSrc(image: unknown): string {
+        if (typeof image === 'string' && (isSafeInternalPath(image) || isAllowedExternalUrl(image, []))) {
+            return image;
+        }
+        return DEFAULT_AD_IMAGE;
+    }
+
     // Define State Variables
     let searchInput: HTMLInputElement | null;
     let filterCityInput: HTMLInputElement | null;
@@ -437,7 +464,7 @@ const searchSchema = {
         // Theme Logic
         const theme = COLOR_PALETTES[getHashIndex(spot.name + spot.city, COLOR_PALETTES.length)];
         const diffBg = difficultyColor[spot.difficulty] || "bg-stone-500";
-        
+
         let iconSvg = GEO_ICONS.default;
         const bottom = spot.bottom_type || "";
         if (bottom.includes("沙")) iconSvg = GEO_ICONS.sand;
@@ -449,9 +476,23 @@ const searchSchema = {
         const glowClasses = ['-top-12 -left-12', '-top-12 -right-12', '-bottom-12 -left-12', '-bottom-12 -right-12'];
         const isLongName = spot.name.length > 8;
         const fontSize = isLongName ? 'text-2xl' : 'text-3xl';
-        
-        // Pattern logic
-        const patternId = `pattern-${spot.name}-${Math.random().toString(36).substr(2,9)}`;
+
+        // All fields below come from spot data (server-authored today, but
+        // this is the same trust boundary as the build-time-rendered
+        // SpotCard.astro, so it is hardened the same way). Every value that
+        // gets concatenated into this HTML string is HTML-escaped first;
+        // the whole string is later inserted via innerHTML.
+        const nameEsc = escapeHtml(spot.name);
+        const cityEsc = escapeHtml(spot.city);
+        const difficultyEsc = escapeHtml(spot.difficulty);
+        const bottomTypeEsc = escapeHtml(spot.bottom_type || '');
+        const descriptionEsc = escapeHtml(spot.description || '');
+        const bestSwellEsc = spot.best_swell ? escapeHtml(spot.best_swell) : '';
+
+        // Pattern id must not embed the raw spot name (SVG/HTML injection
+        // risk once this whole template is inserted via innerHTML) — keep
+        // it to a hash plus the existing random suffix instead.
+        const patternId = `pattern-${getHashIndex(spot.name + '|' + spot.city, 0xffffffff).toString(36)}-${Math.random().toString(36).substr(2,9)}`;
 
         const patternSvg = `
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -466,9 +507,16 @@ const searchSchema = {
           </svg>
         `;
 
+        // href uses the HTML-escaped name (e.g. an "&" would render as
+        // "&amp;" here, same as Astro's own attribute escaping does for the
+        // equivalent server-rendered link in SpotCard.astro) so the target
+        // URL is unchanged for every currently valid spot name while no
+        // longer being able to break out of the href="" attribute.
+        const href = `/spot/${nameEsc}`;
+
         return `
         <div class="spot-item transition-opacity duration-300" style="content-visibility: auto; contain-intrinsic-size: 1px 400px;">
-          <a href="/spot/${spot.name}" class="block group h-full">
+          <a href="${href}" class="block group h-full">
             <article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col active:scale-[0.98] transform duration-100">
                 <div class="relative overflow-hidden h-40 flex flex-col items-center justify-center p-4 text-center ${theme.gradient}">
                     <div class="absolute w-40 h-40 rounded-full opacity-30 blur-3xl mix-blend-screen ${theme.accent} ${glowClasses[glowPos]}"></div>
@@ -476,24 +524,24 @@ const searchSchema = {
                     <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22noiseFilter%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.65%22%20numOctaves%3D%221%22%20stitchTiles%3D%22stitch%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23noiseFilter)%22%20opacity%3D%221%22%2F%3E%3C%2Fsvg%3E')] mix-blend-overlay"></div>
                     <div class="relative z-10 flex flex-col items-center gap-1">
                         <span class="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-white/30 pb-1 mb-1 shadow-sm ${theme.text}">TW SURF</span>
-                        <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans ${fontSize}">${spot.name}</div>
+                        <div class="font-bold tracking-wide leading-tight text-white drop-shadow-lg font-sans ${fontSize}">${nameEsc}</div>
                         <div class="w-6 h-1 bg-white/50 rounded-full mt-1 shadow-sm backdrop-blur-sm"></div>
                     </div>
                     <div class="absolute top-2 right-2 flex gap-2 z-20">
-                        <span class="${diffBg} text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm shadow-sm bg-opacity-90">${spot.difficulty}</span>
+                        <span class="${diffBg} text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm shadow-sm bg-opacity-90">${difficultyEsc}</span>
                     </div>
                     <div class="absolute bottom-2 left-2 text-white text-xs font-bold drop-shadow-md z-20">
-                        🌊 ${spot.bottom_type}
+                        🌊 ${bottomTypeEsc}
                     </div>
                 </div>
                 <div class="p-5 flex-grow flex flex-col">
                     <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-800 transition-colors">${spot.name}</h2>
-                        <span class="text-xs font-semibold bg-stone-100 text-stone-700 px-2 py-1 rounded-full">${spot.city}</span>
+                        <h2 class="text-lg font-bold text-stone-900 group-hover:text-sky-800 transition-colors">${nameEsc}</h2>
+                        <span class="text-xs font-semibold bg-stone-100 text-stone-700 px-2 py-1 rounded-full">${cityEsc}</span>
                     </div>
-                    <p class="text-stone-600 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">${spot.description || ''}</p>
+                    <p class="text-stone-600 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">${descriptionEsc}</p>
                     <div class="flex items-center gap-3 text-xs text-stone-600 border-t border-stone-100 pt-3">
-                        ${spot.best_swell ? `<span>最佳浪向: ${spot.best_swell}</span>` : ''}
+                        ${bestSwellEsc ? `<span>最佳浪向: ${bestSwellEsc}</span>` : ''}
                     </div>
                 </div>
             </article>
@@ -521,19 +569,28 @@ const searchSchema = {
             const link = card.querySelector('.js-feature-link') as HTMLAnchorElement;
             const badgesContainer = card.querySelector('.js-feature-badges');
 
-            if (img) { img.src = ad.image; img.alt = ad.title; }
+            if (img) { img.src = safeAdImageSrc(ad.image); img.alt = ad.title; }
             if (title) title.textContent = ad.title;
-            if (titleOverlay) titleOverlay.textContent = ad.overlayTitle || ad.title; 
+            if (titleOverlay) titleOverlay.textContent = ad.overlayTitle || ad.title;
             if (desc) desc.textContent = ad.desc;
             if (cta) cta.textContent = ad.cta;
             if (link) {
-                link.href = ad.link;
+                link.href = safeAdHref(ad.link);
                 link.setAttribute('aria-label', ad.title);
             }
             if (badgesContainer && ad.badges) {
-                badgesContainer.innerHTML = ad.badges.map((b: any) => 
-                    `<span class="${b.classString}">${b.text}</span>`
-                ).join('');
+                // Safe DOM construction instead of innerHTML: className is
+                // assigned as a property (not parsed as markup) and text is
+                // set via textContent, so badge content can never be
+                // interpreted as HTML even if it were untrusted.
+                badgesContainer.replaceChildren(
+                    ...ad.badges.map((b: any) => {
+                        const span = document.createElement('span');
+                        span.className = b.classString;
+                        span.textContent = b.text;
+                        return span;
+                    })
+                );
             }
 
         } catch (e) {

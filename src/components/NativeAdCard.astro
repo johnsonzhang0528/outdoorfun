@@ -3,6 +3,31 @@
 import { ads, getBadgeClasses } from '../data/adContent';
 import topCampsInventory from '../data/top_camps.json';
 import type { Ad } from '../utils/adManager';
+import { isAllowedExternalUrl, isSafeInternalPath } from '../utils/safeHtml';
+
+// selectedAd.link / selectedAd.image can originate from the external partner
+// feed (src/data/top_camps.json) via adManager's mapCampToAd(). That module
+// already validates both fields, but this component does not assume the
+// upstream is always safe — it re-checks immediately before rendering the
+// href/src attributes, matching the allowlist used across the ad pipeline.
+const ALLOWED_AD_LINK_HOSTS = ['www.outdoorcampingworld.com', 'www.klook.com', 'www.momoshop.com.tw'];
+const SAFE_FALLBACK_LINK = '#';
+const DEFAULT_AD_IMAGE = '/images/featured/glamping.jpg';
+
+function safeAdHref(link: unknown): string {
+  if (link === SAFE_FALLBACK_LINK) return SAFE_FALLBACK_LINK;
+  if (typeof link === 'string' && (isSafeInternalPath(link) || isAllowedExternalUrl(link, ALLOWED_AD_LINK_HOSTS))) {
+    return link;
+  }
+  return SAFE_FALLBACK_LINK;
+}
+
+function safeAdImageSrc(image: unknown): string {
+  if (typeof image === 'string' && (isSafeInternalPath(image) || isAllowedExternalUrl(image, []))) {
+    return image;
+  }
+  return DEFAULT_AD_IMAGE;
+}
 
 interface Props {
     city?: string;
@@ -112,6 +137,10 @@ if (adData) {
     // 預設隨機邏輯 (首頁、列表頁使用)
     selectedAd = adsWithClasses[Math.floor(Math.random() * adsWithClasses.length)];
 }
+
+// Final validation immediately before render — see note above.
+const finalHref = safeAdHref(selectedAd.link);
+const finalImageSrc = safeAdImageSrc(selectedAd.image.replace('/ads/', '/featured/'));
 ---
 
 <article 
@@ -121,9 +150,9 @@ if (adData) {
   
   <div class="h-40 relative overflow-hidden bg-stone-200 animate-pulse group-hover:shadow-inner transition-all duration-500">
      {/* Image Layer */}
-     <img 
-        src={selectedAd.image.replace('/ads/', '/featured/')}
-        alt={selectedAd.title} 
+     <img
+        src={finalImageSrc}
+        alt={selectedAd.title}
         width="800"
         height="450"
         loading="lazy" 
@@ -184,5 +213,5 @@ if (adData) {
     </div>
   </div>
 
-  <a href={selectedAd.link} target="_blank" rel="noopener nofollow sponsored" class="absolute inset-0 z-0 js-feature-link" aria-label={selectedAd.title} data-track-affiliate="native_ad" data-item-name={selectedAd.title}></a>
+  <a href={finalHref} target="_blank" rel="noopener nofollow sponsored" class="absolute inset-0 z-0 js-feature-link" aria-label={selectedAd.title} data-track-affiliate="native_ad" data-item-name={selectedAd.title}></a>
 </article>

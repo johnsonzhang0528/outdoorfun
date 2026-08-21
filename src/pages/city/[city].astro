@@ -9,6 +9,7 @@ import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
 import { getAdRotator } from '../../utils/adManager';
 import { summarizeRegionSea, seaUpdatedAt, todayWaveRange, getSpotStats, getCitySeasonProfile } from '../../utils/surfData';
+import { toSafeJsonScript } from '../../utils/safeHtml';
 
 export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
@@ -170,7 +171,7 @@ const citySchema = {
 ---
 
 <Layout title={title} description={description} geo={{ placename: city }}>
-    <script type="application/ld+json" slot="head" set:html={JSON.stringify(citySchema)}></script>
+    <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(citySchema)}></script>
 
     <div class="bg-indigo-50 border-b border-indigo-100 py-10 mb-8">
         <div class="container mx-auto px-4 text-center">

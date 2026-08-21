@@ -1,5 +1,6 @@
 import { ads as localAds } from '../data/adContent';
 import topCampsInventory from '../data/top_camps.json';
+import { isAllowedExternalUrl, isSafeInternalPath } from './safeHtml';
 
 // Define the unified Ad interface
 export interface Ad {
@@ -13,6 +14,39 @@ export interface Ad {
   overlayTitle?: string;
 }
 
+// mapCampToAd() is the primary trust boundary for src/data/top_camps.json,
+// which is populated by py/sync_partner_feed.py from an external partner
+// feed. That script already validates link/image before writing the file,
+// but this component does not assume the upstream data is always safe —
+// it re-validates here as defense in depth.
+const DEFAULT_CAMP_IMAGE = '/images/featured/glamping.jpg';
+const SAFE_FALLBACK_LINK = '#';
+// Only outdoorcampingworld.com is a confirmed legitimate destination for
+// camp campaign links. No external host is currently legitimate for camp
+// images (see py/sync_partner_feed.py ALLOWED_IMAGE_HOSTS) — an empty list
+// means only a same-origin relative path is ever accepted for image.
+const ALLOWED_CAMP_LINK_HOSTS = ['www.outdoorcampingworld.com'];
+const ALLOWED_CAMP_IMAGE_HOSTS: string[] = [];
+
+function safeCampLink(link: unknown): string {
+  if (typeof link === 'string' && isAllowedExternalUrl(link, ALLOWED_CAMP_LINK_HOSTS)) {
+    return link;
+  }
+  return SAFE_FALLBACK_LINK;
+}
+
+function safeCampImage(image: unknown): string {
+  const isLiteralDefault = image === '/images/camps/default.webp';
+  if (
+    typeof image === 'string' &&
+    !isLiteralDefault &&
+    (isSafeInternalPath(image) || isAllowedExternalUrl(image, ALLOWED_CAMP_IMAGE_HOSTS))
+  ) {
+    return image;
+  }
+  return DEFAULT_CAMP_IMAGE;
+}
+
 // Helper to Map External Camp Data to Ad Format
 function mapCampToAd(city: string, camp: any): Ad {
   return {
@@ -20,8 +54,8 @@ function mapCampToAd(city: string, camp: any): Ad {
     title: `衝浪累了嗎？來去${camp.name}露營吧！`,
     overlayTitle: `推薦${city}露營`,
     desc: camp.desc || `位於${city}的優質露營區，享受大自然與舒適體驗。`,
-    image: camp.image && camp.image !== '/images/camps/default.webp' ? camp.image : '/images/featured/glamping.jpg', // Use generic if default
-    link: camp.link || '#',
+    image: safeCampImage(camp.image),
+    link: safeCampLink(camp.link),
     cta: `查看${camp.name}`,
     badges: [
       { text: '🤝 夥伴推薦', color: 'blue' },

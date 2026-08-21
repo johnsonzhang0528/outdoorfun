@@ -9,6 +9,7 @@ import spots from '../../data/surf_spots.json';
 import marineData from '../../data/sea_conditions.json';
 import { getValidSpots } from '../../utils/filterSpots';
 import { getSpotStats, todayWaveRange, seaUpdatedAt } from '../../utils/surfData';
+import { toSafeJsonScript } from '../../utils/safeHtml';
 
 export async function getStaticPaths() {
   const all = getValidSpots(spots);
@@ -99,7 +100,7 @@ const schema = {
 ---
 
 <Layout title={title} description={description}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)}></script>
+  <script type="application/ld+json" slot="head" set:html={toSafeJsonScript(schema)}></script>
 
   <div class="bg-indigo-900 text-white py-14 md:py-20">
     <div class="container mx-auto px-4 text-center">
