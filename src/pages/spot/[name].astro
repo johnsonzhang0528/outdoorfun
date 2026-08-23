@@ -152,15 +152,6 @@ const breadcrumbListItems = [
     }
 ];
 
-if (spot.area && spot.area !== '待確認') {
-    breadcrumbListItems.push({
-        "@type": "ListItem",
-        "position": breadcrumbListItems.length + 1,
-        "name": spot.area,
-        "item": `${Astro.site ? Astro.site.origin : ""}/search?q=${spot.area}` 
-    });
-}
-
 breadcrumbListItems.push({
     "@type": "ListItem",
     "position": breadcrumbListItems.length + 1,
