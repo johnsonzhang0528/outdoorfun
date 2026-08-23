@@ -12,9 +12,9 @@
   ],
   "redirects": [
     {
-      "source": "/(.*).php",
+      "source": "/(.*)\\.php",
       "destination": "/",
-      "permanent": true
+      "statusCode": 410
     },
     {
       "source": "/modules/(.*)",
