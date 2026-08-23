@@ -177,12 +177,6 @@ const breadcrumbSchema = {
         {
             "@type": "ListItem",
             "position": 2,
-            "name": "主題策展",
-            "item": Astro.site ? `${Astro.site.origin}/topic` : `${SITE_ORIGIN_FALLBACK}/topic`
-        },
-        {
-            "@type": "ListItem",
-            "position": 3,
             "name": title,
             "item": Astro.url.href
         }
