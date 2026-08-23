@@ -74,9 +74,15 @@ const spotMarine = marineData[spot.name] || {};
 const hourlyData = spotMarine.hourly || {};
 
 // Release Date Logic
-const shouldIndex = true; 
-const publishedTime = spot.release_date ? new Date(spot.release_date).toISOString() : new Date().toISOString();
-const modifiedTime = new Date().toISOString();
+const shouldIndex = true;
+// datePublished must come from real spot data, never from build/deploy time —
+// fail closed instead of silently claiming the page was "published today".
+const rawReleaseDate = spot.release_date;
+const releaseDate = new Date(rawReleaseDate);
+if (isNaN(releaseDate.getTime())) {
+  throw new Error(`spot has a missing or invalid release_date: ${rawReleaseDate}`);
+}
+const publishedTime = releaseDate.toISOString();
 
 // Difficulty Helpers
 const isBeginner = spot.difficulty === "初學者";
@@ -256,8 +262,6 @@ const spotSchema = {
           "url": `${Astro.site ? Astro.site.origin : ""}/favicon.svg`
       }
   },
-  "datePublished": publishedTime,
-  "dateModified": modifiedTime,
   "amenityFeature": spotFeatures.map(f => ({
       "@type": "LocationFeatureSpecification",
       "name": f.label,
@@ -275,6 +279,7 @@ const graphSchema = {
             "@id": Astro.url.href,
             "url": Astro.url.href,
             "name": seoTitle,
+            "datePublished": publishedTime,
             "isPartOf": { "@id": `${Astro.site ? Astro.site.origin : ""}/#website` },
             "breadcrumb": { "@id": `${Astro.url.href}#breadcrumb` },
             "about": { "@id": `${Astro.url.href}#place` },
