@@ -3,8 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import SpotCard from '../components/SpotCard.astro';
 import spots from '../data/surf_spots.json';
 
-// Random 3 spots
-const randomSpots = spots.sort(() => 0.5 - Math.random()).slice(0, 3);
+// Random 3 spots — clone before sort: `spots` is the shared surf_spots.json
+// module singleton, and Array#sort mutates in place, which would otherwise
+// permanently shuffle the array for every other page importing it.
+const randomSpots = [...spots].sort(() => 0.5 - Math.random()).slice(0, 3);
 ---
 
 <Layout title="404 找不到頁面 | Surf Taiwan">
