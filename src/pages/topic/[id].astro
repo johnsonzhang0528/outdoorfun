@@ -35,11 +35,27 @@ export async function getStaticPaths() {
   const validSpots = getValidSpots(spots);
   const safeSpots = validSpots as Spot[];
 
+  // SEO consolidation batch 1: these 5 city-feature topic pages had 0 GSC
+  // clicks/impressions over 16 months, 0 Ahrefs backlinks, and no internal
+  // inbound links anywhere in the site. Each has a 301 to a more relevant
+  // existing page in vercel.json. Retired by exact slug, not by spot count,
+  // so no other topic page is affected.
+  const RETIRED_TOPIC_SLUGS = new Set([
+    'hualien-reef-break',
+    'yilan-reef-break',
+    'kaohsiung-reef-break',
+    'taichung-easy-access',
+    'taichung-sandy-beach',
+  ]);
+
   // 1. 生成 [城市 + 特徵] 組合頁面 (e.g., /topic/yilan-beginner)
   const { targetCities, features } = TOPIC_CONFIG;
 
   targetCities.forEach(cityObj => {
     Object.entries(features).forEach(([featureSlug, featureConfig]) => {
+      const topicSlug = `${cityObj.slug}-${featureSlug}`;
+      if (RETIRED_TOPIC_SLUGS.has(topicSlug)) return;
+
       // 篩選出符合條件的浪點
       const matchedSpots = safeSpots.filter(spot => {
         const isCityMatch = spot.city === cityObj.name;

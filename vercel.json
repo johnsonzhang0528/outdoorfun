@@ -35,6 +35,31 @@
       "source": "/product/(.*)",
       "destination": "/",
       "statusCode": 410
+    },
+    {
+      "source": "/topic/hualien-reef-break/",
+      "destination": "/spot/%E5%92%8C%E4%BB%81%E7%A4%AB%E7%81%98/",
+      "statusCode": 301
+    },
+    {
+      "source": "/topic/yilan-reef-break/",
+      "destination": "/spot/%E6%B2%99%E7%81%A3/",
+      "statusCode": 301
+    },
+    {
+      "source": "/topic/kaohsiung-reef-break/",
+      "destination": "/city/%E9%AB%98%E9%9B%84%E5%B8%82/",
+      "statusCode": 301
+    },
+    {
+      "source": "/topic/taichung-easy-access/",
+      "destination": "/city/%E5%8F%B0%E4%B8%AD%E5%B8%82/",
+      "statusCode": 301
+    },
+    {
+      "source": "/topic/taichung-sandy-beach/",
+      "destination": "/city/%E5%8F%B0%E4%B8%AD%E5%B8%82/",
+      "statusCode": 301
     }
   ]
 }
