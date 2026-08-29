@@ -144,9 +144,18 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { title, description, spots: pageSpots, city, keyword } = Astro.props;
+const { title, spots: pageSpots, city, keyword } = Astro.props;
+let { description } = Astro.props;
 const { id } = Astro.params;
 const adRotator = getAdRotator();
+
+// 🟢 [Slug-specific enhancement] 僅覆寫 taichung-surf-school 的 description，
+// 讓 title/H1/meta/hero/schema 從「浪點推薦」語氣統一改為「怎麼選課程/教練」的
+// commercial intent 語氣，不影響其他 45 個 topic 頁（description prop 仍由
+// getStaticPaths() 產生，這裡只在單一 slug 下覆寫該變數）。
+if (id === 'taichung-surf-school') {
+    description = `第一次到台中學衝浪？這裡整理怎麼選衝浪課程與教練、課程通常包含哪些項目，以及台中 ${pageSpots.length} 個浪點的實際環境，幫你上課前先做好功課。`;
+}
 
 // 🟢 [Data-Driven] 真實海況 + 統計 + 今日各浪點浪高
 const marine = marineData as Record<string, any>;
@@ -169,10 +178,53 @@ if (pageSpots.length > 0) {
         question: `${title}包含哪些推薦浪點？`,
         answer: `本專題精選了 ${pageSpots.slice(0, 5).map(s => `<a href="/spot/${s.name}/">${s.name}</a>`).join('、')} 等 ${pageSpots.length} 個與「${keyword}」相關的熱門衝浪地點。`
     });
-    
+
     faqItems.push({
         question: `這些浪點有什麼特色？`,
         answer: `這些地點主要符合「${keyword}」的篩選條件。${description}`
+    });
+}
+
+// 🟢 [Slug-specific enhancement] 僅供 /topic/taichung-surf-school/ 使用，
+// 不影響其他 46 個 topic 頁的渲染邏輯或輸出。
+// 目的：把原本「城市+特徵」通用模板頁，針對「台中衝浪教學/課程/教練」這種
+// commercial/transactional 查詢意圖，補上真正有 Information Gain 的內容，
+// 而非單純重複浪點清單（city page 已經有）。
+const isTaichungSurfSchool = id === 'taichung-surf-school';
+// 🟡 [Seasonality accuracy] 資料集裡每個浪點只有單一 best_swell 欄位（如「南」「南風」），
+// 沒有獨立的月份/季節資料來源。因此這裡只陳述「swell 方向偏好」這個資料集直接支持的事實，
+// 不推論成「最佳月份」或「哪一季浪況比較穩定」——那需要跨月的浪高/頻率資料才能佐證，
+// 目前資料集沒有提供，所以刻意不使用 getCitySeasonProfile() 的月份/季節文案。
+const taichungSwellNote = isTaichungSurfSchool
+    ? (pageSpots.every((s: Spot) => (s.best_swell || '').includes('南'))
+        ? '南向 swell（南、南風）'
+        : '不同浪點的最佳 swell 方向不完全一致')
+    : null;
+
+if (isTaichungSurfSchool) {
+    faqItems.push({
+        question: `台中適合學衝浪嗎？`,
+        answer: `台中目前收錄的浪點都在沙岸地形、浪況平緩，屬於初學者友善的入門環境，且現場都有衝浪店與租板服務，方便新手第一次下水前準備裝備（實際是否提供教學課程請以店家現場資訊為準）。但台中的浪點選擇不多（目前僅 ${pageSpots.length} 個），浪型也偏單一，不算是「進階挑戰」或「浪點多樣性」取向的地區。`
+    });
+    faqItems.push({
+        question: `台中學衝浪適合哪些人？`,
+        answer: `最適合的是完全新手、想安全體驗一次衝浪、或住在台中／中部想就近上課的人。已有基礎、想挑戰不同浪型或礁石地形的進階衝浪者，通常會往浪點選擇更多的地區移動。`
+    });
+    faqItems.push({
+        question: `第一次上課該怎麼選教練或衝浪店？`,
+        answer: `建議優先確認：教練是否會先教基本安全與觀浪知識，而不是直接推下水；裝備（板子、防寒衣、腳繩）是否包含在課程內；上課地點是否就是實際下水的浪點，離停車、盥洗等生活機能近不近。可以先參考<a href="/city/台中市/">台中市浪點總覽</a>確認現場環境，再決定要不要報名課程。`
+    });
+    faqItems.push({
+        question: `衝浪課程費用怎麼看，裝備需要自備嗎？`,
+        answer: `預約前建議先確認費用是否包含教練指導、衝浪板、防磨衣或防寒衣、保險與交通接送；不同方案的包含項目可能不同，價格也會依課程長度與是否一對一而異，實際內容與費用請以報名頁面公告為準，本站不代為保證特定價格或內容。`
+    });
+    faqItems.push({
+        question: `台中浪況要注意什麼？`,
+        answer: `台中目前收錄的浪點記錄的最佳 swell 方向多為${taichungSwellNote}，但實際浪況會依當天浪向、風向與浪高而不同，並非固定不變。建議上課前留意當日海況，浪況不穩定時不建議勉強下水，尤其是第一次上課的新手。`
+    });
+    faqItems.push({
+        question: `台中浪點選擇不多，有其他附近地區可以考慮嗎？`,
+        answer: `如果想要更多元的浪型或浪點選擇，台中北邊的<a href="/city/苗栗縣/">苗栗縣</a>浪點數量明顯較多，是地理上最順路的延伸選項；也可以直接參考<a href="/guide/beginner/">全台新手友善衝浪浪點清單</a>比較其他地區。`
     });
 }
 
@@ -271,6 +323,63 @@ const breadcrumbSchema = {
                             <p class="text-xs text-sky-600 mt-1">
                                 共 {topicStats.count} 個浪點 · 新手友善 {topicStats.beginner} 個
                                 {seaUpdated && <> · 海況資料更新於 {seaUpdated}</>}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* 🟢 [Slug-specific enhancement] 僅 taichung-surf-school 顯示，
+                     針對「台中衝浪教學/課程/教練」commercial intent 補充的
+                     Information Gain 內容，不影響其他 topic 頁。 */}
+                {isTaichungSurfSchool && (
+                    <div class="mb-8 bg-white rounded-2xl p-6 md:p-8 border border-stone-100 shadow-sm space-y-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">台中適合學衝浪嗎？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                台中目前收錄的 {pageSpots.length} 個浪點（{pageSpots.map((s: Spot, i: number) => (
+                                    <>
+                                        <a href={`/spot/${s.name}/`} class="text-sky-700 underline hover:text-sky-900">{s.name}</a>
+                                        {i < pageSpots.length - 1 ? '、' : ''}
+                                    </>
+                                ))}）都是沙岸地形、浪況平緩，且現場都有衝浪店與租板服務，方便新手第一次下水前準備裝備（實際是否提供教學課程請以店家現場資訊為準），對完全沒經驗的新手來說是相對容易入門的環境。但浪點數量不多、浪型也偏單一，如果你已經有基礎、想挑戰不同地形或浪況，台中不會是首選。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">適合哪些人在台中上課？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                最適合完全新手、想安全體驗一次衝浪、或人在中部想就近上課的人。地形平緩加上有現場店家支援，第一次下水的門檻較低。若目標是練習進階技巧或追求變化較大的浪型，通常會需要往浪點選擇更多的地區移動。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">第一次上課，怎麼選課程與教練？</h2>
+                            <ul class="list-disc list-inside text-stone-600 leading-relaxed space-y-1.5">
+                                <li>教練是否會先教基本安全觀念與觀浪知識，而不是直接推下水</li>
+                                <li>衝浪板、防寒衣、腳繩等裝備是否包含在課程內，或需要另外租借</li>
+                                <li>上課地點是否就是實際下水的浪點，交通與停車是否方便</li>
+                                <li>是團體課還是一對一教學，人數會直接影響教練能照顧到你的程度</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">課程費用怎麼看？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                預約前建議先確認費用是否包含教練指導、衝浪板、防磨衣或防寒衣、保險與交通接送；不同方案的包含項目可能不同，價格也會依課程長度與是否一對一而異。實際內容與費用請以報名頁面公告為準，本站不代為保證特定價格、教練資格或商家品質，僅提供地區與浪點資訊供參考。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">台中浪況要注意什麼？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                台中目前收錄的浪點記錄的最佳 swell 方向多為{taichungSwellNote}，但實際浪況會依當天浪向、風向與浪高而不同，並非固定不變。建議上課前留意當日海況，浪況不穩定時不建議勉強下水，尤其是第一次上課的新手更要以安全為優先。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">台中浪點選擇不多，還有其他地方可以考慮嗎？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                如果想要更多浪點或浪型選擇，地理上最順路的延伸是北邊的<a href="/city/苗栗縣/" class="text-sky-700 underline hover:text-sky-900">苗栗縣</a>，浪點數量明顯更多；也可以參考<a href="/guide/beginner/" class="text-sky-700 underline hover:text-sky-900">全台新手友善衝浪浪點清單</a>，比較其他地區的入門選擇。
                             </p>
                         </div>
                     </div>
