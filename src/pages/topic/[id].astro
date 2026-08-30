@@ -157,6 +157,13 @@ if (id === 'taichung-surf-school') {
     description = `第一次到台中學衝浪？這裡整理怎麼選衝浪課程與教練、課程通常包含哪些項目，以及台中 ${pageSpots.length} 個浪點的實際環境，幫你上課前先做好功課。`;
 }
 
+// 🟢 [Slug-specific enhancement] 僅覆寫 tainan-reef-break 的 description，
+// 讓語氣從「浪點推薦清單」改為「礁石浪型是否適合你」的判斷輔助語氣，
+// 不影響其他 45 個 topic 頁。
+if (id === 'tainan-reef-break') {
+    description = `台南「礁石浪點」分類實際上是哪些浪點？底質、適合程度、下水前該注意什麼——這裡整理已知的浪點資料，幫你判斷礁石浪型是否適合你目前的程度。`;
+}
+
 // 🟢 [Data-Driven] 真實海況 + 統計 + 今日各浪點浪高
 const marine = marineData as Record<string, any>;
 const regionSea = summarizeRegionSea(marine, pageSpots, city || '全台');
@@ -225,6 +232,44 @@ if (isTaichungSurfSchool) {
     faqItems.push({
         question: `台中浪點選擇不多，有其他附近地區可以考慮嗎？`,
         answer: `如果想要更多元的浪型或浪點選擇，台中北邊的<a href="/city/苗栗縣/">苗栗縣</a>浪點數量明顯較多，是地理上最順路的延伸選項；也可以直接參考<a href="/guide/beginner/">全台新手友善衝浪浪點清單</a>比較其他地區。`
+    });
+}
+
+// 🟢 [Slug-specific enhancement] 僅供 /topic/tainan-reef-break/ 使用，
+// 不影響其他 46 個 topic 頁的渲染邏輯或輸出。
+// 目的：這個分類目前是由 tag/bottom_type 的 OR 篩選產生（見 getStaticPaths()
+// 的 featureConfig.tags 比對），不代表列出的每個浪點底質都是礁岩——
+// 三寮灣是因為 tags 含「定點起浪」而被納入，但其 bottom_type 實際是「沙灘」。
+// 這裡的文案必須忠實反映這個資料現況，不能宣稱「以下都是礁岩浪點」。
+const isTainanReefBreak = id === 'tainan-reef-break';
+const tainanReefRockSpots = isTainanReefBreak
+    ? pageSpots.filter((s: Spot) => (s.bottom_type || '').includes('礁'))
+    : [];
+const tainanReefSandySpots = isTainanReefBreak
+    ? pageSpots.filter((s: Spot) => !(s.bottom_type || '').includes('礁'))
+    : [];
+// 🟡 [Seasonality accuracy] 同 taichung-surf-school 的原則：資料集只有單一
+// best_swell 欄位，沒有跨月資料，因此只陳述 swell 方向本身，不推論月份/季節。
+const tainanReefSwellDirs = isTainanReefBreak
+    ? [...new Set(pageSpots.map((s: Spot) => s.best_swell).filter(Boolean))]
+    : [];
+
+if (isTainanReefBreak) {
+    faqItems.push({
+        question: `台南有哪些「礁石浪點」類型的浪點？`,
+        answer: `本分類目前收錄 ${pageSpots.length} 個浪點：${pageSpots.map((s: Spot) => `<a href="/spot/${s.name}/">${s.name}</a>`).join('、')}。但這是依「礁石、定點起浪、岩岸」等標籤篩選出來的分類，${tainanReefRockSpots.length > 0 ? `其中底質記錄為礁岩的是 ${tainanReefRockSpots.map((s: Spot) => s.name).join('、')}` : ''}${tainanReefSandySpots.length > 0 ? `，${tainanReefSandySpots.map((s: Spot) => s.name).join('、')}的底質記錄則是沙灘（因具有「定點起浪」的浪型特徵才被歸入此分類，並非礁岩地形）` : ''}。點進各浪點頁可以看到完整的底質與環境描述。`
+    });
+    faqItems.push({
+        question: `礁石浪點和沙灘浪點，選點思路有什麼不同？`,
+        answer: `沙灘浪點（可參考<a href="/topic/tainan-sandy-beach/">台南沙灘浪點列表</a>）通常底質較平緩、跌倒風險相對單純；礁岩底質的浪點（如${tainanReefRockSpots.length > 0 ? tainanReefRockSpots.map((s: Spot) => s.name).join('、') : '本分類中底質為礁岩的浪點'}）下水前需要多留意底質與入水點是否清楚，且通常需要一定經驗才能安全應對。選點時建議先確認自己想要的是「地形平緩好上手」還是「地形有變化、需要經驗判斷」，而不是只看「有沒有浪」。`
+    });
+    faqItems.push({
+        question: `新手適合來這幾個礁石浪點嗎？`,
+        answer: `${tainanReefRockSpots.length > 0 ? `底質為礁岩的浪點（${tainanReefRockSpots.map((s: Spot) => s.name).join('、')}）目前記錄的難度都是「中級」，` : ''}一般會建議已有基本衝浪經驗、能自主觀察浪況與掌握基礎技巧的人再考慮這類地形；完全新手若想入門，站上既有的<a href="/topic/tainan-sandy-beach/">台南沙灘浪點</a>或<a href="/topic/tainan-beginner/">台南新手衝浪推薦</a>會是風險較低的起點。實際是否適合，仍須以現場狀況與個人能力自行判斷。`
+    });
+    faqItems.push({
+        question: `下水前要注意什麼？`,
+        answer: `下水前建議依序確認：①今天的浪況是否超出自己的能力範圍；②進出水的路線是否清楚好辨認；③這個浪點的底質是否為礁岩、是否需要防滑鞋等防護；④當下的風向、浪向與流況。以上資訊本站無法即時提供，請以到場後的實際觀察與當地資訊為準。`
     });
 }
 
@@ -380,6 +425,89 @@ const breadcrumbSchema = {
                             <h2 class="text-xl font-bold text-stone-800 mb-2">台中浪點選擇不多，還有其他地方可以考慮嗎？</h2>
                             <p class="text-stone-600 leading-relaxed">
                                 如果想要更多浪點或浪型選擇，地理上最順路的延伸是北邊的<a href="/city/苗栗縣/" class="text-sky-700 underline hover:text-sky-900">苗栗縣</a>，浪點數量明顯更多；也可以參考<a href="/guide/beginner/" class="text-sky-700 underline hover:text-sky-900">全台新手友善衝浪浪點清單</a>，比較其他地區的入門選擇。
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* 🟢 [Slug-specific enhancement] 僅 tainan-reef-break 顯示，
+                     針對「台南礁石浪點/reef break」informational intent 補充的
+                     Information Gain 內容，不影響其他 topic 頁。 */}
+                {isTainanReefBreak && (
+                    <div class="mb-8 bg-white rounded-2xl p-6 md:p-8 border border-stone-100 shadow-sm space-y-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">這個「礁石浪點」分類代表什麼？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                這個分類是依浪點的標籤（礁石、定點起浪、岩岸）篩選出來的，不完全等於「底質一定是礁岩」。目前收錄的 {pageSpots.length} 個浪點中，
+                                {tainanReefRockSpots.length > 0 && (
+                                    <>底質記錄為礁岩的是 {tainanReefRockSpots.map((s: Spot, i: number) => (
+                                        <>
+                                            <a href={`/spot/${s.name}/`} class="text-sky-700 underline hover:text-sky-900">{s.name}</a>
+                                            {i < tainanReefRockSpots.length - 1 ? '、' : ''}
+                                        </>
+                                    ))}；</>
+                                )}
+                                {tainanReefSandySpots.length > 0 && (
+                                    <>{tainanReefSandySpots.map((s: Spot, i: number) => (
+                                        <>
+                                            <a href={`/spot/${s.name}/`} class="text-sky-700 underline hover:text-sky-900">{s.name}</a>
+                                            {i < tainanReefSandySpots.length - 1 ? '、' : ''}
+                                        </>
+                                    ))} 的底質記錄則是沙灘，是因為具備「定點起浪」這種浪型特徵才被歸入此分類，並非礁岩地形。</>
+                                )}
+                                想確認選點是否符合你要的地形，建議以下方各浪點的底質欄位與說明為準。
+                            </p>
+                        </div>
+
+                        {tainanReefRockSpots.length > 0 && (
+                            <div>
+                                <h2 class="text-xl font-bold text-stone-800 mb-2">目前已知的礁岩浪點差異</h2>
+                                <ul class="list-disc list-inside text-stone-600 leading-relaxed space-y-1.5">
+                                    {tainanReefRockSpots.map((s: Spot) => (
+                                        <li>
+                                            <a href={`/spot/${s.name}/`} class="text-sky-700 underline hover:text-sky-900 font-medium">{s.name}</a>
+                                            （{s.area}）：難度記錄為「{s.difficulty}」，最佳浪向為「{s.best_swell || '未記錄'}」{s.best_wind ? `、最佳風向為「${s.best_wind}」` : ''}。
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p class="text-stone-500 text-sm mt-2">以上僅為目前資料庫記錄的欄位，實際浪況、底質分布與現場狀況仍需以到場觀察為準。</p>
+                            </div>
+                        )}
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">礁石浪型與沙灘浪型，選點思路差在哪？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                沙灘底質的浪點（可參考<a href="/topic/tainan-sandy-beach/" class="text-sky-700 underline hover:text-sky-900">台南沙灘浪點列表</a>）通常地形較平緩、跌倒時的風險相對單純，是多數人入門的起點。礁岩底質的浪點則需要多留意底質分布與入水點是否清楚，跌倒或踩踏時較容易造成割傷，通常也需要一定經驗才能自主判斷浪況與應對。選點時建議先問自己：現在想要的是「地形平緩、好上手」，還是「地形有變化、需要經驗判斷」，而不是只比較浪的大小。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">哪些程度的衝浪者應更謹慎評估？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                {tainanReefRockSpots.length > 0 ? `目前底質為礁岩的浪點（${tainanReefRockSpots.map((s: Spot) => s.name).join('、')}）難度記錄都是「中級」，` : ''}完全新手或還不熟悉自主觀浪、應變能力有限的人，會建議先從<a href="/topic/tainan-sandy-beach/" class="text-sky-700 underline hover:text-sky-900">沙灘浪點</a>或<a href="/topic/tainan-beginner/" class="text-sky-700 underline hover:text-sky-900">新手友善浪點</a>累積經驗，再考慮礁岩地形。已有基礎、能自行判斷浪況與底質風險的人，這類地形能提供更有變化的浪型與挑戰。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">下水前應該確認哪些風險因素？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                本站的「礁石浪點」分類是浪點篩選標籤，不代表每個浪點都已確認為相同海底地形——下水前務必先確認實際底質是否為礁岩，可參考上方各浪點連結頁的說明。礁岩底質最主要的風險是跌倒或站立時容易割傷腳底，建議視情況評估是否需要防滑鞋等防護裝備。無論底質為何，實際水深、礁石或障礙物分布、潮位高低與流況都會隨時間與天氣變化，本站沒有即時掌握這些現場條件，無法代為確認安全與否——請以到場後的實際觀察、入水/出水點是否清楚好辨認、當地衝浪店或有經驗者的資訊為主，浪況看起來不確定時不要勉強下水。
+                            </p>
+                        </div>
+
+                        {tainanReefSwellDirs.length > 0 && (
+                            <div>
+                                <h2 class="text-xl font-bold text-stone-800 mb-2">Swell / 風向條件，目前資料能確認什麼？</h2>
+                                <p class="text-stone-600 leading-relaxed">
+                                    依資料集記錄，本分類浪點的最佳浪向{tainanReefSwellDirs.length === 1 ? `皆為「${tainanReefSwellDirs[0]}」` : `分別為「${tainanReefSwellDirs.join('、')}」，不完全一致`}。資料集僅有單一 best_swell 欄位、沒有跨月份的浪況統計，因此這裡只能陳述「哪個方向的浪比較合適」這件事，無法進一步推論哪個月份或哪一季浪況比較穩定——實際下水時機仍建議查詢當日海況再決定。
+                                </p>
+                            </div>
+                        )}
+
+                        <div>
+                            <h2 class="text-xl font-bold text-stone-800 mb-2">想看台南其他浪點選擇？</h2>
+                            <p class="text-stone-600 leading-relaxed">
+                                如果想先了解台南所有浪點的完整分布與今日海況，可以參考<a href="/city/台南市/" class="text-sky-700 underline hover:text-sky-900">台南市浪點總覽</a>；想比較地形較平緩的選項，也可以看<a href="/topic/tainan-sandy-beach/" class="text-sky-700 underline hover:text-sky-900">台南沙灘浪點列表</a>。
                             </p>
                         </div>
                     </div>
