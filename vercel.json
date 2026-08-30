@@ -60,6 +60,11 @@
       "source": "/topic/taichung-sandy-beach/",
       "destination": "/city/%E5%8F%B0%E4%B8%AD%E5%B8%82/",
       "statusCode": 301
+    },
+    {
+      "source": "/topic/taichung-reef-break/",
+      "destination": "/city/%E5%8F%B0%E4%B8%AD%E5%B8%82/",
+      "statusCode": 301
     }
   ]
 }

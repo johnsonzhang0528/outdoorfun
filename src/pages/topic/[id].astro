@@ -40,12 +40,21 @@ export async function getStaticPaths() {
   // inbound links anywhere in the site. Each has a 301 to a more relevant
   // existing page in vercel.json. Retired by exact slug, not by spot count,
   // so no other topic page is affected.
+  //
+  // SEO consolidation batch 2: taichung-reef-break had weak-but-real GSC
+  // signal (1 click / 38 impressions / 16 months), so this is not a 0-signal
+  // retirement like batch 1 above. It's retired because its "reef-break"
+  // classification has no factual basis for Taichung: all 3 matched spots
+  // are bottom_type "沙灘" (sand), 0 are "礁岩" (reef), matched only via the
+  // "定點起浪" tag, and the spot set is Jaccard-identical (1.0) to
+  // /city/台中市/'s full spot list. 301 to /city/台中市/ in vercel.json.
   const RETIRED_TOPIC_SLUGS = new Set([
     'hualien-reef-break',
     'yilan-reef-break',
     'kaohsiung-reef-break',
     'taichung-easy-access',
     'taichung-sandy-beach',
+    'taichung-reef-break',
   ]);
 
   // 1. 生成 [城市 + 特徵] 組合頁面 (e.g., /topic/yilan-beginner)
